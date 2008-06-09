@@ -5,6 +5,8 @@
 
         <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
+        <mkdir dir="build/clientbin" />
+      
         <csc    target="library"
                 debug="true"
                 output="build\clientbin\Demo.dll"
@@ -37,7 +39,7 @@
                 <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationCore.dll" />
                 <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
                 <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />
-                <include name="build\clientbin\Button.dll" />
+                <include name="build\clientbin\Demo.dll" />
             </references>
 
             <sources>
