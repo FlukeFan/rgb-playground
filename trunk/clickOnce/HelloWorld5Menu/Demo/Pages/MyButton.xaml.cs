@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Resources;
 
-namespace DemoButton.Pages
+namespace Demo.Pages
 {
     public class MyButton : UserControl
     {

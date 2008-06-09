@@ -9,9 +9,9 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using System.Xml;
-using DemoButton.Pages;
+using Demo.Pages;
 
-namespace DemoButton
+namespace Demo
 {
 
     public class App : Application

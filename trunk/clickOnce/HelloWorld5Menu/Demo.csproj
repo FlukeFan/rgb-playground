@@ -28,12 +28,14 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll</HintPath>
+      <HintPath>..\..\SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks" />
+    <Reference Include="Rhino.Mocks" >
+      <HintPath>..\..\SDKs\Rhino.Mocks.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <UsingTask AssemblyFile="ExecParse.dll" TaskName="ExecParse.ExecParse" />
+  <UsingTask AssemblyFile="..\..\SDKs\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>
 
@@ -75,12 +77,12 @@
   </PropertyGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="..\..\SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="..\..\SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
