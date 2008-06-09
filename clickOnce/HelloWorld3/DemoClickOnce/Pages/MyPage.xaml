@@ -1,0 +1,11 @@
+﻿<UserControl
+                xmlns:x="clr-namespace:DemoClickOnce.Pages;assembly=DemoClickOnce"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                Name="MyPage"
+                Width="600"
+                Height="300">
+    <StackPanel Name="LayoutRoot" Background="White">
+        <Button Content="ClickMe" Width="200" Name="SendButton" />
+        <TextBlock Name="ResponseText" Text="Hello world ..." />
+    </StackPanel>
+</UserControl>

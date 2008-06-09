@@ -1,0 +1,9 @@
+﻿<UserControl
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                Name="MyPage"
+                >
+    <StackPanel Name="LayoutRoot" Background="White">
+        <TextBlock Name="TextBlock" />
+        <Button Name="Button" Content="Click Me" />
+    </StackPanel>
+</UserControl>

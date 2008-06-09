@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="Sl2" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+<!--        <csc    target="library"
+                debug="true"
+                output="A1.dll"
+                warnaserror="true"
+                >
+
+            <references>
+            </references>
+
+            <sources>
+                <include name="A1.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>-->
+
+        <csc    target="exe"
+                debug="true"
+                output="MyAssembly.exe"
+                warnaserror="true"
+                >
+
+            <sources>
+                <include name="MyAssembly.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+<!--        <copy file="A1.dll" tofile="x:\A1.dll" />-->
+<!--        <copy file="A2.exe" tofile="x:\A2.exe" />-->
+
+        <exec program="MyAssembly.exe" />
+
+    </target>
+
+</project>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project name="Sl2" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+<!--        <copy todir=".">
+            <fileset basedir="C:\svn\NHibernateBranch2.0.x\nhibernate\build\NHibernate-2.0.0.Alpha1-debug\bin\net-2.0">
+
+                <include name="NHibernate.dll" />
+                <include name="log4net.dll" />
+
+            </fileset>
+        </copy>-->
+
+        <csc    target="library"
+                debug="true"
+                output="Sl2.dll"
+                warnaserror="true"
+                nostdlib="true"
+                noconfig="true">
+
+            <references>
+                <include name="C:\Program Files\Microsoft Silverlight\2.0.30226.2\mscorlib.dll" />
+                <include name="C:\Program Files\Microsoft Silverlight\2.0.30226.2\System.dll" />
+                <include name="C:\Program Files\Microsoft Silverlight\2.0.30226.2\System.Core.dll" />
+                <include name="C:\Program Files\Microsoft Silverlight\2.0.30226.2\System.Windows.dll" />
+                <include name="C:\Program Files\Microsoft Silverlight\2.0.30226.2\System.Windows.Browser.dll" />
+                <include name="System.Windows.Controls.dll" />
+                <include name="NHibernate.dll" />
+                <include name="Atlanta.Application.Domain.dll" />
+            </references>
+
+            <sources>
+                <include name="*.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+        <delete file="Sl2.xap" />
+        <exec program="chiron" commandline="/xap:Sl2.xap" />
+
+    </target>
+
+</project>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<project name="Sl2" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+        <csc    target="library"
+                debug="true"
+                output="build\clientbin\DemoClickOnce.dll"
+                warnaserror="true"
+                >
+
+            <references>
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationCore.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />
+            </references>
+
+            <sources>
+                <include name="DemoClickOnce/*/*.cs" />
+            </sources>
+
+            <resources dynamicprefix="true">
+                <include name="DemoClickOnce/*/*.xaml" />
+            </resources>
+
+        </csc>
+
+        <csc    target="winexe"
+                debug="true"
+                output="build\App.exe"
+                warnaserror="true"
+                >
+
+            <references>
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationCore.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />
+                <include name="build\clientbin\DemoClickOnce.dll" />
+            </references>
+
+            <sources>
+                <include name="DemoClickOnce/App.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+        <copy file="DemoClickOnce\App.exe.config" todir="build" />
+
+<!--        <copy file="build\App.exe" todir="t" />
+        <copy file="build\App.exe.config" todir="t" />
+        <copy file="build\clientbin\DemoClickOnce.dll" todir="t\clientbin" />
+
+        <delete file="build\App.manifest" />
+        <delete file="build\App.application" />
+        <copy file="DemoClickOnce\App.template.manifest"    tofile="build\App.manifest" />
+        <copy file="DemoClickOnce\App.template.application"     tofile="build\App.application" />
+
+        <property name="deployMajor" value="${datetime::get-year(datetime::now())}" />
+        <property name="deployMinor" value="${string::pad-left(datetime::get-month(datetime::now()), 2, '0') + string::pad-left(datetime::get-day(datetime::now()), 2, '0')}" />
+        <property name="deployBuild" value="${string::pad-left(datetime::get-hour(datetime::now()), 2, '0') + string::pad-left(datetime::get-minute(datetime::now()), 2, '0')}" />
+        <property name="deployRevision" value="${string::pad-left(datetime::get-second(datetime::now()), 2, '0')}" />
+        <property name="deployVersion" value="${deployMajor + '.' + deployMinor + '.' + deployBuild + '.' + deployRevision}" />
+
+        <exec program="mage.exe" commandline="-cc" />
+
+        <exec program="mage.exe" commandline="-Update build\App.manifest -FromDirectory t -Name App -TrustLevel FullTrust -Version ${deployVersion} -Processor msil" />
+        <exec program="mage.exe" commandline="-Sign build\App.manifest -CertFile SDKs\Key\Atlanta.pfx -Password Atlanta" />
+
+        <exec program="mage.exe" commandline="-Update build\App.application -Name App -Install false -AppManifest build\App.manifest -Version ${deployVersion} -Processor msil" />
+        <exec program="mage.exe" commandline="-Sign build\App.application -CertFile SDKs\Key\Atlanta.pfx -Password Atlanta" />
+-->
+    </target>
+
+</project>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<project name="Atlanta" default="build">
+
+    <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+    <!-- global project settings -->
+    <property name="nant.settings.currentframework"     value="net-2.0" />
+
+    <property name="project.version" value="0.0.0.1" overwrite="false" />
+
+    <property name="build.includes.dir"     value="${project::get-base-directory()}/Tools/BuildScripts"/>
+    <property name="build.includes.file"    value="${build.includes.dir}/includes.build"/>
+    <include buildfile="${build.includes.file}" />
+
+    <call target="setDefaultEnvironment" />
+
+    <!-- debug build by default -->
+    <call target="debug" />
+
+
+    <target name="onBuild">
+
+        <mkiisdir   dirpath="."
+                    vdirname="WcfTest"
+                    enabledirbrowsing="true"
+                    />
+
+        <csc    target="library"
+                debug="${build.debug}"
+                optimize="${optimize}"
+                output="bin/Service.dll"
+                warnaserror="true">
+
+            <references>
+                <include name="bin/System.ServiceModel.dll" />
+            </references>
+
+            <sources>
+                <include name="*.cs" />
+            </sources>
+
+        </csc>
+
+    </target>
+
+
+</project>

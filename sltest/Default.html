@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title>First Silverlight Project</title>
+        <script src="Silverlight.js" type="text/javascript"></script>
+    </head>
+
+    <body>
+        <form>
+            <div id="AgControl1Host" style="background:#FFFFFF">
+                <script type="text/javascript">
+
+                    var pe = document.getElementById("AgControl1Host");
+
+                    Sys.Silverlight.createObject("Page1.xaml", pe, "AgControl1",
+                                                 {width:'800', height:'500', inplaceInstallPrompt:false, background:'white', isWindowless:'false', framerate:'30', version:'0.95'},
+                                                 {onError:null, onLoad:null},
+                                                 null);
+                </script>
+            </div>
+        </form>
+    </body>
+
+</html>

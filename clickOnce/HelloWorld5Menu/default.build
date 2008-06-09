@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<project name="WpfButton" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+        <csc    target="library"
+                debug="true"
+                output="build\clientbin\Demo.dll"
+                warnaserror="true"
+                >
+
+            <references>
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationCore.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />
+            </references>
+
+            <sources>
+                <include name="Demo/*/*.cs" />
+            </sources>
+
+            <resources dynamicprefix="true">
+                <include name="Demo/*/*.xaml" />
+            </resources>
+
+        </csc>
+
+        <csc    target="winexe"
+                debug="true"
+                output="build\App.exe"
+                warnaserror="true"
+                >
+
+            <references>
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationCore.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />
+                <include name="build\clientbin\Button.dll" />
+            </references>
+
+            <sources>
+                <include name="Demo/App.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+        <copy file="Demo\App.exe.config" todir="build" />
+
+    </target>
+
+</project>
