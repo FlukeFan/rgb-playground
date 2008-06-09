@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project name="Sl2" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+        <csc    target="library"
+                debug="true"
+                output="build\Test.dll"
+                warnaserror="true"
+                >
+
+            <references>
+                <include name="SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll" />
+                <include name="build\Rhino.Mocks.dll" />
+            </references>
+
+            <sources>
+                <include name="*.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+        <nunit2>
+            <formatter type="Plain" />
+            <test>
+                <assemblies>
+                    <include name="build\Test.dll" />
+                </assemblies>
+            </test>
+        </nunit2>
+
+    </target>
+
+</project>

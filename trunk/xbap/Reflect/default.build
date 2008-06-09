@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="Sl2" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+        <csc    target="winexe"
+                debug="true"
+                output="App.exe"
+                warnaserror="true"
+                >
+
+            <references>
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
+                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />
+                <include name="Atlanta.Application.Domain.dll" />
+            </references>
+
+            <sources>
+                <include name="*.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+        <delete file="App.exe.manifest" />
+        <delete file="App.xbap" />
+        <delete file="t\App.exe" />
+
+        <copy file="App.exe" todir="t" />
+        <copy file="NHibernate.dll" todir="t" />
+        <copy file="Atlanta.Application.Domain.dll" todir="t" />
+        <copy file="App.exe.manifest.template" tofile="App.exe.manifest" />
+
+        <exec program="mage.exe" commandline="-cc" />
+
+        <exec program="mage.exe" commandline="-Update App.exe.manifest -FromDirectory t -Name App -TrustLevel Internet -Version 1.0.0.0 -Processor msil" />
+        <exec program="mage.exe" commandline="-Sign App.exe.manifest -CertFile Atlanta.pfx -Password Atlanta" />
+
+        <exec program="mage.exe" commandline="-New Deployment -ToFile App.xbap -Name App -Install false -AppManifest App.exe.manifest" />
+        <exec program="mage.exe" commandline="-Sign App.xbap -CertFile Atlanta.pfx -Password Atlanta" />
+
+    </target>
+
+</project>

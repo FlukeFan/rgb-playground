@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project name="SLTest">
+
+    <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+    <!-- global project settings -->
+    <property name="nant.settings.currentframework"     value="net-2.0" />
+
+    <property name="project.version" value="0.0.0.1" overwrite="false" />
+
+    <csc    target="library"
+            debug="true"
+            optimize="false"
+            output="ClientServiceApp.dll"
+            warnaserror="true">
+
+        <references>
+            <!--<include name="ClientBin/Atlanta.Application.Domain.dll" />-->
+            <include name="C:\Program Files\Microsoft Silverlight\2.0.30226.2\System.Windows.dll" />
+<!--                <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationCore.dll" />
+            <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\PresentationFramework.dll" />
+            <include name="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsBase.dll" />-->
+        </references>
+
+        <sources>
+            <include name="*.cs" />
+        </sources>
+
+    </csc>
+
+</project>
