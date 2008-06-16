@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Sl2" default="build">
+<project name="Sl2" default="build" xsi:schemaLocation="http://nant.sf.net/release/0.85/nant.xsd ..\..\SDKs\nant-0.85\schema\nant.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <target name="build">
 
