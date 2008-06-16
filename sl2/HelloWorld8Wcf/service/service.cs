@@ -37,7 +37,7 @@ namespace Demo.Services
     }
 
     [Serializable]
-    public class CustomException : ApplicationException
+    public class CustomException // : ApplicationException
     {
         private Composite1 _c1;
 
@@ -59,6 +59,7 @@ namespace Demo.Services
         Composite1 GetC1();
 
         [OperationContract()]
+        [FaultContract(typeof(CustomException))]
         void Throw();
     }
 
@@ -77,7 +78,7 @@ namespace Demo.Services
         {
             Composite1 c = new Composite1();
             c.Value = "a test exception value";
-            throw new CustomException(c);
+            throw new FaultException<CustomException>(new CustomException(c));
         }
     }
 
