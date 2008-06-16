@@ -2,9 +2,8 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             EntryPointAssembly="Sl2"
             EntryPointType="Sl2.App"
-            RuntimeVersion="2.0.30226.2">
+            RuntimeVersion="2.0.30523.6">
     <Deployment.Parts>
         <AssemblyPart   x:Name="Sl2"                        Source="Sl2.dll" />
-        <AssemblyPart   x:Name="System.Windows.Controls"    Source="System.Windows.Controls.dll" />
     </Deployment.Parts>
 </Deployment>
