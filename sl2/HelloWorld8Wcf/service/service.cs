@@ -1,9 +1,11 @@
 
 using System;
+using System.ServiceModel;
 
 namespace Demo.Services
 {
 
+    [Serializable]
     public class Composite1
     {
         private string _value;
@@ -22,6 +24,7 @@ namespace Demo.Services
         }
     }
 
+    [Serializable]
     public class Composite2
     {
         private int _value;
@@ -33,6 +36,7 @@ namespace Demo.Services
         }
     }
 
+    [Serializable]
     public class CustomException : ApplicationException
     {
         private Composite1 _c1;
@@ -48,10 +52,13 @@ namespace Demo.Services
         }
     }
 
+    [ServiceContract()]
     interface ITestService
     {
+        [OperationContract()]
         Composite1 GetC1();
 
+        [OperationContract()]
         void Throw();
     }
 

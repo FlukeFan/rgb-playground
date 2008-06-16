@@ -20,6 +20,7 @@
              warnaserror="true">
 
             <references>
+                <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
             </references>
 
             <sources>
@@ -31,7 +32,10 @@
 
         </csc>
 
-<!--        <csc    target="library"
+        <copy file="service\web.config"         tofile="build\web.config" />
+        <copy file="service\TestService.svc"    tofile="build\TestService.svc" />
+
+        <!--        <csc    target="library"
                 debug="true"
                 output="Sl2.dll"
                 warnaserror="true"
