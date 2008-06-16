@@ -29,9 +29,9 @@ namespace Demo
                 _service.Throw();
                 Assert.Fail("no exception thrown");
             }
-            catch (FaultException fe)
+            catch (FaultException<CustomException> fe)
             {
-                Console.WriteLine(fe.ToString());
+                Assert.AreEqual("a test exception value", fe.Detail.C1.Value);
             }
         }
 
