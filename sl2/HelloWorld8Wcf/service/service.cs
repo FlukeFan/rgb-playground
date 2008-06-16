@@ -53,7 +53,7 @@ namespace Demo.Services
     }
 
     [ServiceContract()]
-    interface ITestService
+    public interface ITestService
     {
         [OperationContract()]
         Composite1 GetC1();
