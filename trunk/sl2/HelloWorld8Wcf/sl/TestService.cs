@@ -8,6 +8,38 @@ using System.Threading;
 
 using Demo.Domain;
 
+namespace Demo.Domain
+{
+    public class Composite1
+    {
+        private string _value;
+        private Composite2 _c2;
+
+        public string Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+        public Composite2 C2
+        {
+            get { return _c2; }
+            set { _c2 = value; }
+        }
+    }
+
+    public class Composite2
+    {
+        private int _value;
+
+        public int Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+    }
+}
+
 namespace Sl2
 {
 
@@ -53,7 +85,7 @@ namespace Sl2
 
         private static Binding defaultBinding = new System.ServiceModel.BasicHttpBinding();
 
-        private static EndpointAddress defaultAddress = new System.ServiceModel.EndpointAddress("http://localhost/TestService.svc");
+        private static EndpointAddress defaultAddress = new System.ServiceModel.EndpointAddress("http://localhost/samples/TestService.svc");
 
         public ServiceClient()
             :
@@ -81,12 +113,12 @@ namespace Sl2
 
         private IAsyncResult OnBeginGetC1(object[] inValues, System.AsyncCallback callback, object asyncState)
         {
-            return BeginGetC1(callback, asyncState);
+            return ((ITestService)(this)).BeginGetC1(callback, asyncState);
         }
 
         private object[] OnEndGetC1(System.IAsyncResult result)
         {
-            Composite1 retVal = EndGetC1(result);
+            Composite1 retVal = ((ITestService)(this)).EndGetC1(result);
             return new object[] {
                     retVal};
         }
