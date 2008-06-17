@@ -84,9 +84,9 @@
         <setenv name="PATH" value="..\..\SDKs\SL;%PATH%"/>
         <mkdir dir="build\client" />
 
-        <copy file="Page.xaml"          todir="build\client" />
-        <copy file="AppManifest.xaml"   todir="build\client" />
-        <copy file="default.html"       todir="build" />
+        <copy file="sl\Page.xaml"           todir="build\client" />
+        <copy file="sl\AppManifest.xaml"    todir="build\client" />
+        <copy file="sl\default.html"        todir="build" />
 
         <csc    target="library"
                 debug="true"
@@ -103,8 +103,7 @@
             </references>
 
             <sources>
-                <include name="App.xaml.cs" />
-                <include name="Page.xaml.cs" />
+                <include name="sl\*.cs" />
             </sources>
 
             <resources>
