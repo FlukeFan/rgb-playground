@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
@@ -10,11 +11,13 @@ using Demo.Domain;
 
 namespace Demo.Domain
 {
+    [DataContract(Name = "Composite1", Namespace = "http://schemas.datacontract.org/2004/07/Demo.Domain")]
     public class Composite1
     {
         private string _value;
         private Composite2 _c2;
 
+        [DataMember(Name="_value")]
         public string Value
         {
             get { return _value; }
