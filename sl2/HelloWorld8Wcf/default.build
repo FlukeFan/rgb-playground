@@ -60,7 +60,7 @@
         <copy file="DosClient\DosClient.exe.config" tofile="build\bin\DosClient.exe.config" />
 
         <exec program="build\bin\DosClient.exe" />
-        
+
         <!--        <csc    target="library"
                 debug="true"
                 output="Sl2.dll"
