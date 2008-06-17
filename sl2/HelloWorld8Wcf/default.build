@@ -81,9 +81,16 @@
 
         <exec program="build\bin\DosClient.exe" />
 
-        <!--        <csc    target="library"
+        <setenv name="PATH" value="..\..\SDKs\SL;%PATH%"/>
+        <mkdir dir="build\client" />
+
+        <copy file="Page.xaml"          todir="build\client" />
+        <copy file="AppManifest.xaml"   todir="build\client" />
+        <copy file="default.html"       todir="build" />
+
+        <csc    target="library"
                 debug="true"
-                output="Sl2.dll"
+                output="build\client\Sl2.dll"
                 warnaserror="true"
                 nostdlib="true"
                 noconfig="true">
@@ -96,7 +103,8 @@
             </references>
 
             <sources>
-                <include name="*.cs" />
+                <include name="App.xaml.cs" />
+                <include name="Page.xaml.cs" />
             </sources>
 
             <resources>
@@ -104,8 +112,8 @@
 
         </csc>
 
-        <delete file="Sl2.xap" />
-        <exec program="chiron" commandline="/xap:Sl2.xap" />-->
+        <delete file="build\Sl2.xap" />
+        <exec program="chiron" commandline="/directory:build\client /xap:build\Sl2.xap" />
 
     </target>
 

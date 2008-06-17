@@ -19,6 +19,8 @@
     <Compile Include="**\*.cs" />
     <Compile Include="**\*.svc" />
     <Compile Include="**\*.js" />
+    <Compile Include="**\*.xaml" />
+    <Compile Include="**\*.html" />
     <Compile Include="**\*.aspx" />
     <Compile Include="**\*.asax" />
     <Compile Include="**\*.master" />
