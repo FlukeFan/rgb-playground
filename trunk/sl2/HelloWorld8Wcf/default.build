@@ -16,7 +16,7 @@
 
         <csc target="library"
              debug="true"
-             output="build\bin\Service.dll"
+             output="build\bin\Domain.dll"
              warnaserror="true">
 
             <references>
@@ -24,7 +24,26 @@
             </references>
 
             <sources>
-                <include name="service\*.cs" />
+                <include name="service\domain.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </csc>
+
+        <csc target="library"
+             debug="true"
+             output="build\bin\Service.dll"
+             warnaserror="true">
+
+            <references>
+                <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
+                <include name="build\bin\Domain.dll" />
+            </references>
+
+            <sources>
+                <include name="service\service.cs" />
             </sources>
 
             <resources>
@@ -45,6 +64,7 @@
             <references>
                 <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
                 <include name="build\bin\nunit.framework.dll" />
+                <include name="build\bin\Domain.dll" />
                 <include name="build\bin\Service.dll" />
             </references>
 

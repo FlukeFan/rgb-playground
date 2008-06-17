@@ -5,6 +5,7 @@ using System.ServiceModel;
 
 using NUnit.Framework;
 
+using Demo.Domain;
 using Demo.Services;
 
 namespace Demo
