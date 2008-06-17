@@ -104,7 +104,7 @@
             </references>
 
             <sources>
-                <include name="service\domain.cs" />
+                <!--<include name="service\domain.cs" />-->
                 <include name="sl\*.cs" />
             </sources>
 
