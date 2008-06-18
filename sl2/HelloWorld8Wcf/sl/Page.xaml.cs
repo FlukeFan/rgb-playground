@@ -34,7 +34,7 @@ namespace Sl2
             TextBlock tb = (TextBlock)FindName("textResponse");
             if (e.Error != null)
             {
-                tb.Text = e.Error.Message;
+                tb.Text = e.Error.ToString();
                 throw e.Error;
             }
             else
