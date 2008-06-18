@@ -1,15 +1,16 @@
 
 using System;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Demo.Domain
 {
 
-    [Serializable]
+    [DataContract]
     public class Composite1
     {
-        private string _value;
-        private Composite2 _c2;
+        [DataMember] private string _value;
+        [DataMember] private Composite2 _c2;
 
         public string Value
         {
@@ -24,10 +25,10 @@ namespace Demo.Domain
         }
     }
 
-    [Serializable]
+    [DataContract]
     public class Composite2
     {
-        private int _value;
+        [DataMember] private int _value;
 
         public int Value
         {
@@ -36,10 +37,10 @@ namespace Demo.Domain
         }
     }
 
-    [Serializable]
+    [DataContract]
     public class CustomException // : ApplicationException
     {
-        private Composite1 _c1;
+        [DataMember] private Composite1 _c1;
 
         public CustomException(Composite1 c1)
         {

@@ -39,6 +39,7 @@ namespace Sl2
             }
             else
             {
+                HtmlPage.Window.Alert(e.Result.ToString());
                 tb.Text = e.Result.Value;
             }
         }
