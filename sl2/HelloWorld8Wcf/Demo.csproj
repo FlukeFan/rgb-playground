@@ -43,6 +43,7 @@
     <Reference Include="System.Runtime.Serialization" >
       <HintPath>..\..\SDKs\Wcf\System.Runtime.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="..\..\SDKs\ExecParse.dll" TaskName="ExecParse.ExecParse" />

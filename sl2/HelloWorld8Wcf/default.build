@@ -20,6 +20,7 @@
              warnaserror="true">
 
             <references>
+                <include name="..\..\SDKs\Wcf\System.Runtime.Serialization.dll" />
                 <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
             </references>
 
@@ -27,8 +28,8 @@
           </resources>
 
           <sources>
-                <include name="service\domain.cs" />
-            </sources>
+              <include name="service\domain.cs" />
+          </sources>
 
         </csc>
 
@@ -102,6 +103,7 @@
                 <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.ServiceModel.dll" />
                 <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Windows.dll" />
                 <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Windows.Browser.dll" />
+                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Xml.dll" />
             </references>
 
           <resources>

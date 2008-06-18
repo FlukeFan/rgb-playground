@@ -9,25 +9,25 @@ using System.Threading;
 
 using Demo.Domain;
 
+
 namespace Demo.Domain
 {
-    [DataContract(Name = "Composite1", Namespace = "http://schemas.datacontract.org/2004/07/Demo.Domain")]
+    //[DataContract(Name = "Composite1Unused", Namespace = "http://schemas.datacontract.org/2004/07/Demo.Unused")]
     public class Composite1
     {
         private string _value;
         private Composite2 _c2;
 
-        [DataMember(Name="_value")]
         public string Value
         {
             get { return _value; }
-            set { _value = value; }
+            protected set { _value = value; }
         }
 
         public Composite2 C2
         {
             get { return _c2; }
-            set { _c2 = value; }
+            protected set { _c2 = value; }
         }
     }
 
@@ -41,7 +41,38 @@ namespace Demo.Domain
             set { _value = value; }
         }
     }
+
+    [DataContract(Name = "Composite1", Namespace = "http://schemas.datacontract.org/2004/07/Demo.Domain")]
+    public class Composite1S : Composite1
+    {
+
+        [DataMember(Name="_value")]
+        public string ValueS
+        {
+            get { return Value; }
+            set { Value = value; }
+        }
+
+        [DataMember(Name="_c2")]
+        public Composite2 C2S
+        {
+            get { return C2; }
+            set { C2 = value; }
+        }
+    }
+
+    public class Composite2S : Composite2
+    {
+
+        public int ValueS
+        {
+            get { return Value; }
+            set { Value = value; }
+        }
+    }
+
 }
+
 
 namespace Sl2
 {
