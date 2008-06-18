@@ -3,10 +3,11 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 x:Class="Sl2.Page"
                 x:Name="MyPage"
-                Width="600"
-                Height="300">
-    <StackPanel x:Name="LayoutRoot" Background="White">
-        <Button Content="ClickMe" Width="200" x:Name="btnSend" Click="btnSend_Click" />
-        <TextBlock x:Name="textResponse" Text="Hello world ..." />
+                >
+    <StackPanel>
+        <Button Content="ClickMe" x:Name="btnSend" Click="btnSend_Click" Width="100"/>
+        <ScrollViewer>
+            <TextBlock x:Name="textResponse" Text="Hello world ..." TextWrapping="Wrap"/>
+        </ScrollViewer>
     </StackPanel>
 </UserControl>
