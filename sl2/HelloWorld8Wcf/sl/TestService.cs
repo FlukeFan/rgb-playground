@@ -12,62 +12,39 @@ using Demo.Domain;
 
 namespace Demo.Domain
 {
-    //[DataContract(Name = "Composite1Unused", Namespace = "http://schemas.datacontract.org/2004/07/Demo.Unused")]
+
+    [DataContract]
     public class Composite1
     {
+
         private string _value;
         private Composite2 _c2;
 
+        [DataMember(Name="_value")]
         public string Value
-        {
-            get { return _value; }
-            protected set { _value = value; }
-        }
-
-        public Composite2 C2
-        {
-            get { return _c2; }
-            protected set { _c2 = value; }
-        }
-    }
-
-    public class Composite2
-    {
-        private int _value;
-
-        public int Value
         {
             get { return _value; }
             set { _value = value; }
         }
-    }
 
-    [DataContract(Name = "Composite1", Namespace = "http://schemas.datacontract.org/2004/07/Demo.Domain")]
-    public class Composite1S : Composite1
-    {
-
-        [DataMember(Name="_value")]
-        public string ValueS
+        [DataMember(Name = "_c2")]
+        public Composite2 C2
         {
-            get { return Value; }
-            set { Value = value; }
-        }
-
-        [DataMember(Name="_c2")]
-        public Composite2 C2S
-        {
-            get { return C2; }
-            set { C2 = value; }
+            get { return _c2; }
+            set { _c2 = value; }
         }
     }
 
-    public class Composite2S : Composite2
+    [DataContract]
+    public class Composite2
     {
+        private int _value;
 
-        public int ValueS
+        [DataMember(Name = "_value")]
+        public int Value
         {
-            get { return Value; }
-            set { Value = value; }
+            get { return _value; }
+            set { _value = value; }
         }
     }
 
