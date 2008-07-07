@@ -6,6 +6,8 @@
 
     <head>
         <title>demo</title>
+        <meta http-equiv="Page-Enter" content="progid:DXImageTransform.Microsoft.RandomDissolve(duration=0)" />
+        <meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.RandomDissolve(duration=0)" />
     </head>
 
     <body>
