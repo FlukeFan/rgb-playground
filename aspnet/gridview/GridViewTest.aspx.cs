@@ -35,6 +35,7 @@ namespace Samples
             _gridView = gridView;
             _gridView.EnableViewState = true;
             _gridView.RowCreated += new GridViewRowEventHandler(_gridView_RowCreated);
+            _gridView.PageIndexChanging += new GridViewPageEventHandler(_gridView_PageIndexChanging);
             _gridView.DataKeyNames = new string[] { "Id", "Prop" };
             _gridView.EnableViewState = true;
 
@@ -42,7 +43,6 @@ namespace Samples
             {
                 _gridView.AllowPaging = true;
                 _gridView.PageSize = 10;
-                _gridView.PageIndex = 2;
                 _gridView.AutoGenerateColumns = false;
 
                 {
@@ -69,6 +69,12 @@ namespace Samples
             dataSource.EnableViewState = true;
 
             _gridView.DataSource = dataSource;
+        }
+
+        void _gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            _gridView.PageIndex = e.NewPageIndex;
+            _gridView.DataBind();
         }
 
         void _gridView_RowCreated(object sender, GridViewRowEventArgs e)
