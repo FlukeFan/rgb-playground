@@ -107,7 +107,7 @@ namespace Samples
             return 50;
         }
 
-        public ICollection RetrievePage(int maximumRows,
+        public DataTable RetrievePage(  int maximumRows,
                                         int startRowIndex)
         {
             List<Test> list = new List<Test>();
@@ -132,7 +132,7 @@ namespace Samples
                 dr[1] = t.Prop;
                 dt.Rows.Add(dr);
             }
-            return new DataView(dt);
+            return dt;
         }
 
     }
