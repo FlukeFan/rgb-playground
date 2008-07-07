@@ -20,7 +20,9 @@
   <ItemGroup>
     <None Include="**\*.build" />
     <None Include="**\*.taskdef" />
-    <Compile Include="**\*.cs" />
+    <Compile Include="**\*.cs" >
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="**\*.svc" />
     <Compile Include="**\*.js" />
     <Compile Include="**\*.xaml" />
