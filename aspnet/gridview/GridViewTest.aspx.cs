@@ -36,7 +36,6 @@ namespace Samples
             _gridView.EnableViewState = true;
             _gridView.RowCreated += new GridViewRowEventHandler(_gridView_RowCreated);
             _gridView.PageIndexChanging += new GridViewPageEventHandler(_gridView_PageIndexChanging);
-            _gridView.DataKeyNames = new string[] { "Id", "Prop" };
             _gridView.EnableViewState = true;
 
             if (!_gridView.Page.IsPostBack)
@@ -66,7 +65,7 @@ namespace Samples
             dataSource.ObjectCreating += new ObjectDataSourceObjectEventHandler(dataSource_ObjectCreating);
             dataSource.SelectCountMethod = "RetrieveCount";
             dataSource.EnablePaging = true;
-            dataSource.EnableViewState = true;
+            //dataSource.EnableViewState = true;
 
             _gridView.DataSource = dataSource;
         }
@@ -125,6 +124,7 @@ namespace Samples
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Id", typeof(int)));
             dt.Columns.Add(new DataColumn("Prop", typeof(string)));
+            _gridView.DataKeyNames = new string[] { "Id", "Prop" };
             foreach (Test t in list)
             {
                 DataRow dr = dt.NewRow();
