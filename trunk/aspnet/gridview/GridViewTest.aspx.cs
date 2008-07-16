@@ -37,6 +37,7 @@ namespace Samples
             _gridView.RowCreated += new GridViewRowEventHandler(_gridView_RowCreated);
             _gridView.PageIndexChanging += new GridViewPageEventHandler(_gridView_PageIndexChanging);
             _gridView.EnableViewState = true;
+            _gridView.RowCommand += new GridViewCommandEventHandler(_gridView_RowCommand);
 
             if (!_gridView.Page.IsPostBack)
             {
@@ -59,6 +60,13 @@ namespace Samples
                     tf.HeaderText = "Name Header";
                     _gridView.Columns.Add(tf);
                 }
+                {
+                    ButtonField bf = new ButtonField();
+                    bf.Text = "my command";
+                    bf.CommandName = "MyCustomCommand";
+                    bf.ButtonType = ButtonType.Link;
+                    _gridView.Columns.Add(bf);
+                }
             }
 
             ObjectDataSource dataSource = new ObjectDataSource(this.GetType().FullName, "RetrievePage");
@@ -68,6 +76,11 @@ namespace Samples
             //dataSource.EnableViewState = true;
 
             _gridView.DataSource = dataSource;
+        }
+
+        void _gridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            throw new Exception("command - " + e.CommandSource.ToString());
         }
 
         void _gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
