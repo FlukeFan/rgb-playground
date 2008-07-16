@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="NAntBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <OutputPath>build</OutputPath>
@@ -9,18 +8,16 @@
     <StartAction>URL</StartAction>
     <StartURL>http://localhost/samples</StartURL>
   </PropertyGroup>
-
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
     <ProjectGuid>{2543EE5E-0E8B-4D18-BD16-ACBD1BF3EC3E}</ProjectGuid>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="**\*.build" />
     <None Include="**\*.taskdef" />
-    <Compile Include="**\*.cs" >
+    <Compile Include="**\*.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="**\*.svc" />
@@ -32,11 +29,12 @@
     <Compile Include="**\*.css" />
     <Compile Include="**\*.ddl" />
     <Compile Include="**\*.dml" />
-    <Compile Include="**\*.aspx" />
+    <Compile Include="**\*.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="nunit.framework">
       <HintPath>..\..\SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll</HintPath>
@@ -55,12 +53,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="..\..\SDKs\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>
-
       <!-- catches csc errors -->
       <Error>
         <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
@@ -70,7 +66,6 @@
         <Subcategory>$4</Subcategory>
         <Message>$5</Message>
       </Error>
-
       <!-- catches NUnit failures -->
       <Error>
         <Search>\[nunit2\] \d+\) [\s\S]*?(?=[^\n\r]*?\[nunit2\] ( *[\n\r]|\d|\*))</Search>
@@ -79,7 +74,6 @@
         <File>$3</File>
         <LineNumber>$4</LineNumber>
       </Error>
-
       <!-- catches Build failures -->
       <Error>
         <Search>[\s\n\r](\S.*?\.build)\((\d+),(\d+)\):.*?[\n\r]\s*(.*?)[\n\r]</Search>
@@ -88,7 +82,6 @@
         <LineNumber>$2</LineNumber>
         <ColumnNumber>$3</ColumnNumber>
       </Error>
-
       <!-- catches coverage failures -->
       <Error>
         <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
@@ -96,22 +89,18 @@
       </Error>
     </ExecParseConfiguration>
   </PropertyGroup>
-
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
     <ExecParse Command="..\..\SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
-
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
     <ExecParse Command="..\..\SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
-
   <Target Name="Rebuild">
     <CallTarget Targets="Clean" />
     <CallTarget Targets="NAntBuild" />
   </Target>
-
 </Project>
