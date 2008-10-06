@@ -1,17 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="NAntBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <OutputPath>build</OutputPath>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <ErrorReport>prompt</ErrorReport>
-    <StartAction>URL</StartAction>
-    <StartURL>http://localhost/samples</StartURL>
-  </PropertyGroup>
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <StartupObject>
-    </StartupObject>
+    <Configuration>Debug</Configuration>
+    <Platform>AnyCPU</Platform>
+    <ProjectGuid>{263BDCE5-2110-422E-AACA-7CD47D0C91A5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <OutputPath>build\debug\</OutputPath>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cf.PassiveView</RootNamespace>
+    <AssemblyName>Cf.PassiveView</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>PocketPC</PlatformFamilyName>
+    <PlatformID>b2c48bd2-963d-4549-9169-1fa021dce484</PlatformID>
+    <OSVersion>5.02</OSVersion>
+    <DeployDirSuffix>CfPassiveView</DeployDirSuffix>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <FormFactorID>
+    </FormFactorID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
@@ -31,25 +44,36 @@
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll</HintPath>
+    <Reference Include="mscorlib">
+      <HintPath>SDKs\Ce\bin\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks" >
-      <HintPath>..\..\SDKs\Rhino.Mocks.dll</HintPath>
+    <Reference Include="System">
+      <HintPath>SDKs\Ce\bin\System.dll</HintPath>
     </Reference>
-    <Reference Include="System.ServiceModel" >
-      <HintPath>..\..\SDKs\Wcf\System.ServiceModel.dll</HintPath>
+    <Reference Include="System.Data">
+      <HintPath>SDKs\Ce\bin\System.Data.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.Serialization" >
-      <HintPath>..\..\SDKs\Wcf\System.Runtime.Serialization.dll</HintPath>
+    <Reference Include="System.Drawing">
+      <HintPath>SDKs\Ce\bin\System.Drawing.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Forms">
+      <HintPath>SDKs\Ce\bin\System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>SDKs\Ce\bin\System.Xml.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
   <UsingTask AssemblyFile="..\..\SDKs\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>
-
       <!-- catches csc errors -->
       <Error>
         <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
@@ -59,7 +83,6 @@
         <Subcategory>$4</Subcategory>
         <Message>$5</Message>
       </Error>
-
       <!-- catches NUnit failures -->
       <Error>
         <Search>\[nunit2\] \d+\) [\s\S]*?(?=[^\n\r]*?\[nunit2\] ( *[\n\r]|\d|\*))</Search>
@@ -68,7 +91,6 @@
         <File>$3</File>
         <LineNumber>$4</LineNumber>
       </Error>
-
       <!-- catches Build failures -->
       <Error>
         <Search>[\s\n\r](\S.*?\.build)\((\d+),(\d+)\):.*?[\n\r]\s*(.*?)[\n\r]</Search>
@@ -77,13 +99,11 @@
         <LineNumber>$2</LineNumber>
         <ColumnNumber>$3</ColumnNumber>
       </Error>
-
       <!-- catches coverage failures -->
       <Error>
         <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
         <Message>$1: $2</Message>
       </Error>
-
     </ExecParseConfiguration>
   </PropertyGroup>
   <Target Name="NAntBuild">
