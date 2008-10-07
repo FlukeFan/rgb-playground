@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Cf.PassiveView
+namespace Cf.PassiveView.Source
 {
 
     public static class Program
@@ -11,7 +11,8 @@ namespace Cf.PassiveView
         [MTAThread]
         public static void Main()
         {
-            MessageBox.Show("Hello world");
+            MainView view = new MainView();
+            Application.Run(view);
         }
 
     }

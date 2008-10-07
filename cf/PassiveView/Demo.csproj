@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="NAntBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project DefaultTargets="NAntBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration>Debug</Configuration>
     <Platform>AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{263BDCE5-2110-422E-AACA-7CD47D0C91A5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <OutputPath>build\debug\</OutputPath>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cf.PassiveView</RootNamespace>
     <AssemblyName>Cf.PassiveView</AssemblyName>
@@ -15,21 +15,27 @@
     <OSVersion>5.02</OSVersion>
     <DeployDirSuffix>CfPassiveView</DeployDirSuffix>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FormFactorID>
+    </FormFactorID>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>build\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <FileAlignment>512</FileAlignment>
-    <FormFactorID>
-    </FormFactorID>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
     <None Include="**\*.taskdef" />
-    <Compile Include="**\*.cs" />
     <Compile Include="**\*.svc" />
     <Compile Include="**\*.js" />
     <Compile Include="**\*.xaml" />
@@ -40,28 +46,24 @@
     <Compile Include="**\*.css" />
     <Compile Include="**\*.ddl" />
     <Compile Include="**\*.dml" />
+    <Compile Include="Source\MainView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\MainView.Designer.cs">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Program.cs" />
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>SDKs\Ce\bin\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>SDKs\Ce\bin\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data">
-      <HintPath>SDKs\Ce\bin\System.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>SDKs\Ce\bin\System.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>SDKs\Ce\bin\System.Windows.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>SDKs\Ce\bin\System.Xml.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.WindowsCE.Forms" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

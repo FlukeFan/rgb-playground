@@ -15,6 +15,7 @@
       <references>
         <include name="SDKs\Ce\bin\mscorlib.dll" />
         <include name="SDKs\Ce\bin\System.dll" />
+        <include name="SDKs\Ce\bin\System.Drawing.dll" />
         <include name="SDKs\Ce\bin\System.Windows.Forms.dll" />
       </references>
 
