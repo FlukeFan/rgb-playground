@@ -20,14 +20,43 @@
       </references>
 
       <resources>
-        
+
       </resources>
 
       <sources>
-        <include name="Source\**\*.cs" />
+        <include name="Source\*.cs" />
       </sources>
 
     </csc>
+
+    <csc target="library"
+         debug="true"
+         output="build\debug\Cf.PassiveView.Test.dll"
+         warnaserror="true">
+
+      <references>
+        <include name="SDKs\nant\bin\lib\net\2.0\nunit.framework.dll" />
+      </references>
+
+      <resources>
+
+      </resources>
+
+      <sources>
+        <include name="Source\Test\*.cs" />
+      </sources>
+
+    </csc>
+
+
+    <nunit2>
+      <formatter  type="Plain" />
+      <test>
+        <assemblies>
+          <include name="build\debug\Cf.PassiveView.Test.dll"/>
+        </assemblies>
+      </test>
+    </nunit2>
 
   </target>
 
