@@ -53,6 +53,7 @@
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Program.cs" />
+    <Compile Include="Source\Test\TestMainController.cs" />
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
   </ItemGroup>
@@ -64,6 +65,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="nunit.framework">
+      <HintPath>SDKs\nant\bin\lib\net\2.0\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
