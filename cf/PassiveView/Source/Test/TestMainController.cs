@@ -59,7 +59,12 @@ namespace Cf.PassiveView.Source.Test
         public void Test_WhenHideMessageIsClicked_AndUserConfirms_Then_MessageIsHidden()
         {
             MockRepository mocks = new MockRepository();
+            DialogHandler dialogHandler = mocks.StrictMock<DialogHandler>();
             MainView view = new TestableView();
+
+            //Expect
+            //    .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+            //    .Return(DialogResult.Yes);
 
             mocks.ReplayAll();
             Click(view.ShowMessage);
