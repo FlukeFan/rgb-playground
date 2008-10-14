@@ -46,6 +46,8 @@
     <Compile Include="**\*.css" />
     <Compile Include="**\*.ddl" />
     <Compile Include="**\*.dml" />
+    <Compile Include="Source\MainController.cs">
+    </Compile>
     <Compile Include="Source\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +55,9 @@
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Program.cs" />
+    <Compile Include="Source\Test\TestableView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Test\TestMainController.cs" />
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
@@ -68,6 +73,12 @@
     <Reference Include="nunit.framework">
       <HintPath>SDKs\nant\bin\lib\net\2.0\nunit.framework.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Source\MainView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

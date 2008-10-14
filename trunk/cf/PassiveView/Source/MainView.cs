@@ -9,9 +9,22 @@ namespace Cf.PassiveView.Source
 {
     public partial class MainView : Form
     {
+
         public MainView()
         {
             InitializeComponent();
+            new MainController(this);
         }
+
+        public virtual void SetVisible(Control control, bool isVisible)
+        {
+            control.Visible = isVisible;
+        }
+
+        public virtual bool IsVisible(Control control)
+        {
+            return control.Visible;
+        }
+
     }
 }
