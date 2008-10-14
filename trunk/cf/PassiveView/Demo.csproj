@@ -73,6 +73,9 @@
     <Reference Include="nunit.framework">
       <HintPath>SDKs\nant\bin\lib\net\2.0\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>SDKs\RhinoMocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Source\MainView.resx">

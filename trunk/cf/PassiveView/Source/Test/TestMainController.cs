@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 using NUnit.Framework;
 
+using Rhino.Mocks;
+using Rhino.Mocks.Interfaces;
+
 namespace Cf.PassiveView.Source.Test
 {
 
@@ -53,12 +56,15 @@ namespace Cf.PassiveView.Source.Test
         }
 
         [Test]
-        public void Test_WhenHideMessageIsClicked_Then_MessageIsHidden()
+        public void Test_WhenHideMessageIsClicked_AndUserConfirms_Then_MessageIsHidden()
         {
+            MockRepository mocks = new MockRepository();
             MainView view = new TestableView();
 
+            mocks.ReplayAll();
             Click(view.ShowMessage);
             Click(view.HideMessage);
+            mocks.VerifyAll();
 
             Assert.AreEqual(true, view.ShowMessage.Enabled);
             Assert.AreEqual(false, view.IsVisible(view.Message));
