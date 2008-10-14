@@ -27,6 +27,20 @@ namespace Cf.PassiveView.Source
             ShowMessageControls(false);
 
             _view.ShowMessage.Click += new EventHandler(ShowMessage_Click);
+            _view.HideMessage.Click += new EventHandler(HideMessage_Click);
+        }
+
+        private void HideMessage_Click(object sender, EventArgs e)
+        {
+            ShowMessageControls(false);
+            _view.ShowMessage.Enabled = true;
+        }
+
+        private void ShowMessage_Click(object sender, EventArgs e)
+        {
+            ShowMessageControls(true);
+            PopulateColourSelection();
+            _view.ShowMessage.Enabled = false;
         }
 
         private void ShowMessageControls(bool visible)
@@ -35,13 +49,6 @@ namespace Cf.PassiveView.Source
             _view.SetVisible(_view.SelectColourMessage, visible);
             _view.SetVisible(_view.ColourSelection, visible);
             _view.SetVisible(_view.HideMessage, visible);
-        }
-
-        private void ShowMessage_Click(object sender, EventArgs e)
-        {
-            ShowMessageControls(true);
-            PopulateColourSelection();
-            _view.ShowMessage.Enabled = false;
         }
 
         private void PopulateColourSelection()

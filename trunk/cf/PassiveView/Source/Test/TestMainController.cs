@@ -51,6 +51,21 @@ namespace Cf.PassiveView.Source.Test
             Assert.AreEqual(0, view.ColourSelection.SelectedIndex);
         }
 
+        [Test]
+        public void Test_WhenHideMessageIsClicked_Then_MessageIsHidden()
+        {
+            MainView view = new TestableView();
+
+            Click(view.ShowMessage);
+            Click(view.HideMessage);
+
+            Assert.AreEqual(true, view.ShowMessage.Enabled);
+            Assert.AreEqual(false, view.IsVisible(view.Message));
+            Assert.AreEqual(false, view.IsVisible(view.SelectColourMessage));
+            Assert.AreEqual(false, view.IsVisible(view.ColourSelection));
+            Assert.AreEqual(false, view.IsVisible(view.HideMessage));
+        }
+
     }
 
 }
