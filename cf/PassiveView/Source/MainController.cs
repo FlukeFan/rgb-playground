@@ -28,6 +28,12 @@ namespace Cf.PassiveView.Source
 
             _view.ShowMessage.Click += new EventHandler(ShowMessage_Click);
             _view.HideMessage.Click += new EventHandler(HideMessage_Click);
+            _view.ColourSelection.SelectedIndexChanged += new EventHandler(ColourSelection_SelectedIndexChanged);
+        }
+
+        private void ColourSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeMessageColour((SelectedColour)_view.ColourSelection.SelectedIndex);
         }
 
         private void HideMessage_Click(object sender, EventArgs e)
@@ -60,6 +66,13 @@ namespace Cf.PassiveView.Source
             _view.ColourSelection.Items.Add(((SelectedColour)2).ToString());
 
             _view.ColourSelection.SelectedIndex = 0;
+        }
+
+        private void ChangeMessageColour(SelectedColour selectedColour)
+        {
+            if (selectedColour == SelectedColour.Black) _view.Message.ForeColor = Color.Black;
+            if (selectedColour == SelectedColour.Green) _view.Message.ForeColor = Color.Green;
+            if (selectedColour == SelectedColour.Red)   _view.Message.ForeColor = Color.Red;
         }
 
     }

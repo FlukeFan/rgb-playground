@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -64,6 +65,23 @@ namespace Cf.PassiveView.Source.Test
             Assert.AreEqual(false, view.IsVisible(view.SelectColourMessage));
             Assert.AreEqual(false, view.IsVisible(view.ColourSelection));
             Assert.AreEqual(false, view.IsVisible(view.HideMessage));
+        }
+
+        [Test]
+        public void Test_WhenColourIsSelected_Then_MessageColourChanges()
+        {
+            MainView view = new TestableView();
+
+            Click(view.ShowMessage);
+
+            view.ColourSelection.SelectedIndex = (int)SelectedColour.Green;
+            Assert.AreEqual(Color.Green, view.Message.ForeColor);
+
+            view.ColourSelection.SelectedIndex = (int)SelectedColour.Red;
+            Assert.AreEqual(Color.Red, view.Message.ForeColor);
+
+            view.ColourSelection.SelectedIndex = (int)SelectedColour.Black;
+            Assert.AreEqual(Color.Black, view.Message.ForeColor);
         }
 
     }
