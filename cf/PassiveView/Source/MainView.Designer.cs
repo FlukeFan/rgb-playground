@@ -34,7 +34,7 @@ namespace Cf.PassiveView.Source
             this.ShowMessage = new System.Windows.Forms.Button();
             this.Message = new System.Windows.Forms.Label();
             this.ColourSelection = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.SelectColourMessage = new System.Windows.Forms.Label();
             this.HideMessage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -70,12 +70,12 @@ namespace Cf.PassiveView.Source
             this.ColourSelection.Size = new System.Drawing.Size(126, 22);
             this.ColourSelection.TabIndex = 4;
             // 
-            // label2
+            // SelectColourMessage
             // 
-            this.label2.Location = new System.Drawing.Point(4, 127);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 20);
-            this.label2.Text = "Select a colour:";
+            this.SelectColourMessage.Location = new System.Drawing.Point(4, 127);
+            this.SelectColourMessage.Name = "SelectColourMessage";
+            this.SelectColourMessage.Size = new System.Drawing.Size(100, 20);
+            this.SelectColourMessage.Text = "Select a colour:";
             // 
             // HideMessage
             // 
@@ -92,7 +92,7 @@ namespace Cf.PassiveView.Source
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
             this.Controls.Add(this.HideMessage);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.SelectColourMessage);
             this.Controls.Add(this.ColourSelection);
             this.Controls.Add(this.Message);
             this.Controls.Add(this.ShowMessage);
@@ -109,8 +109,8 @@ namespace Cf.PassiveView.Source
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button ShowMessage;
         public System.Windows.Forms.ComboBox ColourSelection;
-        private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Button HideMessage;
         public System.Windows.Forms.Label Message;
+        public System.Windows.Forms.Label SelectColourMessage;
     }
 }

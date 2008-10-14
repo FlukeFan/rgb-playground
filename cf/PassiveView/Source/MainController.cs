@@ -32,6 +32,7 @@ namespace Cf.PassiveView.Source
         private void ShowMessageControls(bool visible)
         {
             _view.SetVisible(_view.Message, visible);
+            _view.SetVisible(_view.SelectColourMessage, visible);
             _view.SetVisible(_view.ColourSelection, visible);
             _view.SetVisible(_view.HideMessage, visible);
         }
@@ -39,7 +40,12 @@ namespace Cf.PassiveView.Source
         private void ShowMessage_Click(object sender, EventArgs e)
         {
             ShowMessageControls(true);
+            PopulateColourSelection();
+            _view.ShowMessage.Enabled = false;
+        }
 
+        private void PopulateColourSelection()
+        {
             _view.ColourSelection.Items.Clear();
 
             _view.ColourSelection.Items.Add(((SelectedColour)0).ToString());
