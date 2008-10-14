@@ -46,6 +46,7 @@
     <Compile Include="**\*.css" />
     <Compile Include="**\*.ddl" />
     <Compile Include="**\*.dml" />
+    <Compile Include="Source\DialogHandler.cs" />
     <Compile Include="Source\MainController.cs">
     </Compile>
     <Compile Include="Source\MainView.cs">
