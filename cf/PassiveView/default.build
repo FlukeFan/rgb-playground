@@ -37,6 +37,7 @@
       <references>
         <include name="build\debug\Cf.PassiveView.exe" />
         <include name="SDKs\nant\bin\lib\net\2.0\nunit.framework.dll" />
+        <include name="SDKs\RhinoMocks\Rhino.Mocks.dll" />
       </references>
 
       <resources>
@@ -49,6 +50,11 @@
 
     </csc>
 
+    <copy todir="build\debug">
+      <fileset basedir="SDKs\RhinoMocks">
+        <include name="*.*" />
+      </fileset>
+    </copy>
 
     <nunit2>
       <formatter  type="Plain" />
