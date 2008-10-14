@@ -27,7 +27,9 @@ namespace Cf.PassiveView.Source.Test
         {
             MainView view = new TestableView();
 
+            Assert.AreEqual(true, view.ShowMessage.Enabled);
             Assert.AreEqual(false, view.IsVisible(view.Message));
+            Assert.AreEqual(false, view.IsVisible(view.SelectColourMessage));
             Assert.AreEqual(false, view.IsVisible(view.ColourSelection));
             Assert.AreEqual(false, view.IsVisible(view.HideMessage));
         }
@@ -39,7 +41,9 @@ namespace Cf.PassiveView.Source.Test
 
             Click(view.ShowMessage);
 
+            Assert.AreEqual(false, view.ShowMessage.Enabled);
             Assert.AreEqual(true, view.IsVisible(view.Message));
+            Assert.AreEqual(true, view.IsVisible(view.SelectColourMessage));
             Assert.AreEqual(true, view.IsVisible(view.ColourSelection));
             Assert.AreEqual(true, view.IsVisible(view.HideMessage));
 
