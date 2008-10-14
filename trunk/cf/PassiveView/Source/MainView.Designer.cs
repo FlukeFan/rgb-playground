@@ -65,6 +65,7 @@ namespace Cf.PassiveView.Source
             // 
             // ColourSelection
             // 
+            this.ColourSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ColourSelection.Location = new System.Drawing.Point(110, 127);
             this.ColourSelection.Name = "ColourSelection";
             this.ColourSelection.Size = new System.Drawing.Size(126, 22);
@@ -76,6 +77,7 @@ namespace Cf.PassiveView.Source
             this.SelectColourMessage.Name = "SelectColourMessage";
             this.SelectColourMessage.Size = new System.Drawing.Size(100, 20);
             this.SelectColourMessage.Text = "Select a colour:";
+            this.SelectColourMessage.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // HideMessage
             // 
