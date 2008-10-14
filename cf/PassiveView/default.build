@@ -35,6 +35,7 @@
          warnaserror="true">
 
       <references>
+        <include name="build\debug\Cf.PassiveView.exe" />
         <include name="SDKs\nant\bin\lib\net\2.0\nunit.framework.dll" />
       </references>
 

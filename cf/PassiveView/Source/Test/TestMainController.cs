@@ -12,9 +12,13 @@ namespace Cf.PassiveView.Source.Test
     {
 
         [Test]
-        public void Test_That_TestIsRun()
+        public void Test_WhenViewIsCreate_Then_MessageIsHidden_And_ColourSelectionIsPopulated()
         {
-            Assert.Fail("Got to here");
+            MainView view = new TestableView();
+
+            Assert.AreEqual(false, view.IsVisible(view.Message));
+            Assert.AreEqual(false, view.IsVisible(view.ColourSelection));
+            Assert.AreEqual(false, view.IsVisible(view.HideMessage));
         }
 
     }
