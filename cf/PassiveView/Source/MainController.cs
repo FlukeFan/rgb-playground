@@ -8,6 +8,13 @@ using System.Windows.Forms;
 namespace Cf.PassiveView.Source
 {
 
+    public enum SelectedColour
+    {
+        Black,
+        Green,
+        Red,
+    }
+
     internal class MainController
     {
 
@@ -17,9 +24,29 @@ namespace Cf.PassiveView.Source
         {
             _view = view;
 
-            _view.SetVisible(_view.Message, false);
-            _view.SetVisible(_view.ColourSelection, false);
-            _view.SetVisible(_view.HideMessage, false);
+            ShowMessageControls(false);
+
+            _view.ShowMessage.Click += new EventHandler(ShowMessage_Click);
+        }
+
+        private void ShowMessageControls(bool visible)
+        {
+            _view.SetVisible(_view.Message, visible);
+            _view.SetVisible(_view.ColourSelection, visible);
+            _view.SetVisible(_view.HideMessage, visible);
+        }
+
+        private void ShowMessage_Click(object sender, EventArgs e)
+        {
+            ShowMessageControls(true);
+
+            _view.ColourSelection.Items.Clear();
+
+            _view.ColourSelection.Items.Add(((SelectedColour)0).ToString());
+            _view.ColourSelection.Items.Add(((SelectedColour)1).ToString());
+            _view.ColourSelection.Items.Add(((SelectedColour)2).ToString());
+
+            _view.ColourSelection.SelectedIndex = 0;
         }
 
     }
