@@ -11,6 +11,13 @@ namespace Cf.PassiveView.Source.Test
     public class TestableView : MainView
     {
 
+        public TestableView() { }
+
+        public TestableView(DialogHandler dialogHandler)
+        {
+            _dialogHandler = dialogHandler;
+        }
+
         private Dictionary<Control, bool> _controlVisibility = new Dictionary<Control, bool>();
 
         public override void SetVisible(Control control, bool isVisible)
