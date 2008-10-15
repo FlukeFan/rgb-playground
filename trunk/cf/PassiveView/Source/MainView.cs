@@ -10,11 +10,16 @@ namespace Cf.PassiveView.Source
     public partial class MainView : Form
     {
 
+        protected DialogHandler _dialogHandler;
+
         public MainView()
         {
             InitializeComponent();
+            _dialogHandler = new DialogHandler();
             new MainController(this);
         }
+
+        public DialogHandler DialogHandler { get { return _dialogHandler; } }
 
         public virtual void SetVisible(Control control, bool isVisible)
         {

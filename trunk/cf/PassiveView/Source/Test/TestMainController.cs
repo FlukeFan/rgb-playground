@@ -60,11 +60,11 @@ namespace Cf.PassiveView.Source.Test
         {
             MockRepository mocks = new MockRepository();
             DialogHandler dialogHandler = mocks.StrictMock<DialogHandler>();
-            MainView view = new TestableView();
+            MainView view = new TestableView(dialogHandler);
 
-            //Expect
-            //    .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
-            //    .Return(DialogResult.Yes);
+            Expect
+                .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+                .Return(DialogResult.Yes);
 
             mocks.ReplayAll();
             Click(view.ShowMessage);
@@ -76,6 +76,29 @@ namespace Cf.PassiveView.Source.Test
             Assert.AreEqual(false, view.IsVisible(view.SelectColourMessage));
             Assert.AreEqual(false, view.IsVisible(view.ColourSelection));
             Assert.AreEqual(false, view.IsVisible(view.HideMessage));
+        }
+
+        [Test]
+        public void Test_WhenHideMessageIsClicked_AndUserDeclines_Then_MessageRemainsVisible()
+        {
+            MockRepository mocks = new MockRepository();
+            DialogHandler dialogHandler = mocks.StrictMock<DialogHandler>();
+            MainView view = new TestableView(dialogHandler);
+
+            Expect
+                .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+                .Return(DialogResult.No);
+
+            mocks.ReplayAll();
+            Click(view.ShowMessage);
+            Click(view.HideMessage);
+            mocks.VerifyAll();
+
+            Assert.AreEqual(false, view.ShowMessage.Enabled);
+            Assert.AreEqual(true, view.IsVisible(view.Message));
+            Assert.AreEqual(true, view.IsVisible(view.SelectColourMessage));
+            Assert.AreEqual(true, view.IsVisible(view.ColourSelection));
+            Assert.AreEqual(true, view.IsVisible(view.HideMessage));
         }
 
         [Test]

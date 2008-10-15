@@ -38,8 +38,18 @@ namespace Cf.PassiveView.Source
 
         private void HideMessage_Click(object sender, EventArgs e)
         {
-            ShowMessageControls(false);
-            _view.ShowMessage.Enabled = true;
+            DialogResult result =
+                _view.DialogHandler.ShowMessageBox( "Are you sure?",
+                                                    "Check", 
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question,
+                                                    MessageBoxDefaultButton.Button1);
+
+            if (result == DialogResult.Yes)
+            {
+                ShowMessageControls(false);
+                _view.ShowMessage.Enabled = true;
+            }
         }
 
         private void ShowMessage_Click(object sender, EventArgs e)
