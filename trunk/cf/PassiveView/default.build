@@ -70,7 +70,7 @@
       <arg line="PassiveViewSetup.inf" />
     </exec>
 
-    <move file="Source\PassiveViewSetup.cab" todir="build\debug" />
+    <move file="Source\PassiveViewSetup.cab" todir="build\debug" overwrite="true" />
 
   </target>
 
