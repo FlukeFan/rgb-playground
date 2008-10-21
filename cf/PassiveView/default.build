@@ -65,6 +65,13 @@
       </test>
     </nunit2>
 
+    <exec program="SDKs\Ce\tools\CabWiz\CabWiz.exe"
+          workingdir="Source">
+      <arg line="PassiveViewSetup.inf" />
+    </exec>
+
+    <move file="Source\PassiveViewSetup.cab" todir="build\debug" />
+
   </target>
 
   <target name="clean">

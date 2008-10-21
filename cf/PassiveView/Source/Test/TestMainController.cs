@@ -86,7 +86,11 @@ namespace Cf.PassiveView.Source.Test
             MainView view = new TestableView(dialogHandler);
 
             Expect
-                .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+                .Call(dialogHandler.ShowMessageBox( "Are you sure?",
+                                                    "Check",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question,
+                                                    MessageBoxDefaultButton.Button1))
                 .Return(DialogResult.No);
 
             mocks.ReplayAll();
