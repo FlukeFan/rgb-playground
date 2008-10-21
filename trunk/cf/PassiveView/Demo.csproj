@@ -60,8 +60,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Test\TestMainController.cs" />
-    <None Include="**\*.config" />
-    <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsCE.Forms" />
