@@ -5,6 +5,8 @@
 
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
+    <mkdir dir="build\debug"/>
+
     <csc target="winexe"
          debug="true"
          output="build\debug\Cf.PassiveView.exe"
