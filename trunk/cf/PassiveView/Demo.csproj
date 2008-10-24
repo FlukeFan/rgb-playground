@@ -93,7 +93,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <UsingTask AssemblyFile="..\..\SDKs\ExecParse.dll" TaskName="ExecParse.ExecParse" />
+  <UsingTask AssemblyFile="SDKs\ExecParse\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>
       <!-- catches csc errors -->
