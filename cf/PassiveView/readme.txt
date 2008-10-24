@@ -2,7 +2,7 @@
 PassiveViewDemo
 ===============
 
-Some sample code to demonstrate testing a Compact Framework using Passive View.
+Some sample code to demonstrate testing a Compact Framework application using Passive View.
 
 To build:
 
