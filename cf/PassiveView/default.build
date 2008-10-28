@@ -59,7 +59,8 @@
     </copy>
 
     <nunit2>
-      <formatter  type="Plain" />
+      <formatter type="Plain"/>
+      <formatter type="Xml" usefile="true" extension=".xml"/>
       <test>
         <assemblies>
           <include name="build\debug\Cf.PassiveView.Test.dll"/>
