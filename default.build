@@ -13,7 +13,7 @@
     <target name="exportResults">
         <copy todir="results">
             <fileset basedir="cf\PassiveView\build\debug">
-                <include name="*.xml" />
+                <include name="*-results.xml" />
             </fileset>
         </copy>
     </target>
