@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<project name="Samples">
+
+    <echo message="CruiseControlBuild" />
+
+    <nant buildfile="cf\PassiveView\default.build" target="build clean"/>
+
+</project>
