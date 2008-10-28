@@ -2,7 +2,24 @@
 <project name="Samples">
 
     <echo message="CruiseControlBuild" />
+    <call target="build"/>
+    <call target="exportResults"/>
+    <call target="clean"/>
 
-    <nant buildfile="cf\PassiveView\default.build" target="build clean"/>
+    <target name="build">
+        <nant buildfile="cf\PassiveView\default.build" target="build"/>
+    </target>
+
+    <target name="exportResults">
+        <copy todir="results">
+            <fileset basedir="cf\PassiveView\build\debug">
+                <include name="*.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="clean">
+        <nant buildfile="cf\PassiveView\default.build" target="clean"/>
+    </target>
 
 </project>
