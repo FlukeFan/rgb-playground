@@ -1,10 +1,11 @@
 
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace WcfTest
 {
-    
+
     [Serializable]
     public class MyClass
     {
@@ -30,12 +31,31 @@ namespace WcfTest
         }
     }
 
+    [Serializable]
+    public class Parent
+    {
+        protected string _name;
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+    }
+
+
     [ServiceContract()]
     public interface IWcfTest
     {
 
         [OperationContract]
         MyClass GetCopy(MyClass otherClass);
+
+        [OperationContract]
+        IList<Parent> GetParentList();
+
+        [OperationContract]
+        Parent GetParent();
 
     }
 
@@ -49,6 +69,16 @@ namespace WcfTest
             copy.Other = copy2;
             //copy2.Other = copy;
             return copy;
+        }
+
+        public IList<Parent> GetParentList()
+        {
+            return null;
+        }
+
+        public Parent GetParent()
+        {
+            return null;
         }
 
     }
