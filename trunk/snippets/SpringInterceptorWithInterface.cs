@@ -24,7 +24,12 @@ public class MyInt : IMethodInterceptor
 	}
 }
 
-public interface Mi
+public interface Bi
+{
+	void BaseCall();
+}
+
+public interface Mi : Bi
 {
 	void Test();
 	void Test2();
@@ -32,13 +37,20 @@ public interface Mi
 
 public class Mc2 : Mi
 {
+	public void BaseCall()
+	{
+		Console.WriteLine("base call");
+	}
+	
 	public void Test()
 	{
+		BaseCall();
 		Console.WriteLine("hello");
 	}
 	
 	public void Test2()
 	{
+		BaseCall();
 		throw new Exception("a test");
 	}
 	
@@ -53,6 +65,7 @@ public class MyClass
 		ProxyFactory factory = new ProxyFactory(new Mc2());
 		factory.AddAdvice(new MyInt());
 		Mi c = (Mi)factory.GetProxy();
+		c.BaseCall();
 		c.Test();
 		c.Test2();
 		RL();
