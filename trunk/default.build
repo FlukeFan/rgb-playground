@@ -9,6 +9,7 @@
     <target name="build">
         <nant buildfile="cf\PassiveView\default.build"  target="build"/>
         <nant buildfile="wcf_test\default.build"        target="build"/>
+        <nant buildfile="sl\PassiveView\default.build"  target="build"/>
     </target>
 
     <target name="exportResults">
@@ -20,6 +21,7 @@
     </target>
 
     <target name="clean">
+        <nant buildfile="sl\PassiveView\default.build"  target="clean"/>
         <nant buildfile="wcf_test\default.build"        target="clean"/>
         <nant buildfile="cf\PassiveView\default.build"  target="clean"/>
     </target>
