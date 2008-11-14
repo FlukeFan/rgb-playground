@@ -1,9 +1,9 @@
 ﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            EntryPointAssembly="Sl2"
-            EntryPointType="Sl2.App"
+            EntryPointAssembly="Sl.PassiveView"
+            EntryPointType="Sl.PassiveView.App"
             RuntimeVersion="2.0.31005.0">
     <Deployment.Parts>
-        <AssemblyPart   x:Name="Sl2"                        Source="Sl2.dll" />
+        <AssemblyPart x:Name="Sl.PassiveView" Source="Sl.PassiveView.dll" />
     </Deployment.Parts>
 </Deployment>

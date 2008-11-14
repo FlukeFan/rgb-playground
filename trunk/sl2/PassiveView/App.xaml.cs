@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Browser;
 
-namespace Sl2
+namespace Sl.PassiveView
 {
 
     public class App : Application
@@ -20,12 +20,13 @@ namespace Sl2
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Uri uri = new Uri("Page.xaml", UriKind.Relative);
+            MessageBox.Show("Hello");
+/*            Uri uri = new Uri("Page.xaml", UriKind.Relative);
 
             // Load the main control
             Page page = new Page();
             System.Windows.Application.LoadComponent(page, uri);
-            RootVisual = page;
+            RootVisual = page;*/
         }
 
         private void Application_Exit(object sender, EventArgs e)

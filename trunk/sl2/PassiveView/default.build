@@ -4,10 +4,36 @@
   <target name="build">
 
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+    <setenv name="PATH" value="SDKs\SL\tools;%PATH%"/>
 
-    <mkdir dir="build\debug"/>
+    <mkdir dir="build\debug\ClientBin"/>
+    <copy file="AppManifest.xaml" todir="build\debug\ClientBin" />
     <copy file="default.html" todir="build\debug" />
     <copy file="SDKs\SL\tools\silverlight.js" todir="build\debug" />
+    
+    <csc  target="library"
+          debug="true"
+          output="build\debug\ClientBin\Sl.PassiveView.dll"
+          warnaserror="true"
+          nostdlib="true"
+          noconfig="true">
+
+        <references>
+            <include name="SDKs\SL\ref\mscorlib.dll" />
+            <include name="SDKs\SL\ref\System.dll" />
+            <include name="SDKs\SL\ref\System.Core.dll" />
+            <include name="SDKs\SL\ref\System.Windows.dll" />
+            <include name="SDKs\SL\ref\System.Windows.Browser.dll" />
+        </references>
+
+        <sources>
+            <include name="*.cs" />
+        </sources>
+
+    </csc>
+    
+    <delete file="Sl.PassiveView.xap" />
+    <exec program="chiron" commandline="/xap:Sl.PassiveView.xap /d:ClientBin" workingdir="build\debug" />
     
     <!--
 
