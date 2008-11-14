@@ -34,12 +34,14 @@
       <HintPath>SDKs\nant\bin\lib\net\2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
-      <HintPath>SDKs\Rhino.Mocks.dll</HintPath>
+      <HintPath>SDKs\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System">
+      <HintPath>SDKs\SL\ref\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows">
+      <HintPath>SDKs\SL\ref\System.Windows.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="SDKs\ExecParse\ExecParse.dll" TaskName="ExecParse.ExecParse" />
