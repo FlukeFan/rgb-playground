@@ -5,8 +5,10 @@
 
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
-    <!--
     <mkdir dir="build\debug"/>
+    <copy file="default.html" todir="build\debug" />
+    
+    <!--
 
     <csc target="winexe"
          debug="true"
