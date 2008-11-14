@@ -1,0 +1,121 @@
+﻿<Project DefaultTargets="NAntBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration>Debug</Configuration>
+    <Platform>AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{263BDCE5-2110-422E-AACA-7CD47D0C91A5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cf.PassiveView</RootNamespace>
+    <AssemblyName>Cf.PassiveView</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>PocketPC</PlatformFamilyName>
+    <PlatformID>b2c48bd2-963d-4549-9169-1fa021dce484</PlatformID>
+    <OSVersion>5.02</OSVersion>
+    <DeployDirSuffix>CfPassiveView</DeployDirSuffix>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FormFactorID>
+    </FormFactorID>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>build\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**\*.build" />
+    <None Include="**\*.taskdef" />
+    <Compile Include="**\*.svc" />
+    <Compile Include="**\*.js" />
+    <Compile Include="**\*.xaml" />
+    <Compile Include="**\*.html" />
+    <Compile Include="**\*.aspx" />
+    <Compile Include="**\*.asax" />
+    <Compile Include="**\*.master" />
+    <Compile Include="**\*.css" />
+    <Compile Include="**\*.ddl" />
+    <Compile Include="**\*.dml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="nunit.framework">
+      <HintPath>SDKs\nant\bin\lib\net\2.0\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>SDKs\RhinoMocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <UsingTask AssemblyFile="SDKs\ExecParse\ExecParse.dll" TaskName="ExecParse.ExecParse" />
+  <PropertyGroup>
+    <ExecParseConfiguration>
+      <!-- catches csc errors -->
+      <Error>
+        <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
+        <File>$1</File>
+        <LineNumber>$2</LineNumber>
+        <ColumnNumber>$3</ColumnNumber>
+        <Subcategory>$4</Subcategory>
+        <Message>$5</Message>
+      </Error>
+      <!-- catches NUnit failures -->
+      <Error>
+        <Search>\[nunit2\] \d+\) [\s\S]*?(?=[^\n\r]*?\[nunit2\] ( *[\n\r]|\d|\*))</Search>
+        <ReplaceSearch>\[nunit2\] \d+\) .*?\.([^.]*?) : ([\s\S]*? in (.*?):line (\d+))\s*$</ReplaceSearch>
+        <Message>Test Failed: $1: $2</Message>
+        <File>$3</File>
+        <LineNumber>$4</LineNumber>
+      </Error>
+      <!-- catches Build failures -->
+      <Error>
+        <Search>[\s\n\r](\S.*?\.build)\((\d+),(\d+)\):.*?[\n\r]\s*(.*?)[\n\r]</Search>
+        <Message>Build Failed: $4</Message>
+        <File>$1</File>
+        <LineNumber>$2</LineNumber>
+        <ColumnNumber>$3</ColumnNumber>
+      </Error>
+      <!-- catches coverage failures -->
+      <Error>
+        <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
+        <Message>$1: $2</Message>
+      </Error>
+    </ExecParseConfiguration>
+  </PropertyGroup>
+  <Target Name="NAntBuild">
+    <Message Text="Start NAnt debug build ..." />
+    <ExecParse Command="SDKs\nant\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
+    <Message Text="NAnt complete" />
+  </Target>
+  <Target Name="Clean">
+    <Message Text="Start NAnt debug clean ..." />
+    <ExecParse Command="SDKs\nant\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
+    <Message Text="NAnt complete" />
+  </Target>
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="NAntBuild" />
+  </Target>
+</Project>
