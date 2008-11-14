@@ -7,6 +7,7 @@
 
     <mkdir dir="build\debug"/>
     <copy file="default.html" todir="build\debug" />
+    <copy file="SDKs\SL\tools\silverlight.js" todir="build\debug" />
     
     <!--
 
