@@ -18,6 +18,11 @@
                 <include name="*-results.xml" />
             </fileset>
         </copy>
+        <copy todir="results">
+            <fileset basedir="sl2\PassiveView\build\debug">
+                <include name="*-results.xml" />
+            </fileset>
+        </copy>
     </target>
 
     <target name="clean">
