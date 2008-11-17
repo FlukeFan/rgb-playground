@@ -7,8 +7,12 @@
     <setenv name="PATH" value="SDKs\SL\tools;%PATH%"/>
 
     <mkdir dir="build\debug\ClientBin"/>
-    <copy file="AppManifest.xaml" todir="build\debug\ClientBin" />
-    <copy file="default.html" todir="build\debug" />
+    <copy todir="build\debug\ClientBin">
+      <fileset basedir="Source">
+        <include name="*.xaml"/>
+      </fileset>
+    </copy>
+    <copy file="Source\default.html" todir="build\debug" />
     <copy file="SDKs\SL\tools\silverlight.js" todir="build\debug" />
     
     <csc  target="library"
@@ -27,7 +31,7 @@
         </references>
 
         <sources>
-            <include name="*.cs" />
+            <include name="Source\*.cs" />
         </sources>
 
     </csc>
