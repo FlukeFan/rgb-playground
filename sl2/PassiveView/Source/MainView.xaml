@@ -19,7 +19,7 @@
     </TextBlock>
     
     <StackPanel Orientation="Horizontal" HorizontalAlignment="center">
-      <TextBlock Width="150">Select a colour:</TextBlock>
+      <TextBlock x:Name="SelectColourMessage" Width="150">Select a colour:</TextBlock>
       <ComboBox x:Name="ColourSelection" />
     </StackPanel>
 

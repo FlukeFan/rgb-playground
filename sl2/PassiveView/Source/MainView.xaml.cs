@@ -16,6 +16,7 @@ namespace Sl.PassiveView
 
         public Button ShowMessage;
         public TextBlock Message;
+        public TextBlock SelectColourMessage;
         public ComboBox ColourSelection;
         public Button HideMessage;
 
@@ -28,8 +29,10 @@ namespace Sl.PassiveView
         {
             ShowMessage = (Button)FindName("ShowMessage");
             Message = (TextBlock)FindName("Message");
+            SelectColourMessage = (TextBlock)FindName("SelectColourMessage");
             ColourSelection = (ComboBox)FindName("ColourSelection");
             HideMessage = (Button)FindName("HideMessage");
+            new MainController(this);
         }
 
     }
