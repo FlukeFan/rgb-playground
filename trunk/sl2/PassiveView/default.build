@@ -60,7 +60,7 @@
     <nunit2>
       <formatter type="Plain"/>
       <formatter type="Xml" usefile="true" extension=".xml"/>
-      <test>
+      <test appconfig="Sl.PassiveView.Test.dll.config">
         <assemblies>
           <include name="build\debug\Sl.PassiveView.Test.dll"/>
         </assemblies>

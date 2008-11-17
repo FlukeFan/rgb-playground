@@ -26,7 +26,7 @@ namespace Sl.PassiveView.Test
             onClick.Invoke(button, new object[] { null });
         }*/
 
-/*        [Test]
+        [Test] [Ignore("RGB - WIP")]
         public void Test_WhenViewIsCreated_Then_MessageIsHidden()
         {
             MainView view = new MainView();
@@ -36,7 +36,7 @@ namespace Sl.PassiveView.Test
             Assert.AreEqual(false, view.SelectColourMessage.Visibility);
             Assert.AreEqual(false, view.ColourSelection.Visibility);
             Assert.AreEqual(false, view.HideMessage.Visibility);
-        }*/
+        }
 
 /*        [Test]
         public void Test_WhenShowMessageIsClicked_Then_MessageIsDisplayed_And_ColourSelectionIsPopulated()
