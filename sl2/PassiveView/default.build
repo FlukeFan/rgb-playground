@@ -36,79 +36,39 @@
 
     </csc>
     
-    <delete file="Sl.PassiveView.xap" />
-    <exec program="chiron" commandline="/xap:Sl.PassiveView.xap /d:ClientBin" workingdir="build\debug" />
-    
-    <!--
-
-    <csc target="winexe"
-         debug="true"
-         output="build\debug\Cf.PassiveView.exe"
-         nostdlib="true"
-         noconfig="true"
-         warnaserror="true">
-
-      <references>
-        <include name="SDKs\Ce\bin\mscorlib.dll" />
-        <include name="SDKs\Ce\bin\System.dll" />
-        <include name="SDKs\Ce\bin\System.Drawing.dll" />
-        <include name="SDKs\Ce\bin\System.Windows.Forms.dll" />
-      </references>
-
-      <resources>
-
-      </resources>
-
-      <sources>
-        <include name="Source\*.cs" />
-      </sources>
-
-    </csc>
-
     <csc target="library"
          debug="true"
-         output="build\debug\Cf.PassiveView.Test.dll"
+         output="build\debug\Sl.PassiveView.Test.dll"
          warnaserror="true">
 
       <references>
-        <include name="build\debug\Cf.PassiveView.exe" />
+        <include name="SDKs\Wpf\WindowsBase.dll" />
+        <include name="SDKs\Wpf\PresentationCore.dll" />
+        <include name="SDKs\Wpf\PresentationFramework.dll" />
         <include name="SDKs\nant\bin\lib\net\2.0\nunit.framework.dll" />
         <include name="SDKs\RhinoMocks\Rhino.Mocks.dll" />
       </references>
 
-      <resources>
-
-      </resources>
-
       <sources>
+        <include name="Source\*Controller.cs" />
+        <include name="Source\*View.xaml.cs" />
         <include name="Source\Test\*.cs" />
       </sources>
 
     </csc>
-
-    <copy todir="build\debug">
-      <fileset basedir="SDKs\RhinoMocks">
-        <include name="*.*" />
-      </fileset>
-    </copy>
 
     <nunit2>
       <formatter type="Plain"/>
       <formatter type="Xml" usefile="true" extension=".xml"/>
       <test>
         <assemblies>
-          <include name="build\debug\Cf.PassiveView.Test.dll"/>
+          <include name="build\debug\Sl.PassiveView.Test.dll"/>
         </assemblies>
       </test>
     </nunit2>
 
-    <exec program="SDKs\Ce\tools\CabWiz\CabWiz.exe"
-          workingdir="Source">
-      <arg line="PassiveViewSetup.inf" />
-    </exec>
-
-    <move file="Source\PassiveViewSetup.cab" todir="build\debug" overwrite="true" />
-    -->
+    <delete file="Sl.PassiveView.xap" />
+    <exec program="chiron" commandline="/xap:Sl.PassiveView.xap /d:ClientBin" workingdir="build\debug" />
 
   </target>
 
