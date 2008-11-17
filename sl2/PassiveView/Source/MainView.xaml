@@ -1,0 +1,30 @@
+﻿<UserControl
+                xmlns="http://schemas.microsoft.com/client/2007"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                x:Class="Sl.PassiveView.MainView"
+                x:Name="MyPage"
+                Width="400"
+                Height="300">
+
+  <StackPanel x:Name="LayoutRoot" Background="White">
+
+    <TextBlock>
+        Demonstration of Passive View to test Silverlight client
+    </TextBlock>
+
+    <Button x:Name="ShowMessage" Content="Show Message" Width="150"  Margin="20"/>
+
+    <TextBlock x:Name="Message" TextWrapping="Wrap" Height="80" Width="200">
+        This message is hidden or displayed to demonstrate testing visiblity of controls in NUnit
+    </TextBlock>
+    
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="center">
+      <TextBlock Width="150">Select a colour:</TextBlock>
+      <ComboBox x:Name="ColourSelection" />
+    </StackPanel>
+
+    <Button x:Name="HideMessage" Content="Hide Message" Width="150" Margin="20" />
+
+  </StackPanel>
+
+</UserControl>
