@@ -12,7 +12,7 @@
         <include name="*.xaml"/>
       </fileset>
     </copy>
-    <copy file="Source\default.html" todir="build\debug" />
+    <copy file="Source\SilverlightPassiveViewDemo.html" todir="build\debug" />
     <copy file="SDKs\SL\tools\silverlight.js" todir="build\debug" />
     
     <csc  target="library"
