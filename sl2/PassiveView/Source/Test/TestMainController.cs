@@ -18,31 +18,19 @@ namespace Sl.PassiveView.Test
     public class TestMainController
     {
 
-/*        private void Click(Button button)
+        private void Click(Button button)
         {
-            if (!button.Enabled)
-                Assert.Fail("Attempt to click button '" + button.Text + "' while it is not enabled");
+            if (!button.IsEnabled)
+                Assert.Fail("Attempt to click button '" + button.Content.ToString() + "' while it is not enabled");
 
             MethodInfo onClick = button.GetType().GetMethod("OnClick", BindingFlags.NonPublic | BindingFlags.Instance);
-            onClick.Invoke(button, new object[] { null });
-        }*/
-
-        private MainView CreateTestView()
-        {
-            MainView view = new MainView();
-            view.ShowMessage = new Button();
-            view.Message = new TextBlock();
-            view.SelectColourMessage = new TextBlock();
-            view.ColourSelection = new ComboBox();
-            view.HideMessage = new Button();
-            new MainController(view);
-            return view;
+            onClick.Invoke(button, null);
         }
 
         [Test]
         public void Test_WhenViewIsCreated_Then_MessageIsHidden()
         {
-            MainView view = CreateTestView();
+            MainView view = new TestableView();
 
             Assert.AreEqual(true, view.ShowMessage.IsEnabled);
             Assert.AreEqual(Visibility.Collapsed, view.Message.Visibility);
@@ -51,24 +39,24 @@ namespace Sl.PassiveView.Test
             Assert.AreEqual(Visibility.Collapsed, view.HideMessage.Visibility);
         }
 
-/*        [Test]
+        [Test]
         public void Test_WhenShowMessageIsClicked_Then_MessageIsDisplayed_And_ColourSelectionIsPopulated()
         {
             MainView view = new TestableView();
 
             Click(view.ShowMessage);
 
-            Assert.AreEqual(false, view.ShowMessage.Enabled);
-            Assert.AreEqual(true, view.IsVisible(view.Message));
-            Assert.AreEqual(true, view.IsVisible(view.SelectColourMessage));
-            Assert.AreEqual(true, view.IsVisible(view.ColourSelection));
-            Assert.AreEqual(true, view.IsVisible(view.HideMessage));
+            Assert.AreEqual(false, view.ShowMessage.IsEnabled);
+            Assert.AreEqual(Visibility.Visible, view.Message.Visibility);
+            Assert.AreEqual(Visibility.Visible, view.SelectColourMessage.Visibility);
+            Assert.AreEqual(Visibility.Visible, view.ColourSelection.Visibility);
+            Assert.AreEqual(Visibility.Visible, view.HideMessage.Visibility);
 
             Assert.AreEqual(3, view.ColourSelection.Items.Count);
             Assert.AreEqual(0, view.ColourSelection.SelectedIndex);
         }
 
-        [Test]
+/*        [Test]
         public void Test_WhenHideMessageIsClicked_AndUserConfirms_Then_MessageIsHidden()
         {
             MockRepository mocks = new MockRepository();
