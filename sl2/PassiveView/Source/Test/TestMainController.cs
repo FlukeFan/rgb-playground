@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
 
 using NUnit.Framework;
 
@@ -26,16 +27,28 @@ namespace Sl.PassiveView.Test
             onClick.Invoke(button, new object[] { null });
         }*/
 
-        [Test] [Ignore("RGB - WIP")]
-        public void Test_WhenViewIsCreated_Then_MessageIsHidden()
+        private MainView CreateTestView()
         {
             MainView view = new MainView();
+            view.ShowMessage = new Button();
+            view.Message = new TextBlock();
+            view.SelectColourMessage = new TextBlock();
+            view.ColourSelection = new ComboBox();
+            view.HideMessage = new Button();
+            new MainController(view);
+            return view;
+        }
+
+        [Test]
+        public void Test_WhenViewIsCreated_Then_MessageIsHidden()
+        {
+            MainView view = CreateTestView();
 
             Assert.AreEqual(true, view.ShowMessage.IsEnabled);
-            Assert.AreEqual(false, view.Message.Visibility);
-            Assert.AreEqual(false, view.SelectColourMessage.Visibility);
-            Assert.AreEqual(false, view.ColourSelection.Visibility);
-            Assert.AreEqual(false, view.HideMessage.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.Message.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.SelectColourMessage.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.ColourSelection.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.HideMessage.Visibility);
         }
 
 /*        [Test]
