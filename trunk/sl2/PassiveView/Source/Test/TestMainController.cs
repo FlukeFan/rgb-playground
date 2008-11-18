@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 using NUnit.Framework;
 
@@ -106,7 +106,7 @@ namespace Sl.PassiveView.Test
             Assert.AreEqual(Visibility.Visible, view.HideMessage.Visibility);
         }
 
-/*        [Test]
+        [Test]
         public void Test_WhenColourIsSelected_Then_MessageColourChanges()
         {
             MainView view = new TestableView();
@@ -114,14 +114,14 @@ namespace Sl.PassiveView.Test
             Click(view.ShowMessage);
 
             view.ColourSelection.SelectedIndex = (int)SelectedColour.Green;
-            Assert.AreEqual(Color.Green, view.Message.ForeColor);
+            Assert.AreEqual(Colors.Green, ((SolidColorBrush)view.Message.Foreground).Color);
 
             view.ColourSelection.SelectedIndex = (int)SelectedColour.Red;
-            Assert.AreEqual(Color.Red, view.Message.ForeColor);
+            Assert.AreEqual(Colors.Red, ((SolidColorBrush)view.Message.Foreground).Color);
 
             view.ColourSelection.SelectedIndex = (int)SelectedColour.Black;
-            Assert.AreEqual(Color.Black, view.Message.ForeColor);
-        }*/
+            Assert.AreEqual(Colors.Black, ((SolidColorBrush)view.Message.Foreground).Color);
+        }
 
     }
 
