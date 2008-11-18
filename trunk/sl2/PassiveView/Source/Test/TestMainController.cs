@@ -21,7 +21,7 @@ namespace Sl.PassiveView.Test
         private void Click(Button button)
         {
             if (!button.IsEnabled)
-                Assert.Fail("Attempt to click button '" + button.Content.ToString() + "' while it is not enabled");
+                Assert.Fail("Attempt to click button while it is not enabled");
 
             MethodInfo onClick = button.GetType().GetMethod("OnClick", BindingFlags.NonPublic | BindingFlags.Instance);
             onClick.Invoke(button, null);
