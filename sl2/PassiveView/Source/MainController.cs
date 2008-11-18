@@ -40,14 +40,12 @@ namespace Sl.PassiveView
 
         private void HideMessage_Click(object sender, EventArgs e)
         {
-            /*DialogResult result =
+            MessageBoxResult result =
                 _view.DialogHandler.ShowMessageBox( "Are you sure?",
                                                     "Check", 
-                                                    MessageBoxButtons.YesNo,
-                                                    MessageBoxIcon.Question,
-                                                    MessageBoxDefaultButton.Button1);
+                                                    MessageBoxButton.OKCancel);
 
-            if (result == DialogResult.Yes)*/
+            if (result == MessageBoxResult.OK)
             {
                 ShowMessageControls(Visibility.Collapsed);
                 _view.ShowMessage.IsEnabled = true;

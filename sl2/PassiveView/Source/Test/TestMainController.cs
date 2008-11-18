@@ -56,7 +56,7 @@ namespace Sl.PassiveView.Test
             Assert.AreEqual(0, view.ColourSelection.SelectedIndex);
         }
 
-/*        [Test]
+        [Test]
         public void Test_WhenHideMessageIsClicked_AndUserConfirms_Then_MessageIsHidden()
         {
             MockRepository mocks = new MockRepository();
@@ -64,22 +64,22 @@ namespace Sl.PassiveView.Test
             MainView view = new TestableView(dialogHandler);
 
             Expect
-                .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
-                .Return(DialogResult.Yes);
+                .Call(dialogHandler.ShowMessageBox("Are you sure?", "Check", MessageBoxButton.OKCancel))
+                .Return(MessageBoxResult.OK);
 
             mocks.ReplayAll();
             Click(view.ShowMessage);
             Click(view.HideMessage);
             mocks.VerifyAll();
 
-            Assert.AreEqual(true, view.ShowMessage.Enabled);
-            Assert.AreEqual(false, view.IsVisible(view.Message));
-            Assert.AreEqual(false, view.IsVisible(view.SelectColourMessage));
-            Assert.AreEqual(false, view.IsVisible(view.ColourSelection));
-            Assert.AreEqual(false, view.IsVisible(view.HideMessage));
+            Assert.AreEqual(true, view.ShowMessage.IsEnabled);
+            Assert.AreEqual(Visibility.Collapsed, view.Message.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.SelectColourMessage.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.ColourSelection.Visibility);
+            Assert.AreEqual(Visibility.Collapsed, view.HideMessage.Visibility);
         }
 
-        [Test]
+/*        [Test]
         public void Test_WhenHideMessageIsClicked_AndUserDeclines_Then_MessageRemainsVisible()
         {
             MockRepository mocks = new MockRepository();

@@ -50,12 +50,19 @@
       </references>
 
       <sources>
+        <include name="Source\DialogHandler.cs" />
         <include name="Source\*Controller.cs" />
         <include name="Source\*View.xaml.cs" />
         <include name="Source\Test\*.cs" />
       </sources>
 
     </csc>
+
+    <copy todir="build\debug">
+      <fileset basedir="SDKs\RhinoMocks">
+        <include name="*.*" />
+      </fileset>
+    </copy>
 
     <nunit2>
       <formatter type="Plain"/>

@@ -13,6 +13,8 @@ namespace Sl.PassiveView
     public class MainView : UserControl
     {
 
+        protected DialogHandler _dialogHandler;
+
         public Button ShowMessage;
         public TextBlock Message;
         public TextBlock SelectColourMessage;
@@ -24,6 +26,8 @@ namespace Sl.PassiveView
             Loaded += new RoutedEventHandler(UserControl_Loaded);
         }
 
+        public DialogHandler DialogHandler { get { return _dialogHandler; } }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ShowMessage = (Button)FindName("ShowMessage");
@@ -31,6 +35,7 @@ namespace Sl.PassiveView
             SelectColourMessage = (TextBlock)FindName("SelectColourMessage");
             ColourSelection = (ComboBox)FindName("ColourSelection");
             HideMessage = (Button)FindName("HideMessage");
+            _dialogHandler = new DialogHandler();
             new MainController(this);
         }
 
