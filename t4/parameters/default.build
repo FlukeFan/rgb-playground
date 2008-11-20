@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="Sl2" default="build">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+        <setenv name="PATH" value="..\..\SDKs\t4;%PATH%"/>
+
+        <exec program="TextTransform" commandline="-a P1!123 -a p2!234 Main.tt" />
+
+    </target>
+    
+    <target name="clean">
+        <delete file="Main.txt"/>
+    </target>
+
+</project>
