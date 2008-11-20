@@ -1,0 +1,11 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ include file="Utility.tt" #>
+<#
+    int count = (int)GetData("count");
+    WriteLine("Parameters passed: " + count.ToString());
+    PushIndent("    ");
+    for (int i=1; i<=count; i++)
+    {
+        WriteLine("parameter " + i.ToString() + " : " + GetData("parameter" + i.ToString()));
+    }
+#>

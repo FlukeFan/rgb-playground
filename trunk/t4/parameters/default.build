@@ -6,7 +6,17 @@
         <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
         <setenv name="PATH" value="${project::get-base-directory()}\..\..\SDKs\t4;%PATH%"/>
 
-        <exec program="TextTransform" commandline="-a P1!123 -a p2!234 Main.tt" />
+        <exec program="TextTransform">
+            <arg line="-a P1!123" />
+            <arg line="-a p2!234" />
+            <arg line="Main.tt" />
+        </exec>
+
+        <loadfile file="Out1.txt" property="file1-output" />
+        <echo message="${file1-output}"/>
+
+        <loadfile file="Out2.txt" property="file2-output" />
+        <echo message="${file2-output}"/>
 
     </target>
 

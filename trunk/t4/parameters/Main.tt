@@ -1,31 +1,20 @@
 <#@ template language="C#" hostspecific="True" #>
-<#@ import namespace="System.Collections.Specialized" #>
-<#@ import namespace="System.Reflection" #>
-
+<#@ include file="Utility.tt" #>
 <# Run(); #>
-
-<#+
-    private string GetCommandLineProperty(string propertyName)
-    {
-        PropertyInfo parametersProperty = Host.GetType().GetProperty("Parameters", BindingFlags.NonPublic | BindingFlags.Instance);
-        StringCollection parameters = (StringCollection)parametersProperty.GetValue(Host, null);
-        foreach (string parameter in parameters)
-        {
-            string[] values = parameter.Split('!');
-            int length = values.Length;
-            if (values[length - 2] == propertyName)
-                return values[length - 1];
-        }
-        return null;
-    }
-#>
-
 <#+
     public void Run()
     {
         Console.WriteLine("Hello world.");
         Console.WriteLine("P1 = " + GetCommandLineProperty("P1"));
         Console.WriteLine("p2 = " + GetCommandLineProperty("p2"));
+
+        SetData("count", 1);
+        SetData("parameter1", "value 1");
+        ProcessTemplate("SubTemplate.tt", "Out1.txt");
+
+        SetData("count", 2);
+        SetData("parameter1", "value 1");
+        SetData("parameter2", "value 2");
+        ProcessTemplate("SubTemplate.tt", "Out2.txt");
     }
 #>
-
