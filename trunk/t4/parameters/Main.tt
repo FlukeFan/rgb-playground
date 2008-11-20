@@ -1,0 +1,31 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ import namespace="System.Collections.Specialized" #>
+<#@ import namespace="System.Reflection" #>
+
+<# Run(); #>
+
+<#+
+    private string GetCommandLineProperty(string propertyName)
+    {
+        PropertyInfo parametersProperty = Host.GetType().GetProperty("Parameters", BindingFlags.NonPublic | BindingFlags.Instance);
+        StringCollection parameters = (StringCollection)parametersProperty.GetValue(Host, null);
+        foreach (string parameter in parameters)
+        {
+            string[] values = parameter.Split('!');
+            int length = values.Length;
+            if (values[length - 2] == propertyName)
+                return values[length - 1];
+        }
+        return null;
+    }
+#>
+
+<#+
+    public void Run()
+    {
+        Console.WriteLine("Hello world.");
+        Console.WriteLine("P1 = " + GetCommandLineProperty("P1"));
+        Console.WriteLine("p2 = " + GetCommandLineProperty("p2"));
+    }
+#>
+
