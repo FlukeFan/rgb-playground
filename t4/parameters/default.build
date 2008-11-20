@@ -4,12 +4,12 @@
     <target name="build">
 
         <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
-        <setenv name="PATH" value="..\..\SDKs\t4;%PATH%"/>
+        <setenv name="PATH" value="${project::get-base-directory()}\..\..\SDKs\t4;%PATH%"/>
 
         <exec program="TextTransform" commandline="-a P1!123 -a p2!234 Main.tt" />
 
     </target>
-    
+
     <target name="clean">
         <delete file="Main.txt"/>
     </target>
