@@ -31,11 +31,6 @@ namespace Demo
     public class Demo
     {
 
-        /*public static void Test<T>(Func<T, bool> func)
-        {
-            Console.WriteLine(func);
-        }*/
-
         public static void Test<T>(Expression<Func<T, bool>> e)
         {
             BinaryExpression be = (BinaryExpression)e.Body;
@@ -51,11 +46,22 @@ namespace Demo
         public static void Main()
         {
             Test((Person p) => p.Name == "test");
-            DetachedCriteria criteria =
-                DetachedCriteria.For<Person>();
-            //criteria.Add(NHibernate.Criterion.Expression.Eq("Name", "test"));
-            criteria.Add((Person p) => p.Name == "test");
-            Console.WriteLine(criteria);
+
+            DetachedCriteria criteria1 =
+                DetachedCriteria.For<Person>()
+                .Add(NHibernate.Criterion.Expression.Eq("Name", "test1"));
+
+            DetachedCriteria criteria2 =
+                DetachedCriteria.For<Person>()
+                .Add((Person p) => p.Name == "test2");
+
+            DetachedCriteria criteria3 =
+                DetachedCriteria.For<Person>()
+                .Add<Person>(p => p.Name == "test3");
+
+            Console.WriteLine(criteria1);
+            Console.WriteLine(criteria2);
+            Console.WriteLine(criteria3);
         }
 
     }
