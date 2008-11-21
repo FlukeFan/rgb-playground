@@ -6,17 +6,26 @@
   <target name="build">
 
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+    <mkdir dir="build\debug"/>
+    <copy todir="build\debug">
+      <fileset basedir="..\..\SDKs\NHibernate\bin\net-2.0">
+        <include name="*.*" />
+      </fileset>
+    </copy>
 
     <csc target="exe"
-         output="Run.exe"
+         output="build\debug\Run.exe"
          warnaserror="true">
 
+      <references>
+        <include name="build\debug\nhibernate.dll" />
+      </references>
       <sources>
         <include name="*.cs" />
       </sources>
     </csc>
 
-    <exec program="Run.exe" />
+    <exec program="build\debug\Run.exe" />
 
   </target>
 
