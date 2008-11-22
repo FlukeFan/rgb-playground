@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project name="Demo" default="build" xsi:schemaLocation="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd ..\..\SDKs\nant-0.86\schema\nant.xsd" xmlns="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<property name="nant.settings.currentframework" value="net-3.5" />
+
+  <target name="build">
+
+    <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+    <mkdir dir="build\debug"/>
+    <copy todir="build\debug">
+      <fileset basedir="..\..\SDKs\NHibernate\bin\net-2.0">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+
+    <csc target="library"
+         output="build\debug\NHibernate.LambdaExpressions.dll"
+         doc="build\debug\NHibernate.LambdaExpressions.xml"
+         warnaserror="true">
+
+      <references>
+        <include name="build\debug\nhibernate.dll" />
+      </references>
+      <sources>
+        <include name="Source\*.cs" />
+      </sources>
+    </csc>
+      
+    
+
+  </target>
+
+  <target name="clean">
+  </target>
+
+</project>
