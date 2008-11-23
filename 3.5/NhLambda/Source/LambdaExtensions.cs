@@ -9,9 +9,19 @@ using NHibernate.Criterion;
 namespace NHibernate.LambdaExpressions
 {
 
+    /// <summary>
+    /// Extension methods for NHibernate DetachedCriteria class
+    /// </summary>
     public static class DetachedCriteriaExtension
     {
 
+        /// <summary>
+        /// Add criterion expressed as a lambda expression
+        /// </summary>
+        /// <typeparam name="T">Type (same as DetachedCriteria type)</typeparam>
+        /// <param name="criteria">DetachedCriteria instance</param>
+        /// <param name="e">Lambda expression</param>
+        /// <returns>DetachedCriteria instance</returns>
         public static DetachedCriteria Add<T>(this DetachedCriteria criteria, Expression<Func<T, bool>> e)
         {
             BinaryExpression be = (BinaryExpression)e.Body;

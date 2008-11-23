@@ -25,8 +25,33 @@
         <include name="Source\*.cs" />
       </sources>
     </csc>
-      
-    
+
+    <csc target="library"
+         debug="true"
+         output="build\debug\NHibernate.LambdaExpressions.Test.dll"
+         warnaserror="true">
+
+      <references>
+        <include name="build\debug\nhibernate.dll" />
+        <include name="build\debug\NHibernate.LambdaExpressions.dll" />
+        <include name="..\..\SDKs\nant-0.86\bin\lib\net\1.0\nunit.framework.dll" />
+      </references>
+
+      <sources>
+        <include name="Source\Test\*.cs" />
+      </sources>
+
+    </csc>
+
+    <nunit2>
+      <formatter type="Plain"/>
+      <formatter type="Xml" usefile="true" extension=".xml"/>
+      <test>
+        <assemblies>
+          <include name="build\debug\NHibernate.LambdaExpressions.Test.dll"/>
+        </assemblies>
+      </test>
+    </nunit2>
 
   </target>
 
