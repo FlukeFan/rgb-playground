@@ -32,6 +32,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="NHibernate" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\SDKs\nant-0.86\bin\lib\net\1.0\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="..\..\SDKs\ExecParse\ExecParse.dll" TaskName="ExecParse.ExecParse" />
