@@ -26,8 +26,11 @@ namespace NHibernate.LambdaExpressions
         {
             BinaryExpression be = (BinaryExpression)e.Body;
             MemberExpression me = (MemberExpression)be.Left;
-            ConstantExpression ce = (ConstantExpression)be.Right;
-            criteria.Add(NHibernate.Criterion.Expression.Eq(me.Member.Name, ce.Value));
+
+            var valueExpression = Expression<Func<object>>.Lambda<Func<object>>(be.Right).Compile();
+            var value = valueExpression.Invoke();
+
+            criteria.Add(NHibernate.Criterion.Expression.Eq(me.Member.Name, value));
             return criteria;
         }
 
