@@ -26,6 +26,21 @@ namespace NHibernate.LambdaExpressions.Test
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
 
+        [Test]
+        public void TestSimpleEqWithMemberExpression()
+        {
+            DetachedCriteria expected =
+                DetachedCriteria.For<Person>()
+                    .Add(Expression.Eq("Name", "test name"));
+
+            string name = "test name";
+            DetachedCriteria actual =
+                DetachedCriteria.For<Person>()
+                    .Add<Person>(p => p.Name == name);
+
+            Assert.AreEqual(expected.ToString(), actual.ToString());
+        }
+
     }
 
 }
