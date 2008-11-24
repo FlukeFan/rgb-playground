@@ -41,6 +41,20 @@ namespace NHibernate.LambdaExpressions.Test
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
 
+        [Test]
+        public void TestSimpleGt()
+        {
+            DetachedCriteria expected =
+                DetachedCriteria.For<Person>()
+                    .Add(Expression.Gt("Age", 10));
+
+            DetachedCriteria actual =
+                DetachedCriteria.For<Person>()
+                    .Add<Person>(p => p.Age > 10);
+
+            Assert.AreEqual(expected.ToString(), actual.ToString());
+        }
+
     }
 
 }

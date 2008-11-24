@@ -12,8 +12,14 @@
         <include name="*.*" />
       </fileset>
     </copy>
+    <copy todir="build\debug">
+      <fileset basedir="..\..\SDKs\nant-0.86\bin\lib\common\2.0\">
+        <include name="nunit.framework.dll" />
+      </fileset>
+    </copy>
 
     <csc target="library"
+         debug="true"
          output="build\debug\NHibernate.LambdaExpressions.dll"
          doc="build\debug\NHibernate.LambdaExpressions.xml"
          warnaserror="true">
@@ -34,7 +40,7 @@
       <references>
         <include name="build\debug\nhibernate.dll" />
         <include name="build\debug\NHibernate.LambdaExpressions.dll" />
-        <include name="..\..\SDKs\nant-0.86\bin\lib\net\1.0\nunit.framework.dll" />
+        <include name="build\debug\nunit.framework.dll" />
       </references>
 
       <sources>
