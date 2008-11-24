@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -15,6 +16,25 @@ namespace NHibernate.LambdaExpressions
     public static class DetachedCriteriaExtension
     {
 
+        private readonly static IDictionary<ExpressionType, Func<string, object, ICriterion>> _simpleExpressionCreators = null;
+
+        static DetachedCriteriaExtension()
+        {
+            _simpleExpressionCreators = new Dictionary<ExpressionType, Func<string, object, ICriterion>>();
+            _simpleExpressionCreators[ExpressionType.Equal] = Eq;
+            _simpleExpressionCreators[ExpressionType.GreaterThan] = Gt;
+        }
+
+        private static ICriterion Eq(string propertyName, object value)
+        {
+            return NHibernate.Criterion.Expression.Eq(propertyName, value);
+        }
+        
+        private static ICriterion Gt(string propertyName, object value)
+        {
+            return NHibernate.Criterion.Expression.Gt(propertyName, value);
+        }
+        
         /// <summary>
         /// Add criterion expressed as a lambda expression
         /// </summary>
@@ -27,10 +47,12 @@ namespace NHibernate.LambdaExpressions
             BinaryExpression be = (BinaryExpression)e.Body;
             MemberExpression me = (MemberExpression)be.Left;
 
-            var valueExpression = Expression<Func<object>>.Lambda<Func<object>>(be.Right).Compile();
-            var value = valueExpression.Invoke();
+            var valueExpression = System.Linq.Expressions.Expression.Lambda(be.Right).Compile();
+            var value = valueExpression.DynamicInvoke();
 
-            criteria.Add(NHibernate.Criterion.Expression.Eq(me.Member.Name, value));
+            Func<string, object, ICriterion> simpleExpressionCreator = _simpleExpressionCreators[be.NodeType];
+            ICriterion criterion = simpleExpressionCreator(me.Member.Name, value);
+            criteria.Add(criterion);
             return criteria;
         }
 

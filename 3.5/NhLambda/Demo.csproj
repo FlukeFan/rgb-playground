@@ -6,8 +6,8 @@
     <ErrorReport>prompt</ErrorReport>
     <OutputType>Library</OutputType>
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files\Internet Explorer\iexplore.exe</StartProgram>
-    <StartArguments>$(MSBuildProjectDirectory)\build\debug\SilverlightPassiveViewDemo.html</StartArguments>
+    <StartProgram>$(MSBuildProjectDirectory)\..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit-console.exe</StartProgram>
+    <StartArguments>$(MSBuildProjectDirectory)\build\debug\NHibernate.LambdaExpressions.Test.dll</StartArguments>
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
@@ -33,7 +33,7 @@
     <Reference Include="System.Core" />
     <Reference Include="NHibernate" />
     <Reference Include="nunit.framework">
-      <HintPath>..\..\SDKs\nant-0.86\bin\lib\net\1.0\nunit.framework.dll</HintPath>
+      <HintPath>..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
