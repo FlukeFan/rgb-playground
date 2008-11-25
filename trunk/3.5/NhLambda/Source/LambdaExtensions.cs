@@ -40,11 +40,12 @@ namespace NHibernate.LambdaExpressions
         /// </summary>
         /// <typeparam name="T">Type (same as DetachedCriteria type)</typeparam>
         /// <param name="criteria">DetachedCriteria instance</param>
-        /// <param name="e">Lambda expression</param>
+        /// <param name="expression">Lambda expression</param>
         /// <returns>DetachedCriteria instance</returns>
-        public static DetachedCriteria Add<T>(this DetachedCriteria criteria, Expression<Func<T, bool>> e)
+        public static DetachedCriteria Add<T>(  this DetachedCriteria       criteria,
+                                                Expression<Func<T, bool>>   expression)
         {
-            BinaryExpression be = (BinaryExpression)e.Body;
+            BinaryExpression be = (BinaryExpression)expression.Body;
             MemberExpression me = (MemberExpression)be.Left;
 
             var valueExpression = System.Linq.Expressions.Expression.Lambda(be.Right).Compile();
@@ -53,6 +54,23 @@ namespace NHibernate.LambdaExpressions
             Func<string, object, ICriterion> simpleExpressionCreator = _simpleExpressionCreators[be.NodeType];
             ICriterion criterion = simpleExpressionCreator(me.Member.Name, value);
             criteria.Add(criterion);
+            return criteria;
+        }
+
+        /// <summary>
+        /// Add order expressed as a lambda expression
+        /// </summary>
+        /// <typeparam name="T">Type (same as DetachedCriteria type)</typeparam>
+        /// <param name="criteria">DetachedCriteria instance</param>
+        /// <param name="expression">Lamba expression</param>
+        /// <param name="order">Order delegate</param>
+        /// <returns>DetachedCriteria instance</returns>
+        public static DetachedCriteria AddOrder<T>( this DetachedCriteria       criteria,
+                                                    Expression<Func<T, object>> expression,
+                                                    Func<string, Order>         order)
+        {
+            MemberExpression me = (MemberExpression)expression.Body;
+            criteria.AddOrder(order(me.Member.Name));
             return criteria;
         }
 

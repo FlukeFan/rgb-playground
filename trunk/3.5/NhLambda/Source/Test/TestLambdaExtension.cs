@@ -12,6 +12,11 @@ namespace NHibernate.LambdaExpressions.Test
     public class TestLambdaExtension
     {
 
+        private void AssertCriteriaAreEqual(DetachedCriteria expected, DetachedCriteria actual)
+        {
+            Assert.AreEqual(expected.ToString(), actual.ToString());
+        }
+
         [Test]
         public void TestSimpleEq()
         {
@@ -23,7 +28,7 @@ namespace NHibernate.LambdaExpressions.Test
                 DetachedCriteria.For<Person>()
                     .Add<Person>(p => p.Name == "test name");
 
-            Assert.AreEqual(expected.ToString(), actual.ToString());
+            AssertCriteriaAreEqual(expected, actual);
         }
 
         [Test]
@@ -38,7 +43,7 @@ namespace NHibernate.LambdaExpressions.Test
                 DetachedCriteria.For<Person>()
                     .Add<Person>(p => p.Name == name);
 
-            Assert.AreEqual(expected.ToString(), actual.ToString());
+            AssertCriteriaAreEqual(expected, actual);
         }
 
         [Test]
@@ -52,7 +57,21 @@ namespace NHibernate.LambdaExpressions.Test
                 DetachedCriteria.For<Person>()
                     .Add<Person>(p => p.Age > 10);
 
-            Assert.AreEqual(expected.ToString(), actual.ToString());
+            AssertCriteriaAreEqual(expected, actual);
+        }
+
+        [Test]
+        public void TestOrderAsc()
+        {
+            DetachedCriteria expected =
+                DetachedCriteria.For<Person>()
+                    .AddOrder(Order.Desc("Name"));
+
+            DetachedCriteria actual =
+                DetachedCriteria.For<Person>()
+                    .AddOrder<Person>(p => p.Name, Order.Desc);
+
+            AssertCriteriaAreEqual(expected, actual);
         }
 
     }
