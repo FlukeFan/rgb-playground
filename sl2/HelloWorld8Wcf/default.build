@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Sl2" default="build" xsi:schemaLocation="http://nant.sf.net/release/0.85/nant.xsd ..\..\SDKs\nant-0.85\schema\nant.xsd" xmlns="http://nant.sf.net/release/0.85/nant.xsd"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project name="SlWcf" default="build" xsi:schemaLocation="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd ..\..\SDKs\nant-0.86\schema\nant.xsd" xmlns="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <target name="build">
 
@@ -8,7 +8,7 @@
         <servicecontroller action="Start" service="w3svc" />
 
         <mkiisdir   dirpath="build"
-                    vdirname="samples"
+                    vdirname="sl_wcf"
                     enabledirbrowsing="true"
                     />
 
@@ -20,8 +20,6 @@
              warnaserror="true">
 
             <references>
-                <include name="..\..\SDKs\Wcf\System.Runtime.Serialization.dll" />
-                <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
             </references>
 
           <resources>
@@ -39,7 +37,6 @@
              warnaserror="true">
 
             <references>
-                <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
                 <include name="build\bin\Domain.dll" />
             </references>
 
@@ -48,7 +45,7 @@
 
           <sources>
                 <include name="service\service.cs" />
-            </sources>
+          </sources>
 
         </csc>
 
@@ -63,7 +60,6 @@
              warnaserror="true">
 
             <references>
-                <include name="..\..\SDKs\Wcf\System.ServiceModel.dll" />
                 <include name="build\bin\nunit.framework.dll" />
                 <include name="build\bin\Domain.dll" />
                 <include name="build\bin\Service.dll" />
@@ -85,25 +81,26 @@
         <setenv name="PATH" value="..\..\SDKs\SL;%PATH%"/>
         <mkdir dir="build\client" />
 
-        <copy file="sl\Page.xaml"           todir="build\client" />
-        <copy file="sl\AppManifest.xaml"    todir="build\client" />
-        <copy file="sl\default.html"        todir="build" />
+        <copy file="sl\Page.xaml"                       todir="build\client" />
+        <copy file="sl\AppManifest.xaml"                todir="build\client" />
+        <copy file="..\..\SDKs\SL\tools\Silverlight.js" todir="build\" />
+        <copy file="sl\default.html"                    todir="build" />
 
         <csc    target="library"
                 debug="true"
-                output="build\client\Sl2.dll"
+                output="build\client\SlWcf.dll"
                 warnaserror="true"
                 nostdlib="true"
                 noconfig="true">
 
             <references>
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\mscorlib.dll" />
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.dll" />
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Runtime.Serialization.dll" />
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.ServiceModel.dll" />
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Windows.dll" />
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Windows.Browser.dll" />
-                <include name="C:\Program Files\Microsoft Silverlight\2.0.30523.6\System.Xml.dll" />
+                <include name="..\..\SDKs\SL\ref\mscorlib.dll" />
+                <include name="..\..\SDKs\SL\ref\System.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Runtime.Serialization.dll" />
+                <include name="..\..\SDKs\SL\ref\System.ServiceModel.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Windows.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Windows.Browser.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Xml.dll" />
             </references>
 
           <resources>
@@ -116,8 +113,8 @@
 
         </csc>
 
-        <delete file="build\Sl2.xap" />
-        <exec program="chiron" commandline="/directory:build\client /xap:build\Sl2.xap" />
+        <delete file="build\SlWcf.xap" />
+        <exec program="..\..\SDKs\SL\tools\chiron" commandline="/directory:build\client /xap:build\SlWcf.xap" />
 
     </target>
 

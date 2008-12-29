@@ -1,7 +1,7 @@
 ﻿<UserControl
                 xmlns="http://schemas.microsoft.com/client/2007"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                x:Class="Sl2.Page"
+                x:Class="SlWcf.Page"
                 x:Name="MyPage"
                 >
     <StackPanel>
