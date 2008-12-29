@@ -51,7 +51,7 @@ namespace Demo.Domain
 }
 
 
-namespace Sl2
+namespace SlWcf
 {
 
     [ServiceContract]
@@ -96,7 +96,7 @@ namespace Sl2
 
         private static Binding defaultBinding = new System.ServiceModel.BasicHttpBinding();
 
-        private static EndpointAddress defaultAddress = new System.ServiceModel.EndpointAddress("http://localhost/samples/TestService.svc");
+        private static EndpointAddress defaultAddress = new System.ServiceModel.EndpointAddress("http://localhost/sl_wcf/TestService.svc");
 
         public ServiceClient()
             :

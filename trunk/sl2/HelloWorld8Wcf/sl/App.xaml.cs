@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Browser;
 
-namespace Sl2
+namespace SlWcf
 {
 
     public class App : Application

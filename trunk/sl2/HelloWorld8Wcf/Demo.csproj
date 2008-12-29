@@ -6,7 +6,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
     <StartAction>URL</StartAction>
-    <StartURL>http://localhost/samples</StartURL>
+    <StartURL>http://localhost/sl_wcf</StartURL>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -31,22 +31,14 @@
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks" >
-      <HintPath>..\..\SDKs\Rhino.Mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ServiceModel" >
-      <HintPath>..\..\SDKs\Wcf\System.ServiceModel.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" >
-      <HintPath>..\..\SDKs\Wcf\System.Runtime.Serialization.dll</HintPath>
-    </Reference>
+    <Reference Include="nunit.framework"/>
+    <Reference Include="Rhino.Mocks" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <UsingTask AssemblyFile="..\..\SDKs\ExecParse.dll" TaskName="ExecParse.ExecParse" />
+  <UsingTask AssemblyFile="..\..\SDKs\ExecParse\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>
 
@@ -88,12 +80,12 @@
   </PropertyGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <ExecParse Command="..\..\SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="..\..\SDKs\nant-0.86\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <ExecParse Command="..\..\SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="..\..\SDKs\nant-0.86\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
