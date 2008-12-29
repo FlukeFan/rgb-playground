@@ -12,6 +12,7 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
+    <ProjectGuid>{263BDCE5-2110-422E-AACA-7CD47D0C91A5}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
@@ -31,10 +32,13 @@
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework"/>
-    <Reference Include="Rhino.Mocks" />
-    <Reference Include="System.ServiceModel" />
+    <Reference Include="nunit.framework">
+      <HintPath>build\bin\nunit.framework.dll</HintPath>
+    </Reference>
+    <!--<Reference Include="Rhino.Mocks" />-->
+    <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
