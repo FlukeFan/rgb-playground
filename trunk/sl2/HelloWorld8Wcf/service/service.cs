@@ -10,6 +10,10 @@ namespace Demo.Services
     [ServiceContract()]
     public interface ITestService
     {
+
+        [OperationContract()]
+        Person GetPersonGraph();
+
         [OperationContract()]
         Composite1 GetC1();
 
@@ -20,6 +24,39 @@ namespace Demo.Services
 
     public class TestService : ITestService
     {
+
+        public Person GetPersonGraph()
+        {
+            Person father =
+                Person.CreatePerson()
+                    .SetName("father")
+                    .SetAge(50)
+                    .SetGender(PersonGender.Male);
+
+            Person child1 =
+                Person.CreatePerson()
+                    .SetName("daughter")
+                    .SetAge(1)
+                    .SetGender(PersonGender.Female);
+
+            Person child2 =
+                Person.CreatePerson()
+                    .SetName("son")
+                    .SetAge(2)
+                    .SetGender(PersonGender.Male);
+
+            Person person =
+                Person.CreatePerson()
+                    .SetName("test person")
+                    .SetAge(30)
+                    .SetGender(PersonGender.Female)
+                    .SetFather(father)
+                    .AddChild(child1)
+                    .AddChild(child2);
+
+            return person;
+        }
+
         public Composite1 GetC1()
         {
             Composite1 c = new Composite1();

@@ -52,7 +52,7 @@
         <copy file="service\web.config"         tofile="build\web.config" />
         <copy file="service\TestService.svc"    tofile="build\TestService.svc" />
 
-        <copy file="..\..\SDKs\nant-0.85\bin\lib\net\2.0\nunit.framework.dll" tofile="build\bin\nunit.framework.dll" />
+        <copy file="..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit.framework.dll" tofile="build\bin\nunit.framework.dll" />
 
         <csc target="exe"
              debug="true"
@@ -116,6 +116,11 @@
         <delete file="build\SlWcf.xap" />
         <exec program="..\..\SDKs\SL\tools\chiron" commandline="/directory:build\client /xap:build\SlWcf.xap" />
 
+    </target>
+  
+    <target name="clean">
+      <deliisdir vdirname="sl_wcf"/>
+      <delete dir="build" />
     </target>
 
 </project>

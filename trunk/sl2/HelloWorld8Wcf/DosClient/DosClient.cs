@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 
 using NUnit.Framework;
@@ -36,6 +37,16 @@ namespace Demo
             }
         }
 
+        public static void Test3()
+        {
+            Person person = _service.GetPersonGraph();
+            Assert.AreEqual("test person", person.Name);
+            Assert.AreEqual(30, person.Age);
+
+            Assert.AreEqual("father", person.Father.Name);
+            Assert.AreEqual("son", person.ChildrenEnumeration.Skip(1).Take(1).First().Name);
+        }
+
         public static int Main(string[] args)
         {
             try
@@ -43,6 +54,7 @@ namespace Demo
                 _service = new ChannelFactory<ITestService>("TestService").CreateChannel();
                 Test1();
                 Test2();
+                Test3();
                 Console.WriteLine("Done");
                 return 0;
             }
