@@ -52,12 +52,16 @@ namespace Demo.Domain
     [Serializable]
     public class NameNotUniqueException : DomainException
     {
-        public NameNotUniqueException(Person duplicatePerson) : base("Name not unique - " + duplicatePerson.Name)
+        public NameNotUniqueException(string message) : base(message)
         {
-            DuplicatePerson = duplicatePerson;
         }
 
-        public Person DuplicatePerson { get; protected set; }
+        public NameNotUniqueException(Person duplicatePerson) : base("Name not unique - " + duplicatePerson.Name)
+        {
+            DuplicateName = duplicatePerson.Name;
+        }
+
+        public string DuplicateName { get; protected set; }
     }
 
     [Serializable]
@@ -71,63 +75,32 @@ namespace Demo.Domain
     {
         public string Message;
         public string Class;
-        public string SerialisedException;
-
-        private static string ToXml(Object sourceObject)
-        {
-            string xml;
-
-            if (sourceObject == null)
-            {
-                xml = "<null/>";
-            }
-            else
-            {
-                SoapFormatter soapFormatter = new SoapFormatter();
-                MemoryStream memoryStream = new MemoryStream();
-                XmlDocument soapDocument = new XmlDocument();
-
-                soapFormatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
-                soapFormatter.FilterLevel = TypeFilterLevel.Full;
-                soapFormatter.TypeFormat = FormatterTypeStyle.TypesWhenNeeded;
-
-                soapFormatter.Serialize(memoryStream, sourceObject);
-                memoryStream.Position = 0;
-                soapDocument.Load(memoryStream);
-
-                xml = soapDocument.InnerXml;
-            }
-
-            return xml;
-        }
-
-        private static object ToObject(string xml)
-        {
-            XmlDocument soapDocument = new XmlDocument();
-            soapDocument.LoadXml(xml);
-            MemoryStream memoryStream = new MemoryStream();
-            soapDocument.Save(memoryStream);
-            memoryStream.Position = 0;
-            SoapFormatter soapFormatter = new SoapFormatter();
-            soapFormatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
-            soapFormatter.FilterLevel = TypeFilterLevel.Full;
-            soapFormatter.TypeFormat = FormatterTypeStyle.TypesWhenNeeded;
-            object value = soapFormatter.Deserialize(memoryStream);
-            return value;
-        }
+        public IDictionary<string, object> Properties;
 
         public static FaultException<DomainExceptionFault> CreateWcfException(DomainException exception)
         {
             DomainExceptionFault domainExceptionFault = new DomainExceptionFault();
             domainExceptionFault.Message = exception.Message;
             domainExceptionFault.Class = exception.GetType().FullName;
-            domainExceptionFault.SerialisedException = ToXml(exception);
+            domainExceptionFault.Properties = new Dictionary<string, object>();
+            foreach (PropertyInfo property in exception.GetType().GetProperties())
+            {
+                if (typeof(DomainException).IsAssignableFrom(property.DeclaringType))
+                {
+                    domainExceptionFault.Properties.Add(property.Name, property.GetValue(exception, null));
+                }
+            }
             return new FaultException<DomainExceptionFault>(domainExceptionFault, exception.Message);
         }
 
         public static DomainException CreateDomainException(DomainExceptionFault domainExceptionFault)
         {
-            DomainException exception = (DomainException)ToObject(domainExceptionFault.SerialisedException);
+            Type exceptionType = Type.GetType(domainExceptionFault.Class);
+            DomainException exception = (DomainException)exceptionType.GetConstructor(new Type[] {typeof(string)}).Invoke(new object[] {domainExceptionFault.Message});
+            foreach (string propertyName in domainExceptionFault.Properties.Keys)
+            {
+                exceptionType.GetProperty(propertyName).SetValue(exception, domainExceptionFault.Properties[propertyName], null);
+            }
             return exception;
         }
     }
