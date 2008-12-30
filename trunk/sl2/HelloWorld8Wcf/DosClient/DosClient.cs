@@ -56,18 +56,15 @@ namespace Demo
             }
             catch (FaultException<DomainExceptionFault> de)
             {
-                Console.WriteLine("Exception caught: "
-                    + "\n\t" + de.Detail.Message
-                    + "\n\t" + de.Detail.Class
-                    + "\n\t" + de.Detail.SerialisedException);
-/*                try
+                try
                 {
                     throw DomainExceptionFault.CreateDomainException(de.Detail);
                 }
                 catch (NameNotUniqueException e)
                 {
-                    Assert.AreEqual("a test exception value", e.DuplicatePerson.Name);
-                }*/
+                    Assert.AreEqual("Name not unique - duplicate person", e.Message);
+                    Assert.AreEqual("duplicate person", e.DuplicateName);
+                }
             }
         }
 
