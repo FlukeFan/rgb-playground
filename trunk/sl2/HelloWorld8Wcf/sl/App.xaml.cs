@@ -30,8 +30,8 @@ namespace SlWcf
 
         private void Application_Exit(object sender, EventArgs e)
         {
-
         }
+
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             HtmlPage.Window.Alert(e.ExceptionObject.ToString());

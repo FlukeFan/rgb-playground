@@ -5,9 +5,9 @@
                 x:Name="MyPage"
                 >
     <StackPanel>
-        <Button Content="ClickMe" x:Name="btnSend" Click="btnSend_Click" Width="100"/>
+        <Button Content="ClickMe" x:Name="Send" Width="100"/>
         <ScrollViewer>
-            <TextBlock x:Name="textResponse" Text="Hello world ..." TextWrapping="Wrap"/>
+            <TextBlock x:Name="textResponse" Text="Starting ..." TextWrapping="Wrap"/>
         </ScrollViewer>
     </StackPanel>
 </UserControl>
