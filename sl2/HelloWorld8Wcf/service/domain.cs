@@ -1,8 +1,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters;
+using System.Runtime.Serialization.Formatters.Soap;
 using System.ServiceModel;
+using System.Xml;
 
 namespace Demo.Domain
 {
@@ -38,21 +43,93 @@ namespace Demo.Domain
         public Person SetFather(Person father) { Father = father; return this; }
         public Person AddChild(Person child) { Children.Add(child); return this; }
 
-        public void Throw()
+        public Person Throw()
         {
             throw new NameNotUniqueException(this);
         }
     }
 
     [Serializable]
-    public class NameNotUniqueException : ApplicationException
+    public class NameNotUniqueException : DomainException
     {
-        public NameNotUniqueException(Person duplicatePerson)
+        public NameNotUniqueException(Person duplicatePerson) : base("Name not unique - " + duplicatePerson.Name)
         {
             DuplicatePerson = duplicatePerson;
         }
 
         public Person DuplicatePerson { get; protected set; }
+    }
+
+    [Serializable]
+    public abstract class DomainException : ApplicationException
+    {
+        public DomainException(string message) : base(message) { }
+    }
+
+    [Serializable]
+    public class DomainExceptionFault
+    {
+        public string Message;
+        public string Class;
+        public string SerialisedException;
+
+        private static string ToXml(Object sourceObject)
+        {
+            string xml;
+
+            if (sourceObject == null)
+            {
+                xml = "<null/>";
+            }
+            else
+            {
+                SoapFormatter soapFormatter = new SoapFormatter();
+                MemoryStream memoryStream = new MemoryStream();
+                XmlDocument soapDocument = new XmlDocument();
+
+                soapFormatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
+                soapFormatter.FilterLevel = TypeFilterLevel.Full;
+                soapFormatter.TypeFormat = FormatterTypeStyle.TypesWhenNeeded;
+
+                soapFormatter.Serialize(memoryStream, sourceObject);
+                memoryStream.Position = 0;
+                soapDocument.Load(memoryStream);
+
+                xml = soapDocument.InnerXml;
+            }
+
+            return xml;
+        }
+
+        private static object ToObject(string xml)
+        {
+            XmlDocument soapDocument = new XmlDocument();
+            soapDocument.LoadXml(xml);
+            MemoryStream memoryStream = new MemoryStream();
+            soapDocument.Save(memoryStream);
+            memoryStream.Position = 0;
+            SoapFormatter soapFormatter = new SoapFormatter();
+            soapFormatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
+            soapFormatter.FilterLevel = TypeFilterLevel.Full;
+            soapFormatter.TypeFormat = FormatterTypeStyle.TypesWhenNeeded;
+            object value = soapFormatter.Deserialize(memoryStream);
+            return value;
+        }
+
+        public static FaultException<DomainExceptionFault> CreateWcfException(DomainException exception)
+        {
+            DomainExceptionFault domainExceptionFault = new DomainExceptionFault();
+            domainExceptionFault.Message = exception.Message;
+            domainExceptionFault.Class = exception.GetType().FullName;
+            domainExceptionFault.SerialisedException = ToXml(exception);
+            return new FaultException<DomainExceptionFault>(domainExceptionFault, exception.Message);
+        }
+
+        public static DomainException CreateDomainException(DomainExceptionFault domainExceptionFault)
+        {
+            DomainException exception = (DomainException)ToObject(domainExceptionFault.SerialisedException);
+            return exception;
+        }
     }
 
     [DataContract]

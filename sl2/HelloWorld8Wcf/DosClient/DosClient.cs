@@ -47,6 +47,30 @@ namespace Demo
             Assert.AreEqual("son", person.ChildrenEnumeration.Skip(1).Take(1).First().Name);
         }
 
+        public static void Test4()
+        {
+            try
+            {
+                _service.GetPersonThrowError();
+                Assert.Fail("no exception thrown");
+            }
+            catch (FaultException<DomainExceptionFault> de)
+            {
+                Console.WriteLine("Exception caught: "
+                    + "\n\t" + de.Detail.Message
+                    + "\n\t" + de.Detail.Class
+                    + "\n\t" + de.Detail.SerialisedException);
+/*                try
+                {
+                    throw DomainExceptionFault.CreateDomainException(de.Detail);
+                }
+                catch (NameNotUniqueException e)
+                {
+                    Assert.AreEqual("a test exception value", e.DuplicatePerson.Name);
+                }*/
+            }
+        }
+
         public static int Main(string[] args)
         {
             try
@@ -55,6 +79,7 @@ namespace Demo
                 Test1();
                 Test2();
                 Test3();
+                Test4();
                 Console.WriteLine("Done");
                 return 0;
             }

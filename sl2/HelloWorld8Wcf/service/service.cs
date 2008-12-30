@@ -15,6 +15,10 @@ namespace Demo.Services
         Person GetPersonGraph();
 
         [OperationContract()]
+        [FaultContract(typeof(DomainExceptionFault))]
+        Person GetPersonThrowError();
+
+        [OperationContract()]
         Composite1 GetC1();
 
         [OperationContract()]
@@ -55,6 +59,21 @@ namespace Demo.Services
                     .AddChild(child2);
 
             return person;
+        }
+
+        public Person GetPersonThrowError()
+        {
+            try
+            {
+                return
+                    Person.CreatePerson()
+                        .SetName("duplicate person")
+                        .Throw();
+            }
+            catch (DomainException e)
+            {
+                throw DomainExceptionFault.CreateWcfException(e);
+            }
         }
 
         public Composite1 GetC1()
