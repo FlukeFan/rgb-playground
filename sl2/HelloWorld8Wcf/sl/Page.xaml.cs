@@ -18,9 +18,12 @@ namespace SlWcf
         private ServiceClient client;
 
         private Button _send;
+        private List<string> _calls = new List<string>();
+        private Storyboard _timer;
 
         public Page()
         {
+            _timer = new Storyboard();
             client = new ServiceClient();
             client.GetC1Completed += new EventHandler<GetC1CompletedEventArgs>(client_GetC1Completed);
             Loaded += new RoutedEventHandler(Page_Loaded);
@@ -30,6 +33,16 @@ namespace SlWcf
         {
             _send = (Button)FindName("Send");
             _send.Click += new RoutedEventHandler(Send_Click);
+
+            _timer.Duration = new TimeSpan(0, 0, 5);
+            _timer.Completed += new EventHandler(timer_Completed);
+            _timer.Begin();
+        }
+
+        private void timer_Completed(object sender, EventArgs e)
+        {
+            Send_Click(null, null);
+            _timer.Begin();
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)
