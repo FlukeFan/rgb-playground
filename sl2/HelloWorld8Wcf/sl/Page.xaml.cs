@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Browser;
@@ -16,13 +17,22 @@ namespace SlWcf
 
         private ServiceClient client;
 
+        private Button _send;
+
         public Page()
         {
             client = new ServiceClient();
             client.GetC1Completed += new EventHandler<GetC1CompletedEventArgs>(client_GetC1Completed);
+            Loaded += new RoutedEventHandler(Page_Loaded);
         }
 
-        private void btnSend_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _send = (Button)FindName("Send");
+            _send.Click += new RoutedEventHandler(Send_Click);
+        }
+
+        private void Send_Click(object sender, RoutedEventArgs e)
         {
             client.GetC1Async();
             TextBlock tb = (TextBlock)FindName("textResponse");
