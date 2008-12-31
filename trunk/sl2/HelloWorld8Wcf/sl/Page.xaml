@@ -6,8 +6,10 @@
                 >
     <StackPanel>
         <Button Content="ClickMe" x:Name="Send" Width="100"/>
-        <ScrollViewer>
-            <TextBlock x:Name="textResponse" Text="Starting ..." TextWrapping="Wrap"/>
+        <ScrollViewer x:Name="ScrollViewer" Height="200">
+            <StackPanel x:Name="Messages">
+                <TextBlock Text="Loaded ..." TextWrapping="Wrap"/>
+            </StackPanel>
         </ScrollViewer>
     </StackPanel>
 </UserControl>
