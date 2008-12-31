@@ -18,6 +18,8 @@ namespace SlWcf
         private ServiceClient client;
 
         private Button _send;
+        private ScrollViewer _scrollViewer;
+        private StackPanel _messages;
         private List<string> _calls = new List<string>();
         private Storyboard _timer;
 
@@ -34,7 +36,10 @@ namespace SlWcf
             _send = (Button)FindName("Send");
             _send.Click += new RoutedEventHandler(Send_Click);
 
-            _timer.Duration = new TimeSpan(0, 0, 5);
+            _scrollViewer = (ScrollViewer)FindName("ScrollViewer");
+            _messages = (StackPanel)FindName("Messages");
+
+            _timer.Duration = new TimeSpan(0, 0, 1);
             _timer.Completed += new EventHandler(timer_Completed);
             _timer.Begin();
         }
@@ -45,24 +50,30 @@ namespace SlWcf
             _timer.Begin();
         }
 
+        private void Write(string message)
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = DateTime.Now + " - " + message;
+            _messages.Children.Add(textBlock);
+            _scrollViewer.ScrollToVerticalOffset(_scrollViewer.ExtentHeight);
+        }
+
         private void Send_Click(object sender, RoutedEventArgs e)
         {
             client.GetC1Async();
-            TextBlock tb = (TextBlock)FindName("textResponse");
-            tb.Text = "called";
+            Write("Called");
         }
 
         private void client_GetC1Completed(object sender, GetC1CompletedEventArgs e)
         {
-            TextBlock tb = (TextBlock)FindName("textResponse");
             if (e.Error != null)
             {
-                tb.Text = e.Error.ToString();
+                Write(e.ToString());
                 throw e.Error;
             }
             else
             {
-                tb.Text = e.Result.Value + ", " + e.Result.C2.Value;
+                Write(e.Result.Value + ", " + e.Result.C2.Value);
             }
         }
 
