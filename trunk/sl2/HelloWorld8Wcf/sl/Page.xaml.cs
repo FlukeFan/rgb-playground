@@ -1,8 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Browser;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -20,7 +20,8 @@ namespace SlWcf
         private Button _send;
         private ScrollViewer _scrollViewer;
         private StackPanel _messages;
-        private List<string> _calls = new List<string>();
+        private int _callIndex = 0;
+        private List<MethodInfo> _calls = new List<MethodInfo>();
         private Storyboard _timer;
 
         public Page()
@@ -39,15 +40,48 @@ namespace SlWcf
             _scrollViewer = (ScrollViewer)FindName("ScrollViewer");
             _messages = (StackPanel)FindName("Messages");
 
-            _timer.Duration = new TimeSpan(0, 0, 1);
+            foreach (MethodInfo testMethod in GetType().GetMethods())
+            {
+                if (testMethod.GetParameters().Length == 0
+                    && testMethod.DeclaringType == GetType())
+                {
+                    _calls.Add(testMethod);
+                }
+            }
+
+            _timer.Duration = new TimeSpan(0, 0, 0, 0, 500);
             _timer.Completed += new EventHandler(timer_Completed);
             _timer.Begin();
         }
 
-        private void timer_Completed(object sender, EventArgs e)
+        private void timer_Completed(object sender, EventArgs evt)
+        {
+            if (_callIndex < _calls.Count)
+            {
+                MethodInfo test = _calls[_callIndex];
+                Write("Calling " + test.Name);
+                try
+                {
+                    test.Invoke(this, null);
+                    Write("Pass");
+                }
+                catch (Exception e)
+                {
+                    Write("Fail");
+                    Write(e.ToString());
+                }
+                _callIndex++;
+                _timer.Begin();
+            }
+        }
+
+        public void Test1()
         {
             Send_Click(null, null);
-            _timer.Begin();
+        }
+
+        public void Test2()
+        {
         }
 
         private void Write(string message)
