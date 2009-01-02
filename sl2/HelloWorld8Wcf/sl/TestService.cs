@@ -13,6 +13,15 @@ using Demo.Domain;
 namespace Demo.Domain
 {
 
+    [System.Runtime.Serialization.DataContractAttribute(Name="Person", Namespace="http://schemas.datacontract.org/2004/07/Demo.Domain")]
+    public class Person
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="_name", IsRequired=true)]
+        public string Name { get; set; }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Age>k__BackingField", IsRequired=true)]
+        public int Age { get; set; }
+    }
+
     [DataContract]
     public class Composite1
     {
@@ -61,6 +70,11 @@ namespace SlWcf
         System.IAsyncResult BeginGetC1(System.AsyncCallback callback, object asyncState);
 
         Composite1 EndGetC1(System.IAsyncResult result);
+
+        [OperationContract(AsyncPattern=true, Action = "http://tempuri.org/ITestService/GetPersonGraph", ReplyAction = "http://tempuri.org/ITestService/GetPersonGraphResponse")]
+        System.IAsyncResult BeginGetPersonGraph(System.AsyncCallback callback, object asyncState);
+
+        Person EndGetPersonGraph(System.IAsyncResult result);
     }
 
     public partial class GetC1CompletedEventArgs : AsyncCompletedEventArgs
@@ -81,6 +95,28 @@ namespace SlWcf
             {
                 base.RaiseExceptionIfNecessary();
                 return ((Composite1)(this.results[0]));
+            }
+        }
+    }
+
+    public class GetPersonGraphCompletedEventArgs : AsyncCompletedEventArgs
+    {
+
+        private object[] results;
+
+        public GetPersonGraphCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
+            :
+                base(exception, cancelled, userState)
+        {
+            this.results = results;
+        }
+
+        public Person Result
+        {
+            get
+            {
+                base.RaiseExceptionIfNecessary();
+                return ((Person)(this.results[0]));
             }
         }
     }
@@ -165,6 +201,64 @@ namespace SlWcf
             base.InvokeAsync(this.onBeginGetC1Delegate, new object[] {}, this.onEndGetC1Delegate, this.onGetC1CompletedDelegate, userState);
         }
 
+        private BeginOperationDelegate onBeginGetPersonGraphDelegate;
+        private EndOperationDelegate onEndGetPersonGraphDelegate;
+        private SendOrPostCallback onGetPersonGraphCompletedDelegate;
+        public event EventHandler<GetPersonGraphCompletedEventArgs> GetPersonGraphCompleted;
+
+        IAsyncResult ITestService.BeginGetPersonGraph(System.AsyncCallback callback, object asyncState)
+        {
+            return base.Channel.BeginGetPersonGraph(callback, asyncState);
+        }
+
+        Person ITestService.EndGetPersonGraph(System.IAsyncResult result)
+        {
+            return base.Channel.EndGetPersonGraph(result);
+        }
+
+        private IAsyncResult OnBeginGetPersonGraph(object[] inValues, System.AsyncCallback callback, object asyncState)
+        {
+            return ((ITestService)(this)).BeginGetPersonGraph(callback, asyncState);
+        }
+
+        private object[] OnEndGetPersonGraph(System.IAsyncResult result)
+        {
+            Person retVal = ((ITestService)(this)).EndGetPersonGraph(result);
+            return new object[] {
+                    retVal};
+        }
+
+        private void OnGetPersonGraphCompleted(object state)
+        {
+            if ((this.GetPersonGraphCompleted != null))
+            {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetPersonGraphCompleted(this, new GetPersonGraphCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+
+        public void GetPersonGraphAsync()
+        {
+            this.GetPersonGraphAsync(null);
+        }
+
+        public void GetPersonGraphAsync(object userState)
+        {
+            if ((this.onBeginGetPersonGraphDelegate == null))
+            {
+                this.onBeginGetPersonGraphDelegate = new BeginOperationDelegate(this.OnBeginGetPersonGraph);
+            }
+            if ((this.onEndGetPersonGraphDelegate == null))
+            {
+                this.onEndGetPersonGraphDelegate = new EndOperationDelegate(this.OnEndGetPersonGraph);
+            }
+            if ((this.onGetPersonGraphCompletedDelegate == null))
+            {
+                this.onGetPersonGraphCompletedDelegate = new SendOrPostCallback(this.OnGetPersonGraphCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetPersonGraphDelegate, new object[] {}, this.onEndGetPersonGraphDelegate, this.onGetPersonGraphCompletedDelegate, userState);
+        }
+
         protected override ITestService CreateChannel()
         {
             return new ServiceClientChannel(this);
@@ -177,6 +271,20 @@ namespace SlWcf
                 :
                     base(client)
             {
+            }
+
+            public IAsyncResult BeginGetPersonGraph(AsyncCallback callback, object asyncState)
+            {
+                object[] _args = new object[0];
+                IAsyncResult _result = base.BeginInvoke("GetPersonGraph", _args, callback, asyncState);
+                return _result;
+            }
+
+            public Person EndGetPersonGraph(IAsyncResult result)
+            {
+                object[] _args = new object[0];
+                Person _result = ((Person)(base.EndInvoke("GetPersonGraph", _args, result)));
+                return _result;
             }
 
             public IAsyncResult BeginGetC1(AsyncCallback callback, object asyncState)

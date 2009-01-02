@@ -29,6 +29,7 @@ namespace SlWcf
             _timer = new Storyboard();
             client = new ServiceClient();
             client.GetC1Completed += new EventHandler<GetC1CompletedEventArgs>(client_GetC1Completed);
+            client.GetPersonGraphCompleted += new EventHandler<GetPersonGraphCompletedEventArgs>(client_GetPersonGraphCompleted);
             Loaded += new RoutedEventHandler(Page_Loaded);
         }
 
@@ -82,6 +83,22 @@ namespace SlWcf
 
         public void Test2()
         {
+            Write("Calling ...");
+            client.GetPersonGraphAsync();
+            Write("Called");
+        }
+
+        private void client_GetPersonGraphCompleted(object sender, GetPersonGraphCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                Write(e.ToString());
+            }
+            else
+            {
+                Write("Name=" + e.Result.Name);
+                Write("Age=" + e.Result.Age);
+            }
         }
 
         private void Write(string message)
