@@ -21,9 +21,16 @@ namespace Demo.Domain
     [Serializable]
     public class Person
     {
+        private string _name;
+
         protected Person() { }
 
-        public string Name { get; protected set; }
+        public string Name
+        {
+            get { return _name; }
+            protected set { _name = value; }
+        }
+
         public int Age { get; protected set; }
         public PersonGender Gender { get; protected set; }
         public Person Father { get; protected set; }
