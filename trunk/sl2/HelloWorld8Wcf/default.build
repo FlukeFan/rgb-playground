@@ -96,6 +96,7 @@
             <references>
                 <include name="..\..\SDKs\SL\ref\mscorlib.dll" />
                 <include name="..\..\SDKs\SL\ref\System.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Core.dll" />
                 <include name="..\..\SDKs\SL\ref\System.Runtime.Serialization.dll" />
                 <include name="..\..\SDKs\SL\ref\System.ServiceModel.dll" />
                 <include name="..\..\SDKs\SL\ref\System.Windows.dll" />
