@@ -19,7 +19,11 @@ namespace Demo.Domain
         [System.Runtime.Serialization.DataMemberAttribute(Name="_name", IsRequired=true)]
         public string Name { get; set; }
         [System.Runtime.Serialization.DataMemberAttribute(Name="<Age>k__BackingField", IsRequired=true)]
-        public int Age { get; set; }
+        public int Age;
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Father>k__BackingField", IsRequired=true)]
+        public Person Father { get; set; }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Children>k__BackingField", IsRequired=true)]
+        public IList<Person> Children { get; set; }
     }
 
     [DataContract]

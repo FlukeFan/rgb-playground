@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -96,8 +97,10 @@ namespace SlWcf
             }
             else
             {
-                Write("Name=" + e.Result.Name);
-                Write("Age=" + e.Result.Age);
+                Write("Name(test person)=" + e.Result.Name);
+                Write("Age(30)=" + e.Result.Age);
+                Write("Father(father)=" + e.Result.Father.Name);
+                Write("Child1(son)=" + e.Result.Children.Skip(1).Take(1).First().Name);
             }
         }
 
