@@ -1,5 +1,8 @@
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Reflection;
 using System.ServiceModel;
 
 using Demo.Domain;
@@ -7,9 +10,76 @@ using Demo.Domain;
 namespace Demo.Services
 {
 
+    [Serializable]
+    public class ServiceResult
+    {
+
+        protected ServiceResult()
+        {
+        }
+
+        public bool IsVoid { get; protected set; }
+        public bool IsError { get; protected set; }
+        public string ExceptionMessage { get; protected set; }
+        public string ExceptionClass { get; protected set; }
+        public IDictionary<string, object> Properties { get; protected set; }
+
+        public static ServiceResult Void
+        {
+            get
+            {
+                ServiceResult serviceResult = new ServiceResult();
+                serviceResult.IsVoid = true;
+                return serviceResult;
+            }
+        }
+
+        public static ServiceResult Error(Exception exception)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            serviceResult.IsError = true;
+            serviceResult.ExceptionMessage = exception.Message;
+            serviceResult.ExceptionClass = exception.GetType().FullName;
+            serviceResult.Properties = new Dictionary<string, object>();
+
+            foreach (PropertyInfo property in exception.GetType().GetProperties())
+            {
+                if (typeof(DomainException).IsAssignableFrom(property.DeclaringType))
+                {
+                    serviceResult.Properties.Add(property.Name, property.GetValue(exception, null));
+                }
+            }
+
+            return serviceResult;
+        }
+
+    }
+
+    [Serializable]
+    public class ServiceResult<T> : ServiceResult
+    {
+        protected ServiceResult() { }
+
+        public T Result { get; protected set; }
+
+        public static ServiceResult<T> Return(T result)
+        {
+            ServiceResult<T> serviceResult = new ServiceResult<T>();
+            serviceResult.Result = result;
+            return serviceResult;
+        }
+
+    }
+
     [ServiceContract()]
     public interface ITestService
     {
+
+        [OperationContract()]
+        ServiceResult<Person> CollatePerson(Person person1, Person person2);
+
+        [OperationContract()]
+        ServiceResult ReturnVoidOrThrow(int choice);
 
         [OperationContract()]
         Person GetPersonGraph();
@@ -28,6 +98,40 @@ namespace Demo.Services
 
     public class TestService : ITestService
     {
+
+        public ServiceResult<Person> CollatePerson(Person person1, Person person2)
+        {
+            Person person =
+                Person.CreatePerson()
+                    .SetGender(PersonGender.Male)
+                    .SetAge(person1.Age + person2.Age);
+
+            return ServiceResult<Person>.Return(person);
+        }
+
+        public ServiceResult ReturnVoidOrThrow(int choice)
+        {
+            try
+            {
+                if (choice == 0)
+                {
+                    return ServiceResult.Void;
+                }
+                else if (choice == 1)
+                {
+                    Person.CreatePerson().SetName("test name").Throw();
+                    return ServiceResult.Void;
+                }
+                else
+                {
+                    throw new ArgumentException("silly value", "choice");
+                }
+            }
+            catch(Exception e)
+            {
+                return ServiceResult.Error(e);
+            }
+        }
 
         public Person GetPersonGraph()
         {

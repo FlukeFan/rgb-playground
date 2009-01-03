@@ -68,6 +68,36 @@ namespace Demo
             }
         }
 
+        public static void Test5()
+        {
+            Person personIn1 = Person.CreatePerson().SetGender(PersonGender.Female).SetAge(10);
+            Person personIn2 = Person.CreatePerson().SetGender(PersonGender.Female).SetAge(20);
+            ServiceResult<Person> result = _service.CollatePerson(personIn1, personIn2);
+            Assert.AreEqual(30, result.Result.Age);
+        }
+
+        public static void Test6()
+        {
+            ServiceResult result = _service.ReturnVoidOrThrow(0);
+            Assert.AreEqual(true, result.IsVoid);
+        }
+
+        public static void Test7()
+        {
+            {
+                ServiceResult result = _service.ReturnVoidOrThrow(1);
+                Assert.AreEqual(true, result.IsError);
+                Assert.AreEqual("Name not unique - test name", result.ExceptionMessage);
+                Assert.AreEqual("Demo.Domain.NameNotUniqueException", result.ExceptionClass);
+                Assert.AreEqual("test name", result.Properties["DuplicateName"]);
+            }
+            {
+                ServiceResult result = _service.ReturnVoidOrThrow(2);
+                Assert.AreEqual(true, result.IsError);
+                Assert.AreEqual("silly value\r\nParameter name: choice", result.ExceptionMessage);
+            }
+        }
+
         public static int Main(string[] args)
         {
             try
@@ -77,6 +107,9 @@ namespace Demo
                 Test2();
                 Test3();
                 Test4();
+                Test5();
+                Test6();
+                Test7();
                 Console.WriteLine("Done");
                 return 0;
             }
