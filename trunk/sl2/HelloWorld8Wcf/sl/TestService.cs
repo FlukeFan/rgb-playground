@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
+using System.Windows.Threading;
 
 using Demo.Domain;
 
@@ -72,6 +73,48 @@ namespace Demo.Domain
 
 namespace SlWcf
 {
+
+    public class MinimalClient : ClientBase<ITestServiceDp>
+    {
+
+        private Dispatcher _dispatcher;
+
+        public MinimalClient(Dispatcher dispatcher) : base(new BasicHttpBinding(), new EndpointAddress("http://localhost/sl_wcf/TestService.svc"))
+        {
+            _dispatcher = dispatcher;
+        }
+
+        public void Invoke(AsyncCallback callback, IAsyncResult result)
+        {
+            if (_dispatcher == null)
+            {
+                callback(result);
+            }
+            else
+            {
+                _dispatcher.BeginInvoke(callback, new object[] { result });
+            }
+        }
+
+        public IAsyncResult GetPersonGraphAsync(AsyncCallback asyncCallback)
+        {
+            return Channel.BeginGetPersonGraph(GetPersonGraphResponse, asyncCallback);
+        }
+
+        private void GetPersonGraphResponse(IAsyncResult result)
+        {
+            AsyncCallback callback = (AsyncCallback)result.AsyncState;
+            Invoke(callback, result);
+        }
+
+        private void GetPersonGraphResponseThread(object resultObject)
+        {
+            IAsyncResult result = (IAsyncResult)resultObject;
+            AsyncCallback callback = (AsyncCallback)result.AsyncState;
+            callback(null);
+        }
+
+    }
 
     [ServiceContract(Name="ITestService")]
     public interface ITestServiceDp

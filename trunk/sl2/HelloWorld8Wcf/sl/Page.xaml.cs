@@ -21,6 +21,7 @@ namespace SlWcf
 
         private ServiceClient client;
         private ITestServiceDp _clientDp;
+        private MinimalClient _minimalClient;
 
         private Button _send;
         private ScrollViewer _scrollViewer;
@@ -44,6 +45,8 @@ namespace SlWcf
             BasicHttpBinding basicHttpBinding = new BasicHttpBinding();
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost/sl_wcf/TestService.svc");
             _clientDp = new ChannelFactory<ITestServiceDp>(basicHttpBinding, endpointAddress).CreateChannel();
+
+            _minimalClient = new MinimalClient(Dispatcher);
 
             _send = (Button)FindName("Send");
             _send.Click += new RoutedEventHandler(Send_Click);
@@ -121,6 +124,20 @@ namespace SlWcf
                 Write("Father(father)=" + person.Father.Name);
                 Write("Child1(son)=" + person.Children.Skip(1).Take(1).First().Name);
             }, result);
+        }
+
+        public void Test5()
+        {
+            _minimalClient.GetPersonGraphAsync(Test5_Response);
+        }
+
+        public void Test5_Response(IAsyncResult result)
+        {
+            this.Dispatcher.BeginInvoke((Action<int>)delegate(int threadId)
+            {
+                Write("Test5 callback landed on thread id " + threadId);
+                Write("Test5 callback should be thread id " + System.Threading.Thread.CurrentThread.ManagedThreadId);
+            }, System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
 
         private void client_GetPersonThrowErrorCompleted(object sender, GetPersonThrowErrorCompletedEventArgs e)
