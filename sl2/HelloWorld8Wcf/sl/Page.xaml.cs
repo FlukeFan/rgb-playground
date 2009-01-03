@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,12 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using Demo.Domain;
+
 namespace SlWcf
 {
     public class Page : UserControl
     {
 
         private ServiceClient client;
+        private ITestServiceDp _clientDp;
 
         private Button _send;
         private ScrollViewer _scrollViewer;
@@ -37,6 +41,10 @@ namespace SlWcf
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            BasicHttpBinding basicHttpBinding = new BasicHttpBinding();
+            EndpointAddress endpointAddress = new EndpointAddress("http://localhost/sl_wcf/TestService.svc");
+            _clientDp = new ChannelFactory<ITestServiceDp>(basicHttpBinding, endpointAddress).CreateChannel();
+
             _send = (Button)FindName("Send");
             _send.Click += new RoutedEventHandler(Send_Click);
 
@@ -97,11 +105,30 @@ namespace SlWcf
             Write("Called");
         }
 
+        public void Test4()
+        {
+            _clientDp.BeginGetPersonGraph(Test4_Response, null);
+        }
+
+        public void Test4_Response(IAsyncResult result)
+        {
+            this.Dispatcher.BeginInvoke((Action<IAsyncResult>)delegate(IAsyncResult result2)
+            {
+                Write("Test4 callback");
+                Person person = _clientDp.EndGetPersonGraph(result);
+                Write("Name(test person)=" + person.Name);
+                Write("Age(30)=" + person.Age);
+                Write("Father(father)=" + person.Father.Name);
+                Write("Child1(son)=" + person.Children.Skip(1).Take(1).First().Name);
+            }, result);
+        }
+
         private void client_GetPersonThrowErrorCompleted(object sender, GetPersonThrowErrorCompletedEventArgs e)
         {
             if (e.Error != null)
             {
-                Write("Error returned");
+                Write("Error returned: " + e.Error.Message);
+                Write("Cannot deserialize error :-(");
             }
             else
             {
