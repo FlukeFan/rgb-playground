@@ -73,6 +73,15 @@ namespace Demo.Domain
 namespace SlWcf
 {
 
+    [ServiceContract(Name="ITestService")]
+    public interface ITestServiceDp
+    {
+        [OperationContract(AsyncPattern=true)]
+        IAsyncResult BeginGetPersonGraph(AsyncCallback callback, object state);
+
+        Person EndGetPersonGraph(IAsyncResult result);
+    }
+
     [ServiceContract]
     public interface ITestService
     {
