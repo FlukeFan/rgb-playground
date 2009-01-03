@@ -26,6 +26,12 @@ namespace Demo.Domain
         public IList<Person> Children { get; set; }
     }
 
+    [System.Runtime.Serialization.DataContractAttribute(Name="DomainExceptionFault", Namespace="http://schemas.datacontract.org/2004/07/Demo.Domain")]
+    public class DomainExceptionFault
+    {
+
+    }
+
     [DataContract]
     public class Composite1
     {
@@ -79,6 +85,11 @@ namespace SlWcf
         System.IAsyncResult BeginGetPersonGraph(System.AsyncCallback callback, object asyncState);
 
         Person EndGetPersonGraph(System.IAsyncResult result);
+
+        [OperationContract(AsyncPattern=true, Action = "http://tempuri.org/ITestService/GetPersonThrowError", ReplyAction = "http://tempuri.org/ITestService/GetPersonThrowErrorResponse")]
+        System.IAsyncResult BeginGetPersonThrowError(System.AsyncCallback callback, object asyncState);
+
+        Person EndGetPersonThrowError(System.IAsyncResult result);
     }
 
     public partial class GetC1CompletedEventArgs : AsyncCompletedEventArgs
@@ -109,6 +120,28 @@ namespace SlWcf
         private object[] results;
 
         public GetPersonGraphCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
+            :
+                base(exception, cancelled, userState)
+        {
+            this.results = results;
+        }
+
+        public Person Result
+        {
+            get
+            {
+                base.RaiseExceptionIfNecessary();
+                return ((Person)(this.results[0]));
+            }
+        }
+    }
+
+    public class GetPersonThrowErrorCompletedEventArgs : AsyncCompletedEventArgs
+    {
+
+        private object[] results;
+
+        public GetPersonThrowErrorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
             :
                 base(exception, cancelled, userState)
         {
@@ -205,6 +238,8 @@ namespace SlWcf
             base.InvokeAsync(this.onBeginGetC1Delegate, new object[] {}, this.onEndGetC1Delegate, this.onGetC1CompletedDelegate, userState);
         }
 
+//********************************************************************************************
+
         private BeginOperationDelegate onBeginGetPersonGraphDelegate;
         private EndOperationDelegate onEndGetPersonGraphDelegate;
         private SendOrPostCallback onGetPersonGraphCompletedDelegate;
@@ -263,6 +298,68 @@ namespace SlWcf
             base.InvokeAsync(this.onBeginGetPersonGraphDelegate, new object[] {}, this.onEndGetPersonGraphDelegate, this.onGetPersonGraphCompletedDelegate, userState);
         }
 
+//********************************************************************************************
+
+        private BeginOperationDelegate onBeginGetPersonThrowErrorDelegate;
+        private EndOperationDelegate onEndGetPersonThrowErrorDelegate;
+        private SendOrPostCallback onGetPersonThrowErrorCompletedDelegate;
+        public event EventHandler<GetPersonThrowErrorCompletedEventArgs> GetPersonThrowErrorCompleted;
+
+        IAsyncResult ITestService.BeginGetPersonThrowError(System.AsyncCallback callback, object asyncState)
+        {
+            return base.Channel.BeginGetPersonThrowError(callback, asyncState);
+        }
+
+        Person ITestService.EndGetPersonThrowError(System.IAsyncResult result)
+        {
+            return base.Channel.EndGetPersonThrowError(result);
+        }
+
+        private IAsyncResult OnBeginGetPersonThrowError(object[] inValues, System.AsyncCallback callback, object asyncState)
+        {
+            return ((ITestService)(this)).BeginGetPersonThrowError(callback, asyncState);
+        }
+
+        private object[] OnEndGetPersonThrowError(System.IAsyncResult result)
+        {
+            Person retVal = ((ITestService)(this)).EndGetPersonThrowError(result);
+            return new object[] {
+                    retVal};
+        }
+
+        private void OnGetPersonThrowErrorCompleted(object state)
+        {
+            if ((this.GetPersonThrowErrorCompleted != null))
+            {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetPersonThrowErrorCompleted(this, new GetPersonThrowErrorCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+
+        public void GetPersonThrowErrorAsync()
+        {
+            this.GetPersonThrowErrorAsync(null);
+        }
+
+        public void GetPersonThrowErrorAsync(object userState)
+        {
+            if ((this.onBeginGetPersonThrowErrorDelegate == null))
+            {
+                this.onBeginGetPersonThrowErrorDelegate = new BeginOperationDelegate(this.OnBeginGetPersonThrowError);
+            }
+            if ((this.onEndGetPersonThrowErrorDelegate == null))
+            {
+                this.onEndGetPersonThrowErrorDelegate = new EndOperationDelegate(this.OnEndGetPersonThrowError);
+            }
+            if ((this.onGetPersonThrowErrorCompletedDelegate == null))
+            {
+                this.onGetPersonThrowErrorCompletedDelegate = new SendOrPostCallback(this.OnGetPersonThrowErrorCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetPersonThrowErrorDelegate, new object[] {}, this.onEndGetPersonThrowErrorDelegate, this.onGetPersonThrowErrorCompletedDelegate, userState);
+        }
+
+//********************************************************************************************
+
         protected override ITestService CreateChannel()
         {
             return new ServiceClientChannel(this);
@@ -288,6 +385,20 @@ namespace SlWcf
             {
                 object[] _args = new object[0];
                 Person _result = ((Person)(base.EndInvoke("GetPersonGraph", _args, result)));
+                return _result;
+            }
+
+            public IAsyncResult BeginGetPersonThrowError(AsyncCallback callback, object asyncState)
+            {
+                object[] _args = new object[0];
+                IAsyncResult _result = base.BeginInvoke("GetPersonThrowError", _args, callback, asyncState);
+                return _result;
+            }
+
+            public Person EndGetPersonThrowError(IAsyncResult result)
+            {
+                object[] _args = new object[0];
+                Person _result = ((Person)(base.EndInvoke("GetPersonThrowError", _args, result)));
                 return _result;
             }
 

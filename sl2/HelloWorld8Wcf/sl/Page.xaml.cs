@@ -31,6 +31,7 @@ namespace SlWcf
             client = new ServiceClient();
             client.GetC1Completed += new EventHandler<GetC1CompletedEventArgs>(client_GetC1Completed);
             client.GetPersonGraphCompleted += new EventHandler<GetPersonGraphCompletedEventArgs>(client_GetPersonGraphCompleted);
+            client.GetPersonThrowErrorCompleted += new EventHandler<GetPersonThrowErrorCompletedEventArgs>(client_GetPersonThrowErrorCompleted);
             Loaded += new RoutedEventHandler(Page_Loaded);
         }
 
@@ -87,6 +88,25 @@ namespace SlWcf
             Write("Calling ...");
             client.GetPersonGraphAsync();
             Write("Called");
+        }
+
+        public void Test3()
+        {
+            Write("Calling ...");
+            client.GetPersonThrowErrorAsync();
+            Write("Called");
+        }
+
+        private void client_GetPersonThrowErrorCompleted(object sender, GetPersonThrowErrorCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                Write("Error returned");
+            }
+            else
+            {
+                Write("No error");
+            }
         }
 
         private void client_GetPersonGraphCompleted(object sender, GetPersonGraphCompletedEventArgs e)
