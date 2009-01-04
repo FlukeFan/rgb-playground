@@ -9,18 +9,26 @@ using System.Threading;
 using System.Windows.Threading;
 
 using Demo.Domain;
-
+using Demo.Services;
 
 namespace Demo.Domain
 {
 
-    [System.Runtime.Serialization.DataContractAttribute(Name="Person", Namespace="http://schemas.datacontract.org/2004/07/Demo.Domain")]
+    public enum PersonGender
+    {
+        Male = 1,
+        Female = 2,
+    }
+
+    [DataContract]
     public class Person
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="_name", IsRequired=true)]
         public string Name { get; set; }
         [System.Runtime.Serialization.DataMemberAttribute(Name="<Age>k__BackingField", IsRequired=true)]
         public int Age;
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Gender>k__BackingField", IsRequired=true)]
+        public PersonGender Gender { get; set; }
         [System.Runtime.Serialization.DataMemberAttribute(Name="<Father>k__BackingField", IsRequired=true)]
         public Person Father { get; set; }
         [System.Runtime.Serialization.DataMemberAttribute(Name="<Children>k__BackingField", IsRequired=true)]
@@ -71,6 +79,36 @@ namespace Demo.Domain
 }
 
 
+namespace Demo.Services
+{
+
+    public delegate void ServiceCallback(ServiceCallStatus status);
+
+    public class ServiceCallStatus
+    {
+        public ServiceCallback Callback { get; set; }
+        public IAsyncResult AsyncResult { get; set; }
+    }
+
+    [DataContract]
+    public class ServiceResult
+    {
+        [DataMember] public bool IsVoid { get; set; }
+        [DataMember] public bool IsError { get; set; }
+        [DataMember] public string ExceptionMessage { get; set; }
+        [DataMember] public string ExceptionClass { get; set; }
+        [DataMember] public IDictionary<string, object> Properties { get; set; }
+    }
+
+    [DataContract]
+    public class ServiceResult<T> : ServiceResult
+    {
+        [DataMember]
+        public T Result { get; set; }
+    }
+
+}
+
 namespace SlWcf
 {
 
@@ -96,6 +134,18 @@ namespace SlWcf
             }
         }
 
+        private void InvokeResultOnUiThread(ServiceCallStatus serviceCallStatus)
+        {
+            if (_dispatcher == null)
+            {
+                serviceCallStatus.Callback(serviceCallStatus);
+            }
+            else
+            {
+                _dispatcher.BeginInvoke(serviceCallStatus.Callback, new object[] { serviceCallStatus });
+            }
+        }
+
         public IAsyncResult GetPersonGraphAsync(AsyncCallback asyncCallback)
         {
             return Channel.BeginGetPersonGraph(GetPersonGraphResponse, asyncCallback);
@@ -107,11 +157,22 @@ namespace SlWcf
             Invoke(callback, result);
         }
 
-        private void GetPersonGraphResponseThread(object resultObject)
+        public IAsyncResult CollatePerson(Person person1, Person person2, ServiceCallback serviceCallback)
         {
-            IAsyncResult result = (IAsyncResult)resultObject;
-            AsyncCallback callback = (AsyncCallback)result.AsyncState;
-            callback(null);
+            return Channel.BeginCollatePerson(person1, person2, CollatePersonResponse, new ServiceCallStatus() { Callback = serviceCallback });
+        }
+
+        private void CollatePersonResponse(IAsyncResult result)
+        {
+            ServiceCallStatus serviceCallStatus = (ServiceCallStatus)result.AsyncState;
+            serviceCallStatus.AsyncResult = result;
+            InvokeResultOnUiThread(serviceCallStatus);
+        }
+
+        public Person CollatePerson(ServiceCallStatus serviceCallStatus)
+        {
+            ServiceResult<Person> serviceResult = Channel.EndCollatePerson(serviceCallStatus.AsyncResult);
+            return serviceResult.Result;
         }
 
     }
@@ -121,8 +182,11 @@ namespace SlWcf
     {
         [OperationContract(AsyncPattern=true)]
         IAsyncResult BeginGetPersonGraph(AsyncCallback callback, object state);
-
         Person EndGetPersonGraph(IAsyncResult result);
+
+        [OperationContract(AsyncPattern=true)]
+        IAsyncResult BeginCollatePerson(Person person1, Person person2, AsyncCallback callback, object state);
+        ServiceResult<Person> EndCollatePerson(IAsyncResult result);
     }
 
     [ServiceContract]
