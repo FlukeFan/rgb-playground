@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 using Demo.Domain;
+using Demo.Services;
 
 namespace SlWcf
 {
@@ -138,6 +139,20 @@ namespace SlWcf
                 Write("Test5 callback landed on thread id " + threadId);
                 Write("Test5 callback should be thread id " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             }, System.Threading.Thread.CurrentThread.ManagedThreadId);
+        }
+
+        public void Test6()
+        {
+            _minimalClient.CollatePerson(
+                new Person() { Age=30, Gender=PersonGender.Male },
+                new Person() { Age=40, Gender=PersonGender.Female },
+                Test6_Response);
+        }
+
+        public void Test6_Response(ServiceCallStatus callStatus)
+        {
+            Person person = _minimalClient.CollatePerson(callStatus);
+            Write("Test6 callback person Age (70) = " + person.Age);
         }
 
         private void client_GetPersonThrowErrorCompleted(object sender, GetPersonThrowErrorCompletedEventArgs e)

@@ -10,7 +10,7 @@ using Demo.Domain;
 namespace Demo.Services
 {
 
-    [Serializable]
+    [DataContract]
     public class ServiceResult
     {
 
@@ -18,11 +18,11 @@ namespace Demo.Services
         {
         }
 
-        public bool IsVoid { get; protected set; }
-        public bool IsError { get; protected set; }
-        public string ExceptionMessage { get; protected set; }
-        public string ExceptionClass { get; protected set; }
-        public IDictionary<string, object> Properties { get; protected set; }
+        [DataMember] public bool IsVoid { get; protected set; }
+        [DataMember] public bool IsError { get; protected set; }
+        [DataMember] public string ExceptionMessage { get; protected set; }
+        [DataMember] public string ExceptionClass { get; protected set; }
+        [DataMember] public IDictionary<string, object> Properties { get; protected set; }
 
         public static ServiceResult Void
         {
@@ -55,11 +55,12 @@ namespace Demo.Services
 
     }
 
-    [Serializable]
+    [DataContract]
     public class ServiceResult<T> : ServiceResult
     {
         protected ServiceResult() { }
 
+        [DataMember]
         public T Result { get; protected set; }
 
         public static ServiceResult<T> Return(T result)
