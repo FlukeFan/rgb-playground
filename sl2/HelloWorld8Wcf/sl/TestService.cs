@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -33,6 +34,13 @@ namespace Demo.Domain
         public Person Father { get; set; }
         [System.Runtime.Serialization.DataMemberAttribute(Name="<Children>k__BackingField", IsRequired=true)]
         public IList<Person> Children { get; set; }
+    }
+
+    public class NameNotUniqueException : Exception
+    {
+        public NameNotUniqueException(string message) : base(message) { }
+
+        public string DuplicateName { get; set; }
     }
 
     [System.Runtime.Serialization.DataContractAttribute(Name="DomainExceptionFault", Namespace="http://schemas.datacontract.org/2004/07/Demo.Domain")]
@@ -146,6 +154,32 @@ namespace SlWcf
             }
         }
 
+        private void ProcessException(ServiceResult serviceResult)
+        {
+            if (!serviceResult.IsError)
+                return;
+
+            Type exceptionType = Type.GetType(serviceResult.ExceptionClass);
+
+            if (exceptionType == null)
+                throw new Exception("Unrecognised exception type (" + serviceResult.ExceptionClass + ")\r\n" + serviceResult.ExceptionMessage);
+
+            ConstructorInfo messageConstructor = exceptionType.GetConstructor(new Type[] { typeof(string) });
+            if (messageConstructor == null)
+                throw new Exception("No valid constructor taking a string for (" + serviceResult.ExceptionClass + ")\r\n" + serviceResult.ExceptionMessage);
+
+            Exception exception = (Exception) messageConstructor.Invoke(new object[] { serviceResult.ExceptionMessage });
+            foreach (string propertyName in serviceResult.Properties.Keys)
+            {
+                PropertyInfo property = exceptionType.GetProperty(propertyName);
+                if (property == null)
+                    throw new Exception("No property (" + propertyName + ") on (" + serviceResult.ExceptionClass + ")\r\n" + serviceResult.ExceptionMessage);
+
+                property.SetValue(exception, serviceResult.Properties[propertyName], null);
+            }
+            throw exception;
+        }
+
         public IAsyncResult GetPersonGraphAsync(AsyncCallback asyncCallback)
         {
             return Channel.BeginGetPersonGraph(GetPersonGraphResponse, asyncCallback);
@@ -172,9 +206,27 @@ namespace SlWcf
         public Person CollatePerson(ServiceCallStatus serviceCallStatus)
         {
             ServiceResult<Person> serviceResult = Channel.EndCollatePerson(serviceCallStatus.AsyncResult);
+            ProcessException(serviceResult);
             return serviceResult.Result;
         }
 
+        public IAsyncResult ReturnVoidOrThrow(int choice, ServiceCallback serviceCallback)
+        {
+            return Channel.BeginReturnVoidOrThrow(choice, ReturnVoidOrThrowResponse, new ServiceCallStatus() { Callback = serviceCallback });
+        }
+
+        private void ReturnVoidOrThrowResponse(IAsyncResult result)
+        {
+            ServiceCallStatus serviceCallStatus = (ServiceCallStatus)result.AsyncState;
+            serviceCallStatus.AsyncResult = result;
+            InvokeResultOnUiThread(serviceCallStatus);
+        }
+
+        public void ReturnVoidOrThrow(ServiceCallStatus serviceCallStatus)
+        {
+            ServiceResult serviceResult = Channel.EndReturnVoidOrThrow(serviceCallStatus.AsyncResult);
+            ProcessException(serviceResult);
+        }
     }
 
     [ServiceContract(Name="ITestService")]
@@ -187,6 +239,10 @@ namespace SlWcf
         [OperationContract(AsyncPattern=true)]
         IAsyncResult BeginCollatePerson(Person person1, Person person2, AsyncCallback callback, object state);
         ServiceResult<Person> EndCollatePerson(IAsyncResult result);
+
+        [OperationContract(AsyncPattern=true)]
+        IAsyncResult BeginReturnVoidOrThrow(int choice, AsyncCallback callback, object state);
+        ServiceResult EndReturnVoidOrThrow(IAsyncResult result);
     }
 
     [ServiceContract]

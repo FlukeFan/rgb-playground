@@ -123,9 +123,13 @@ namespace Demo.Services
                     Person.CreatePerson().SetName("test name").Throw();
                     return ServiceResult.Void;
                 }
-                else
+                else if (choice == 2)
                 {
                     throw new ArgumentException("silly value", "choice");
+                }
+                else
+                {
+                    throw new System.ComponentModel.LicenseException(typeof(TestService));
                 }
             }
             catch(Exception e)
