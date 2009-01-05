@@ -155,6 +155,73 @@ namespace SlWcf
             Write("Test6 callback person Age (70) = " + person.Age);
         }
 
+        public void Test7()
+        {
+            _minimalClient.ReturnVoidOrThrow(0, Test7_Response);
+        }
+
+        public void Test7_Response(ServiceCallStatus callStatus)
+        {
+            _minimalClient.ReturnVoidOrThrow(callStatus);
+            Write("Test7 callback pass");
+        }
+
+        public void Test8()
+        {
+            _minimalClient.ReturnVoidOrThrow(1, Test8_Response);
+        }
+
+        public void Test8_Response(ServiceCallStatus callStatus)
+        {
+            try
+            {
+                _minimalClient.ReturnVoidOrThrow(callStatus);
+                throw new Exception("exception not thrown!");
+            }
+            catch (NameNotUniqueException e)
+            {
+                Write(e.Message);
+                Write("e.DuplicateName = " + e.DuplicateName);
+            }
+        }
+
+        public void Test9()
+        {
+            _minimalClient.ReturnVoidOrThrow(2, Test9_Response);
+        }
+
+        public void Test9_Response(ServiceCallStatus callStatus)
+        {
+            try
+            {
+                _minimalClient.ReturnVoidOrThrow(callStatus);
+                throw new Exception("exception not thrown!");
+            }
+            catch (ArgumentException e)
+            {
+                Write(e.GetType().ToString());
+                Write(e.Message);
+            }
+        }
+
+        public void Test10()
+        {
+            _minimalClient.ReturnVoidOrThrow(3, Test10_Response);
+        }
+
+        public void Test10_Response(ServiceCallStatus callStatus)
+        {
+            try
+            {
+                _minimalClient.ReturnVoidOrThrow(callStatus);
+                throw new Exception("exception not thrown!");
+            }
+            catch (Exception e)
+            {
+                Write(e.Message);
+            }
+        }
+
         private void client_GetPersonThrowErrorCompleted(object sender, GetPersonThrowErrorCompletedEventArgs e)
         {
             if (e.Error != null)
