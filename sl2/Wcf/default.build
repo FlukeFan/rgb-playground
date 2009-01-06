@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<project name="SlWcf" default="build" xsi:schemaLocation="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd ..\..\SDKs\nant-0.86\schema\nant.xsd" xmlns="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+        
+        <servicecontroller action="Start" service="w3svc" />
+
+        <mkiisdir   dirpath="build"
+                    vdirname="SlWcfExample"
+                    enabledirbrowsing="true"
+                    />
+      
+        <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs set w3svc/1/root/SlWcfExample/MimeMap &quot;.xap,application/x-silverlight-app&quot;" />
+
+        <mkdir dir="build\bin" />
+
+        <csc target="library"
+             debug="true"
+             output="build\bin\Domain.dll"
+             warnaserror="true">
+
+            <references>
+            </references>
+
+          <resources>
+          </resources>
+
+          <sources>
+              <include name="Domain\*.cs" />
+          </sources>
+
+        </csc>
+
+        <csc target="library"
+             debug="true"
+             output="build\bin\Service.dll"
+             warnaserror="true">
+
+            <references>
+                <include name="build\bin\Domain.dll" />
+            </references>
+
+          <resources>
+          </resources>
+
+          <sources>
+                <include name="Service\*.cs" />
+          </sources>
+
+        </csc>
+
+        <copy file="Service\web.config"         tofile="build\web.config" />
+        <copy file="Service\TestService.svc"    tofile="build\TestService.svc" />
+
+        <setenv name="PATH" value="..\..\SDKs\SL;%PATH%"/>
+        <mkdir dir="build\client" />
+
+        <!--<copy file="Presentation\Page.xaml"             todir="build\client" />-->
+        <copy file="Presentation\AppManifest.xaml"      todir="build\client" />
+        <copy file="..\..\SDKs\SL\tools\Silverlight.js" todir="build\" />
+        <copy file="Presentation\default.html"          todir="build" />
+
+        <csc    target="library"
+                debug="true"
+                output="build\client\SlWcf.dll"
+                warnaserror="true"
+                nostdlib="true"
+                noconfig="true">
+
+            <references>
+                <include name="..\..\SDKs\SL\ref\mscorlib.dll" />
+                <include name="..\..\SDKs\SL\ref\System.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Core.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Runtime.Serialization.dll" />
+                <include name="..\..\SDKs\SL\ref\System.ServiceModel.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Windows.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Windows.Browser.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Xml.dll" />
+            </references>
+
+          <resources>
+          </resources>
+
+          <sources>
+                <include name="Presentation\*.cs" />
+          </sources>
+
+        </csc>
+
+        <delete file="build\SlWcf.xap" />
+        <exec program="..\..\SDKs\SL\tools\chiron" commandline="/directory:build\client /xap:build\SlWcf.xap" />
+
+    </target>
+  
+    <target name="clean">
+      <deliisdir vdirname="SlWcfExample"/>
+      <delete dir="build" />
+    </target>
+
+</project>
