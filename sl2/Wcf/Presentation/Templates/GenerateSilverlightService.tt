@@ -1,0 +1,25 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.ServiceModel" #>
+<#@ include file="Utility.tt" #>
+<# Init(); #>
+// Generated service for <#=_serviceTypeInterfaceName#> (<#=DateTime.Now#>)
+
+namespace <#=_serviceNamespace#>
+{
+}
+
+<#+
+    
+    private Type _serviceType;
+    private string _serviceNamespace;
+    private string _serviceTypeInterfaceName;
+
+    public void Init()
+    {
+        _serviceType = (Type)GetData("ServiceType");
+        _serviceNamespace = _serviceType.Namespace;
+        _serviceTypeInterfaceName = _serviceType.Name;
+    }
+#>
