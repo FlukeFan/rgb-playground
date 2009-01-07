@@ -55,6 +55,14 @@
         <copy file="Service\TestService.svc"    tofile="build\TestService.svc" />
 
         <setenv name="PATH" value="..\..\SDKs\SL;%PATH%"/>
+        <setenv name="PATH" value="..\..\SDKs\t4;%PATH%"/>
+        <mkdir dir="Presentation\generated" />
+        <exec program="TextTransform">
+            <arg line="-a ServiceAssembly!&quot;${project::get-base-directory()}\build\bin\Service.dll&quot;" />
+            <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\Presentation\generated&quot;" />
+            <arg line="Presentation\Templates\GenerateSilverlightServices.tt" />
+        </exec>
+        
         <mkdir dir="build\client" />
 
         <!--<copy file="Presentation\Page.xaml"             todir="build\client" />-->
