@@ -1,13 +1,33 @@
 <#@ template language="C#" hostspecific="True" #>
 <#@ assembly name="System.ServiceModel" #>
-<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.ServiceModel" #>
 <#@ include file="Utility.tt" #>
 <# Init(); #>
 // Generated service for <#=_serviceTypeInterfaceName#> (<#=DateTime.Now#>)
 
+using System;
+using System.ServiceModel;
+
 namespace <#=_serviceNamespace#>
 {
+
+    [ServiceContract]
+    public interface <#=_serviceTypeInterfaceName#>
+    {
+
+<#
+        foreach (MethodInfo method in _methods)
+        {#>
+        [OperationContract]
+        IAsyncResult Begin<#=method.Name#>(<#=ParameterDeclaration(method)#>AsyncCallback callback, object state);
+        <#=SharpType(method.ReturnType)#> End<#=method.Name#>(IAsyncResult result);
+
+<#
+        }
+        #>
+    }
+    
 }
 
 <#+
@@ -15,11 +35,46 @@ namespace <#=_serviceNamespace#>
     private Type _serviceType;
     private string _serviceNamespace;
     private string _serviceTypeInterfaceName;
+    private IList<MethodInfo> _methods = new List<MethodInfo>();
 
     public void Init()
     {
         _serviceType = (Type)GetData("ServiceType");
         _serviceNamespace = _serviceType.Namespace;
         _serviceTypeInterfaceName = _serviceType.Name;
+        
+        foreach (MethodInfo method in _serviceType.GetMethods())
+            foreach (object attribute in method.GetCustomAttributes(false))
+                if (attribute.GetType() == typeof(OperationContractAttribute))
+                    _methods.Add(method);
+    }
+    
+    public string ParameterDeclaration(MethodInfo method)
+    {
+        string decl = "";
+        foreach (ParameterInfo param in method.GetParameters())
+        {
+            decl +=
+                SharpType(param.ParameterType) + " "
+                + param.Name + ", ";
+        }
+        return decl;
+    }
+    
+    public string SharpType(Type type)
+    {
+        if (!type.IsGenericType)
+            return type.FullName;
+        
+        string name = type.FullName;
+        name = name.Substring(0, name.IndexOf("`")) + "<";
+        
+        foreach (Type param in type.GetGenericArguments())
+        {
+            name += SharpType(param) + ", ";
+        }
+        name = name.TrimEnd(", ".ToCharArray());
+
+        return name + ">";
     }
 #>
