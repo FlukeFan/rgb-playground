@@ -23,7 +23,7 @@
                     Console.WriteLine("Generating: " + serviceType.Name);
                     SetData("ServiceType", serviceType);
                     ProcessTemplate("GenerateSilverlightService.tt",
-                        Path.Combine(outputFolderPath, serviceType.Name + ".cs"));
+                        Path.Combine(outputFolderPath, serviceType.Name.TrimStart('I') + "Client.cs"));
                 }
 
         // Write flag file to indicate success
