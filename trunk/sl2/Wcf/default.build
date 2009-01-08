@@ -92,7 +92,7 @@
           </resources>
 
           <sources>
-                <include name="Presentation\*.cs" />
+                <include name="Presentation\**\*.cs" />
           </sources>
 
         </csc>

@@ -8,14 +8,14 @@ using SlWcf.Domain;
 namespace SlWcf.Services
 {
 
-    [ServiceContract()]
+    [ServiceContract]
     public interface ITestService
     {
 
-        [OperationContract()]
+        [OperationContract]
         ServiceResult<Person> CollatePerson(Person person1, Person person2);
 
-        [OperationContract()]
+        [OperationContract]
         ServiceResult ReturnVoidOrThrow(int choice);
 
     }
