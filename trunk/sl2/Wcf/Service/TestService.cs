@@ -18,6 +18,9 @@ namespace SlWcf.Services
         [OperationContract]
         ServiceResult ReturnVoidOrThrow(int choice);
 
+        [OperationContract]
+        ServiceResult<IList<Person>> GetPersonList();
+
     }
 
     public class TestService : ITestService
@@ -59,6 +62,16 @@ namespace SlWcf.Services
             {
                 return ServiceResult.Error(e);
             }
+        }
+
+        public ServiceResult<IList<Person>> GetPersonList()
+        {
+            return ServiceResult<IList<Person>>.Return(
+                new List<Person>()
+                {
+                    Person.CreatePerson().SetGender(PersonGender.Female).SetName("Her"),
+                    Person.CreatePerson().SetGender(PersonGender.Male).SetName("Him")
+                });
         }
 
     }
