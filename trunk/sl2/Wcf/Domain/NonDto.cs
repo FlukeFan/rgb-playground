@@ -3,6 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
+namespace SlWcf.NonDomain
+{
+
+    [Serializable]
+    public class AnotherNonDto
+    {
+    }
+
+}
+
 namespace SlWcf.Domain
 {
 

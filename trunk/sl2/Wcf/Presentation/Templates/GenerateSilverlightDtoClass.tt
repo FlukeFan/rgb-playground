@@ -1,0 +1,26 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="Utility.tt" #>
+<# Init(); #>
+// Generated DTO for <#=_modelTypeName#> (<#=DateTime.Now#>)
+
+using System;
+
+namespace <#=_namespace#>
+{
+}
+
+<#+
+    
+    private Type _modelType;
+    private string _namespace;
+    private string _modelTypeName;
+
+    public void Init()
+    {
+        _modelType = (Type)GetData("ModelType");
+        _modelTypeName = _modelType.Name;
+        _namespace = _modelType.Namespace;
+    }
+    
+#>
