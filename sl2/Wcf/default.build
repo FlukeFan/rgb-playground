@@ -62,6 +62,12 @@
             <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\Presentation\generated&quot;" />
             <arg line="Presentation\Templates\GenerateSilverlightServices.tt" />
         </exec>
+        <exec program="TextTransform">
+            <arg line="-a ModelAssembly!&quot;${project::get-base-directory()}\build\bin\Domain.dll&quot;" />
+            <arg line="-a DtoConfig!&quot;${project::get-base-directory()}\Presentation\DtoConfig.xml&quot;" />
+            <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\Presentation\generated&quot;" />
+            <arg line="Presentation\Templates\GenerateSilverlightDtos.tt" />
+        </exec>
         
         <mkdir dir="build\client" />
 

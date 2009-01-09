@@ -1,0 +1,5 @@
+<dtoTypes>
+    <!-- regular expressions detailing which types should have DTO's created -->
+    <include types="SlWcf\.Domain\..*" />
+    <exclude types="SlWcf\.Domain\.No.*" />
+</dtoTypes>
