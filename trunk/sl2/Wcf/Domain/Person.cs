@@ -21,6 +21,7 @@ namespace SlWcf.Domain
 
         protected Person()
         {
+            Gender = PersonGender.Female;
             Detail = new PersonDetail();
         }
 
