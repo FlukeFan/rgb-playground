@@ -4,8 +4,7 @@
 namespace SlWcf.Domain
 {
 
-
-    public class Person
+    public enum PersonGender
     {
     }
 
