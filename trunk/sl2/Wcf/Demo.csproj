@@ -5,16 +5,13 @@
     <OutputPath>build</OutputPath>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
+    <StartAction>URL</StartAction>
+    <StartURL>http://localhost/SlWcfExample/default.html</StartURL>
+  </PropertyGroup>
+  <PropertyGroup>
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
-    <ProjectGuid>{263BDCE5-2110-422E-AACA-7CD47D0C91A5}</ProjectGuid>
-    <StartAction>URL</StartAction>
-    <StartURL>http://localhost/SlWcfExample/default.html</StartURL>
-    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-    <SilverlightDebugging>True</SilverlightDebugging>
-    <AspNetDebugging>True</AspNetDebugging>
-    <SilverlightApplicationList>{45D143C2-F084-4EBA-A395-50AAE6D8FEFC}|Presentation\Presentation.csproj|build\client|False</SilverlightApplicationList>
   </PropertyGroup>
   <ItemGroup>
     <None Include="default.build" />
@@ -74,23 +71,4 @@
     <CallTarget Targets="Clean" />
     <CallTarget Targets="NAntBuild" />
   </Target>
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-        <WebProjectProperties>
-          <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>54180</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-        </WebProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>
