@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ProjectGuid>{45D143C2-F084-4EBA-A395-50AAE6D8FEFC}</ProjectGuid>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <OutputPath>..\build</OutputPath>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -9,6 +10,8 @@
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <SilverlightApplication>true</SilverlightApplication>
     <AssemblyName>SlWcf</AssemblyName>
+    <XapFilename>SlWcf.xap</XapFilename>
+    <SilverlightManifestTemplate>AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>SlWcf.App</SilverlightAppEntry>
     <CreateTestPage>false</CreateTestPage>
     <TestPageFileName>default.html</TestPageFileName>
@@ -32,8 +35,14 @@
     <Compile Include="**\*.tt" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System">
+      <HintPath>..\..\..\SDKs\Sl\ref\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows">
       <HintPath>..\..\..\SDKs\Sl\ref\System.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Browser">
+      <HintPath>..\..\..\SDKs\Sl\ref\System.Windows.Browser.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization">
       <HintPath>..\..\..\SDKs\Sl\ref\System.Runtime.Serialization.dll</HintPath>
@@ -49,4 +58,27 @@
   </Target>
   <Target Name="Rebuild">
   </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>DynamicPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <ShowWebRefOnDebugPrompt>True</ShowWebRefOnDebugPrompt>
+        </SilverlightProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
