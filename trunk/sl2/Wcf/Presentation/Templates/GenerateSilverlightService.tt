@@ -106,43 +106,4 @@ namespace <#=_serviceNamespace#>
         return SharpType(method.ReturnType.GetGenericArguments()[0]);
     }
     
-    public string ParameterDeclaration(MethodInfo method)
-    {
-        string decl = "";
-        foreach (ParameterInfo param in method.GetParameters())
-        {
-            decl +=
-                SharpType(param.ParameterType) + " "
-                + param.Name + ", ";
-        }
-        return decl;
-    }
-    
-    public string ParameterList(MethodInfo method)
-    {
-        string decl = "";
-        foreach (ParameterInfo param in method.GetParameters())
-        {
-            decl += param.Name + ", ";
-        }
-        return decl;
-    }
-    
-    public string SharpType(Type type)
-    {
-        if (!type.IsGenericType)
-            return type.FullName;
-        
-        string name = type.FullName;
-        name = name.Substring(0, name.IndexOf("`")) + "<";
-        
-        foreach (Type param in type.GetGenericArguments())
-        {
-            name += SharpType(param) + ", ";
-        }
-        name = name.TrimEnd(", ".ToCharArray());
-
-        return name + ">";
-    }
-
 #>

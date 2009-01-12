@@ -5,9 +5,26 @@
 // Generated DTO for <#=_modelTypeName#> (<#=DateTime.Now#>)
 
 using System;
+using System.Runtime.Serialization;
 
 namespace <#=_namespace#>
 {
+
+    [DataContract]
+    public class <#=_modelTypeName#>
+    {
+
+<#
+        for (int i=0; i<_fieldNames.Count; i++)
+        {#>
+        [DataMember(Name="<#=_fieldNames[i]#>")]
+        public <#=_fieldTypes[i]#> <#=_propertyNames[i]#> { get; set; }
+
+<#
+        }
+        #>
+    }
+
 }
 
 <#+
@@ -15,12 +32,23 @@ namespace <#=_namespace#>
     private Type _modelType;
     private string _namespace;
     private string _modelTypeName;
+    
+    private IList<string> _fieldTypes = new List<string>();
+    private IList<string> _fieldNames = new List<string>();
+    private IList<string> _propertyNames = new List<string>();
 
     public void Init()
     {
         _modelType = (Type)GetData("ModelType");
         _modelTypeName = _modelType.Name;
         _namespace = _modelType.Namespace;
+        
+        foreach (FieldInfo field in _modelType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+        {
+            _fieldTypes.Add(SharpType(field.FieldType));
+            _fieldNames.Add(field.Name);
+            _propertyNames.Add(FieldToProperty(field.Name));
+        }
     }
     
 #>
