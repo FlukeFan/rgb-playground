@@ -11,11 +11,17 @@ namespace SlWcf.Domain
         Female = 2,
     }
 
+    [Serializable]
+    public class PersonBase
+    {
+        public Person Father { get; protected set; }
+    }
+
     /// <summary>
     /// Using [Serializable] and regular property, auto-property, and field access
     /// </summary>
     [Serializable]
-    public class Person
+    public class Person : PersonBase
     {
         private string _name;
 
@@ -33,7 +39,6 @@ namespace SlWcf.Domain
 
         public int Age;
         public PersonGender Gender { get; protected set; }
-        public Person Father { get; protected set; }
         protected IList<Person> Children { get; set; }
         public PersonDetail Detail { get; protected set; }
         public IEnumerable<Person> ChildrenEnumeration { get { return Children; } }
