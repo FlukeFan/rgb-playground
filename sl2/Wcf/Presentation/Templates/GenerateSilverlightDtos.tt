@@ -50,6 +50,8 @@
             else if (modelType.IsEnum)
             {
                 Console.WriteLine("Generating enum: " + modelType.Name);
+                ProcessTemplate("GenerateSilverlightDtoEnum.tt",
+                    Path.Combine(outputFolderPath, modelType.Name + ".cs"));
             }
             else
             {

@@ -4,9 +4,7 @@
 namespace SlWcf.Domain
 {
 
-    public enum PersonGender
-    {
-    }
+    // not required now
 
 }
 
