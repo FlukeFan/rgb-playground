@@ -1,4 +1,5 @@
 <#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
 <#@ assembly name="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Xml" #>
