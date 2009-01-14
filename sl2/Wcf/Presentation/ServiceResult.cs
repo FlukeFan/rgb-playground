@@ -60,7 +60,14 @@ namespace SlWcf.Services
                 if (property == null)
                     throw new Exception("No property (" + propertyName + ") on (" + ExceptionClass + ")\r\n" + ExceptionMessage);
 
-                property.SetValue(exception, Properties[propertyName], null);
+                try
+                {
+                    property.SetValue(exception, Properties[propertyName], null);
+                }
+                catch(Exception e)
+                {
+                    throw new Exception("Error setting property (" + propertyName + ") on (" + ExceptionClass + ")\r\n" + ExceptionMessage, e);
+                }
             }
 
             throw exception;

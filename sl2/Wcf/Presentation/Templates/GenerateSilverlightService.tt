@@ -21,7 +21,7 @@ namespace <#=_serviceNamespace#>
         foreach (MethodInfo method in _methods)
         {#>
         // *** <#=method.Name#> ***
-        [OperationContract]
+        [OperationContract(AsyncPattern=true)]
         IAsyncResult Begin<#=method.Name#>(<#=ParameterDeclaration(method)#>AsyncCallback callback, object state);
         <#=SharpType(method.ReturnType)#> End<#=method.Name#>(IAsyncResult result);
 
