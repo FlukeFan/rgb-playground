@@ -17,6 +17,14 @@ namespace <#=_namespace#>
     {
 
 <#
+        if (typeof(Exception).IsAssignableFrom(_modelType))
+        {#>
+        public <#=_modelTypeName#>(string message) : base(message) { }
+
+<#
+        }
+#>
+<#
         for (int i=0; i<_fieldNames.Count; i++)
         {#>
         [DataMember(Name="<#=_fieldNames[i]#>")]

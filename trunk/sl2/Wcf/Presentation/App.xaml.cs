@@ -21,12 +21,11 @@ namespace SlWcf
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Uri uri = new Uri("Page.xaml", UriKind.Relative);
-            MessageBox.Show("Hello");
 
             // Load the main control
-            //Page page = new Page();
-            //System.Windows.Application.LoadComponent(page, uri);
-            //RootVisual = page;
+            Page page = new Page();
+            System.Windows.Application.LoadComponent(page, uri);
+            RootVisual = page;
         }
 
         private void Application_Exit(object sender, EventArgs e)

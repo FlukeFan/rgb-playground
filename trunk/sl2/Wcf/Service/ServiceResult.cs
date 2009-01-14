@@ -39,9 +39,9 @@ namespace SlWcf.Services
             serviceResult.ExceptionClass = exception.GetType().FullName;
             serviceResult.Properties = new Dictionary<string, object>();
 
-            foreach (PropertyInfo property in exception.GetType().GetProperties())
+            foreach (PropertyInfo property in exception.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
-                if (exception.GetType() == property.DeclaringType)
+                if (property.CanRead && property.CanWrite)
                 {
                     serviceResult.Properties.Add(property.Name, property.GetValue(exception, null));
                 }

@@ -1,0 +1,15 @@
+﻿<UserControl
+                xmlns="http://schemas.microsoft.com/client/2007"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                x:Class="SlWcf.Page"
+                x:Name="MyPage"
+                >
+    <StackPanel>
+        <Button Content="ClickMe" x:Name="Send" Width="100"/>
+        <ScrollViewer x:Name="ScrollViewer" Height="200" HorizontalScrollBarVisibility="Auto">
+            <StackPanel x:Name="Messages">
+                <TextBlock Text="Loaded ..." TextWrapping="Wrap"/>
+            </StackPanel>
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>

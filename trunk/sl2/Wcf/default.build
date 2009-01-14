@@ -71,7 +71,7 @@
         
         <mkdir dir="build\client" />
 
-        <!--<copy file="Presentation\Page.xaml"             todir="build\client" />-->
+        <copy file="Presentation\Page.xaml"             todir="build\client" />
         <copy file="Presentation\AppManifest.xaml"      todir="build\client" />
         <copy file="..\..\SDKs\SL\tools\Silverlight.js" todir="build\" />
         <copy file="Presentation\default.html"          todir="build" />
