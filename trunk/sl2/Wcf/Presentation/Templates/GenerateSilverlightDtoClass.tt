@@ -71,7 +71,6 @@ namespace <#=_namespace#>
                         _fieldNames.RemoveAt(existingIndex);
                         _propertyNames.RemoveAt(existingIndex);
                     }
-                    Console.WriteLine(property.Name);
                     _fieldTypes.Add(SharpType(property.PropertyType));
                     _fieldNames.Add(property.Name);
                     _propertyNames.Add(property.Name);

@@ -110,6 +110,7 @@
   
     <target name="clean">
       <deliisdir vdirname="SlWcfExample"/>
+      <deliisdir vdirname="SlWcfExampleVsDummy"/>
       <delete dir="build" />
       <delete dir="Presentation\generated" />
     </target>
