@@ -89,7 +89,8 @@ namespace SlWcf
         public void Test2()
         {
             Write("Calling ...");
-            _client.GetPersonList(Test2_Response);
+            _client.GetPersonListCompleted += Test2_Response;
+            _client.GetPersonList();
             Write("Called");
         }
 
@@ -117,10 +118,10 @@ namespace SlWcf
 
         public void Test6()
         {
+            _client.CollatePersonCompleted += Test6_Response;
             _client.CollatePerson(
                 new Person() { Age=30, Gender=PersonGender.Male },
-                new Person() { Age=40, Gender=PersonGender.Female },
-                Test6_Response);
+                new Person() { Age=40, Gender=PersonGender.Female });
         }
 
         public void Test6_Response(ServiceCallStatus callStatus)
@@ -131,22 +132,26 @@ namespace SlWcf
 
         public void Test7()
         {
-            _client.ReturnVoidOrThrow(0, Test7_Response);
+            _client.ReturnVoidOrThrowCompleted += Test7_Response;
+            _client.ReturnVoidOrThrow(0);
         }
 
         public void Test7_Response(ServiceCallStatus callStatus)
         {
+            _client.ReturnVoidOrThrowCompleted -= Test7_Response;
             _client.ReturnVoidOrThrow(callStatus);
             Write("Test7 callback pass");
         }
 
         public void Test8()
         {
-            _client.ReturnVoidOrThrow(1, Test8_Response);
+            _client.ReturnVoidOrThrowCompleted += Test8_Response;
+            _client.ReturnVoidOrThrow(1);
         }
 
         public void Test8_Response(ServiceCallStatus callStatus)
         {
+            _client.ReturnVoidOrThrowCompleted -= Test8_Response;
             try
             {
                 _client.ReturnVoidOrThrow(callStatus);
@@ -161,11 +166,13 @@ namespace SlWcf
 
         public void Test9()
         {
-            _client.ReturnVoidOrThrow(2, Test9_Response);
+            _client.ReturnVoidOrThrowCompleted += Test9_Response;
+            _client.ReturnVoidOrThrow(2);
         }
 
         public void Test9_Response(ServiceCallStatus callStatus)
         {
+            _client.ReturnVoidOrThrowCompleted -= Test9_Response;
             try
             {
                 _client.ReturnVoidOrThrow(callStatus);
@@ -180,11 +187,13 @@ namespace SlWcf
 
         public void Test10()
         {
-            _client.ReturnVoidOrThrow(3, Test10_Response);
+            _client.ReturnVoidOrThrowCompleted += Test10_Response;
+            _client.ReturnVoidOrThrow(3);
         }
 
         public void Test10_Response(ServiceCallStatus callStatus)
         {
+            _client.ReturnVoidOrThrowCompleted -= Test10_Response;
             try
             {
                 _client.ReturnVoidOrThrow(callStatus);
