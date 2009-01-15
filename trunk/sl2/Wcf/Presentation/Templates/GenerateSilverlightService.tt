@@ -45,17 +45,20 @@ namespace <#=_serviceNamespace#>
         foreach (MethodInfo method in _methods)
         {#>
         // *** Start <#=method.Name#> ***
-        public virtual IAsyncResult <#=method.Name#>(<#=ParameterDeclaration(method)#>ServiceCallback serviceCallback)
+        public event ServiceCallback <#=method.Name#>Completed;
+        
+        public virtual IAsyncResult <#=method.Name#>(<#=StripTrailingComma(ParameterDeclaration(method))#>)
         {
             return Channel.Begin<#=method.Name#>(<#=ParameterList(method)#><#=method.Name#>Response,
-                new ServiceCallStatus() { Callback = serviceCallback });
+                new ServiceCallStatus() { Callback = <#=method.Name#>Completed });
         }
 
         private void <#=method.Name#>Response(IAsyncResult result)
         {
             ServiceCallStatus serviceCallStatus = (ServiceCallStatus)result.AsyncState;
             serviceCallStatus.AsyncResult = result;
-            ServiceCallStatus.InvokeResultOnUiThread(_dispatcher, serviceCallStatus);
+            if (serviceCallStatus.Callback != null)
+                ServiceCallStatus.InvokeResultOnUiThread(_dispatcher, serviceCallStatus);
         }
 
         public virtual <#=ServiceWrappedType(method)#> <#=method.Name#>(ServiceCallStatus serviceCallStatus)

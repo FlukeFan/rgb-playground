@@ -64,6 +64,12 @@
     }
 #>
 <#+
+    private string StripTrailingComma(string list)
+    {
+        return list.TrimEnd(", ".ToCharArray());
+    }
+#>
+<#+
     private string SharpType(Type type)
     {
         if (!type.IsGenericType)
