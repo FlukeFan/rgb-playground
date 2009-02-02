@@ -104,8 +104,15 @@ namespace WcfTest
         [FaultContract(typeof(MyException))]
         Parent GetGraph(Parent parentCopy);
 
+        [OperationContract]
+        IList<Child> GetGraph1();
+
+        [OperationContract]
+        Parent GetGraph2();
+
     }
 
+    [ServiceBehavior(IncludeExceptionDetailInFaults=true)]
     public class MyService : IWcfTest
     {
 
@@ -125,6 +132,29 @@ namespace WcfTest
             //child1.Parent = parent; -- can't do this yet
             parent.Children.Add(child2);
 
+            return parent;
+        }
+
+        public IList<Child> GetGraph1()
+        {
+            Parent parent = new Parent("parent");
+            Child child1 = new Child() { Name="child1", Parent=parent };
+            Child child2 = new Child() { Name="child2", Parent=parent };
+            IList<Child> list = new List<Child>() { child1, child2 };
+            return list;
+        }
+
+        public Parent GetGraph2()
+        {
+            Parent parent = new Parent("parent from " + Process.GetCurrentProcess().Id.ToString());
+
+            Child child1 = new Child(); child1.Name="child 1";
+            Child child2 = new Child(); child2.Name="child 2";
+
+            parent.Children.Add(child1);
+            child1.Parent = parent;
+            parent.Children.Add(child2);
+            child2.Parent = parent;
             return parent;
         }
 

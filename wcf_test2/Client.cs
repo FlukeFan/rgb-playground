@@ -23,11 +23,21 @@ namespace WcfTestClient
                 ChannelFactory<IWcfTest> factory = new ChannelFactory<IWcfTest>("RemoteService");
                 IWcfTest service = factory.CreateChannel();
 
-                Parent parent = new Parent("error");
-                //Parent parent = new Parent("no error");
-                parent = service.GetGraph(parent);
+                //IList<Child> childList = service.GetGraph1();
+                //Console.WriteLine(childList.Count);
+                //Console.WriteLine(childList[0].Name + childList[0].Parent.Name);
+                //Console.WriteLine(childList[1].Name + childList[1].Parent.Name);
+                //Console.WriteLine(childList[0].Parent == childList[1].Parent);
+                
+                Parent parent = service.GetGraph2();
                 Console.WriteLine(parent.Name);
                 Console.WriteLine(parent.Children.Count);
+
+                //Parent parent = new Parent("error");
+                //Parent parent = new Parent("no error");
+                //parent = service.GetGraph(parent);
+                //Console.WriteLine(parent.Name);
+                //Console.WriteLine(parent.Children.Count);
                 }
                 catch (FaultException fe)
                 {

@@ -1,35 +1,16 @@
 <?xml version="1.0"?>
-<project name="Atlanta" default="build">
+<project name="wcf_test" default="build">
 
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
-    <!-- global project settings -->
-    <property name="nant.settings.currentframework"     value="net-2.0" />
+    <target name="build">
 
-    <property name="project.version" value="0.0.0.1" overwrite="false" />
-
-    <property name="build.includes.dir"     value="${project::get-base-directory()}/Tools/BuildScripts"/>
-    <property name="build.includes.file"    value="${build.includes.dir}/includes.build"/>
-    <include buildfile="${build.includes.file}" />
-
-    <call target="setDefaultEnvironment" />
-
-    <!-- debug build by default -->
-    <call target="debug" />
-
-
-    <target name="onBuild">
+        <mkdir dir="bin" />
 
         <csc    target="exe"
-                debug="${build.debug}"
-                optimize="${optimize}"
+                debug="true"
                 output="bin/Service.exe"
                 warnaserror="true">
-
-            <references>
-                <include name="bin/System.Runtime.Serialization.dll" />
-                <include name="bin/System.ServiceModel.dll" />
-            </references>
 
             <sources>
                 <include name="Service.cs" />
@@ -40,13 +21,11 @@
         <copy todir="bin" file="Service.exe.config" />
 
         <csc    target="exe"
-                debug="${build.debug}"
-                optimize="${optimize}"
+                debug="true"
                 output="bin/Client.exe"
                 warnaserror="true">
 
             <references>
-                <include name="bin/System.ServiceModel.dll" />
                 <include name="bin/Service.exe" />
             </references>
 
