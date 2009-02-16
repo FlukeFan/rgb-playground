@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project name="SlUserControl" default="build" xsi:schemaLocation="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd ..\..\SDKs\nant-0.86\schema\nant.xsd" xmlns="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <target name="build">
+
+        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+        
+        <servicecontroller action="Start" service="w3svc" />
+
+        <mkiisdir   dirpath="build"
+                    vdirname="SlUserControl"
+                    enabledirbrowsing="true"
+                    />
+      
+        <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs set w3svc/1/root/SlUserControl/MimeMap &quot;.xap,application/x-silverlight-app&quot;" />
+
+        <mkdir dir="build\client" />
+
+        <copy file="default.htm"                        todir="build\" />
+        <copy file="..\..\SDKs\SL\tools\Silverlight.js" todir="build\" />
+        <copy file="AppManifest.xml"                    tofile="build\client\AppManifest.xaml" />
+        <copy file="..\..\SDKs\SL\ref\System.Windows.Controls.Data.dll" todir="build\client" />
+
+        <copy todir="build\client">
+          <fileset>
+            <include name="**\*.xaml"/>
+            <exclude name="build\**"/>
+          </fileset>
+        </copy>
+
+        <csc    target="library"
+                debug="true"
+                output="build\client\SlUserControl.dll"
+                warnaserror="true"
+                nostdlib="true"
+                noconfig="true">
+
+            <references>
+                <include name="..\..\SDKs\SL\ref\mscorlib.dll" />
+                <include name="..\..\SDKs\SL\ref\System.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Core.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Runtime.Serialization.dll" />
+                <include name="..\..\SDKs\SL\ref\System.ServiceModel.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Windows.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Windows.Browser.dll" />
+                <include name="..\..\SDKs\SL\ref\System.Xml.dll" />
+                <include name="build\client\System.Windows.Controls.Data.dll" />
+            </references>
+
+          <resources>
+          </resources>
+
+          <sources>
+            <include name="**\*.cs" />
+          </sources>
+
+        </csc>
+
+        <delete file="build\SlUserControl.xap" />
+        <exec program="..\..\SDKs\SL\tools\chiron" commandline="/directory:build\client /xap:build\SlUserControl.xap" />
+
+    </target>
+  
+    <target name="clean">
+      <deliisdir vdirname="SlUserControl"/>
+      <deliisdir vdirname="SlUserControlVsDummy"/>
+      <delete dir="build" />
+    </target>
+
+</project>
