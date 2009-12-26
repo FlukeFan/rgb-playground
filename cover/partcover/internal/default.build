@@ -10,7 +10,8 @@
         <csc    target="library"
                 output="output/Lib.dll"
                 warnaserror="true"
-                debug="true">
+                debug="true"
+                platform="x86">
 
             <references>
             </references>
@@ -24,7 +25,8 @@
         <csc    target="exe"
                 output="output/Client.exe"
                 warnaserror="true"
-                debug="true">
+                debug="true"
+                platform="x86">
 
             <references>
                 <include name="output\Lib.dll" />
