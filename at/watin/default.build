@@ -1,38 +1,52 @@
 <?xml version="1.0"?>
-<project name="Sl2" default="build">
+<project name="WatinExample"
+         default="build"
+         basedir="."
+         xsi:schemaLocation="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd ..\..\SDKs\nant-0.86\schema\nant.xsd"
+         xmlns="http://nant.sf.net/nightly/2008-08-18-0.86/nant.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <target name="build">
+  <target name="build">
 
-        <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+    <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
-        <csc    target="library"
-                debug="true"
-                output="build\WatinExample.dll"
-                warnaserror="true"
+    <copy todir="build">
+      <fileset>
+        <include name="..\..\SDKs\WatiN\*.dll"/>
+      </fileset>
+    </copy>
+
+    <copy file="WatinExample.dll.config" todir="build" />
+
+    <csc    target="library"
+            debug="true"
+            output="build\WatinExample.dll"
+            warnaserror="true"
                 >
 
-            <references>
-                <include name="..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit.framework.dll" />
-            </references>
+      <references>
+        <include name="..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit.framework.dll" />
+        <include name="..\..\SDKs\WatiN\WatiN.Core.dll" />
+      </references>
 
-            <sources>
-                <include name="*.cs" />
-            </sources>
+      <sources>
+        <include name="*.cs" />
+      </sources>
 
-            <resources>
-            </resources>
+      <resources>
+      </resources>
 
-        </csc>
+    </csc>
 
-        <nunit2>
-            <formatter type="Plain" />
-            <test>
-                <assemblies>
-                    <include name="build\WatinExample.dll" />
-                </assemblies>
-            </test>
-        </nunit2>
+    <nunit2>
+      <formatter type="Plain" />
+      <test>
+        <assemblies>
+          <include name="build\WatinExample.dll" />
+        </assemblies>
+      </test>
+    </nunit2>
 
-    </target>
+  </target>
 
 </project>
