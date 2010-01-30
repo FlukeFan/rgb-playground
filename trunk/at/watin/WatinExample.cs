@@ -1,5 +1,6 @@
 
 using NUnit.Framework;
+using WatiN.Core;
 
 namespace WatinExample
 {
@@ -9,7 +10,9 @@ namespace WatinExample
         [Test]
         public void OpenBrowser()
         {
-            Assert.Fail("Not implemented yet");
+            IE ie = new IE();
+
+            ie.Dispose();
         }
     }
 }
