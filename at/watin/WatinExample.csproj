@@ -33,6 +33,9 @@
     <Reference Include="WatiN.Core">
       <HintPath>..\..\SDKs\WatiN\WatiN.Core.dll</HintPath>
     </Reference>
+    <Reference Include="WebDev.WebHost">
+      <HintPath>..\..\SDKs\WebDev\WebDev.WebHost.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="..\..\SDKs\ExecParse\ExecParse.dll" TaskName="ExecParse.ExecParse" />

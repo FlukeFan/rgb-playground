@@ -16,6 +16,18 @@
       </fileset>
     </copy>
 
+    <copy todir="build">
+      <fileset>
+        <include name="..\..\SDKs\WebDev\*.dll"/>
+      </fileset>
+    </copy>
+
+    <copy todir="build">
+      <fileset>
+        <include name="..\..\SDKs\nant-0.86\bin\lib\common\2.0\*.dll"/>
+      </fileset>
+    </copy>
+
     <copy file="WatinExample.dll.config" todir="build" />
 
     <csc    target="library"
@@ -25,16 +37,19 @@
                 >
 
       <references>
-        <include name="..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit.framework.dll" />
-        <include name="..\..\SDKs\WatiN\WatiN.Core.dll" />
+        <include name="build\nunit.framework.dll" />
+        <include name="build\WatiN.Core.dll" />
+        <include name="build\WebDev.WebHost.dll" />
       </references>
+
+      <resources>
+      </resources>
+
+      <modules/>
 
       <sources>
         <include name="*.cs" />
       </sources>
-
-      <resources>
-      </resources>
 
     </csc>
 
