@@ -10,6 +10,7 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
+    <ProjectGuid>{F18061D7-D64B-4352-9433-3BA2623413D4}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
@@ -27,6 +28,7 @@
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Core"/>
     <Reference Include="nunit.framework">
       <HintPath>..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit.framework.dll</HintPath>
     </Reference>
