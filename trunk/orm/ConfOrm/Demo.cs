@@ -1,22 +1,43 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
 
 using ConfOrm;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 
 using MapDemo.Domain;
-using System.Collections.Generic;
+using NHibernate;
+using NHibernate.Type;
 
 namespace MapDemo
 {
     [TestFixture]
 	public class Demo
 	{
+		public class PropertyConvention : IPatternApplier<MemberInfo, IPropertyMapper>
+		{
+			public void Apply(MemberInfo subject, IPropertyMapper applyTo)
+			{
+				IType stringType =NHibernateUtil.String;
+				// stringType.Length = 50; // how??
+				Console.WriteLine("String property: " + subject.Name);
+				applyTo.Type(stringType);
+			}
+
+			public bool Match(MemberInfo subject)
+			{
+				var propertyInfo = (PropertyInfo)subject;
+				return propertyInfo.PropertyType == typeof(string);
+			}
+		}
+
         [Test][Explicit]
         public void MapDomain()
         {
@@ -36,6 +57,7 @@ namespace MapDemo
             domainInspector.TablePerClassHierarchy(rootTypes);
 
             var mapper = new Mapper(domainInspector);
+			mapper.PropertyPatternsAppliers.Add(new PropertyConvention());
 
             var mappings = mapper.CompileMappingForEach(allDomainTypes);
             var xml = Serialize(mappings);
