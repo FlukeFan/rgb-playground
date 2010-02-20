@@ -38,6 +38,17 @@ namespace MapDemo
 			}
 		}
 
+		private bool MatchesStringProperty(MemberInfo member)
+		{
+			var propertyInfo = (PropertyInfo)member;
+			return propertyInfo.PropertyType == typeof(string);
+		}
+
+		private void ApplyStringPropertyConvention(IPropertyMapper propertyMapper)
+		{
+			Console.WriteLine("String property: " + propertyMapper.ToString());
+		}
+
         [Test][Explicit]
         public void MapDomain()
         {
@@ -57,7 +68,8 @@ namespace MapDemo
             domainInspector.TablePerClassHierarchy(rootTypes);
 
             var mapper = new Mapper(domainInspector);
-			mapper.PropertyPatternsAppliers.Add(new PropertyConvention());
+			//mapper.PropertyPatternsAppliers.Add(new PropertyConvention());
+			mapper.AddPropertyPattern(MatchesStringProperty, ApplyStringPropertyConvention);
 
             var mappings = mapper.CompileMappingForEach(allDomainTypes);
             var xml = Serialize(mappings);
