@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ConfOrm.NH;
 
 namespace MapDemo.Domain
 {
@@ -12,11 +13,21 @@ namespace MapDemo.Domain
 
 	public class SpecialLibrary : Library
 	{
+		public static void CustomiseMapping(IPersistentClassCustomizer<SpecialLibrary> customizer)
+		{
+			customizer.Property(p => p.SpecialName, m => m.Column(cm => cm.Length(1000)));
+		}
+
 		public virtual string SpecialName { get; protected set; }
 	}
 
 	public class DetailedLibrary : Library
 	{
+		public static void CustomiseMapping(IPersistentClassCustomizer<DetailedLibrary> customizer)
+		{
+			customizer.Property(p => p.Detail, m => m.Column(cm => cm.Length(4000)));
+		}
+
 		public virtual string Detail { get; protected set; }
 	}
 }
