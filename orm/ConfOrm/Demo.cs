@@ -72,6 +72,10 @@ namespace MapDemo
 			mapper.PropertyPatternsAppliers.Add(new StringPropertyConvention());
 			mapper.PropertyPatternsAppliers.Add(new DescriptionPropertyConvention());
 
+			// class specific customisations
+			mapper.Customize<SpecialLibrary>(SpecialLibrary.CustomiseMapping);
+			mapper.Customize<DetailedLibrary>(DetailedLibrary.CustomiseMapping);
+
 			var mappings = mapper.CompileMappingForEach(allDomainTypes);
 			var xml = Serialize(mappings);
 
