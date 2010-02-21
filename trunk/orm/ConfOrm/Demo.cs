@@ -18,17 +18,14 @@ using NHibernate.Type;
 
 namespace MapDemo
 {
-    [TestFixture]
+	[TestFixture]
 	public class Demo
 	{
-		public class PropertyConvention : IPatternApplier<MemberInfo, IPropertyMapper>
+		public class StringPropertyConvention : IPatternApplier<MemberInfo, IPropertyMapper>
 		{
 			public void Apply(MemberInfo subject, IPropertyMapper applyTo)
 			{
-				IType stringType =NHibernateUtil.String;
-				// stringType.Length = 50; // how??
-				Console.WriteLine("String property: " + subject.Name);
-				applyTo.Type(stringType);
+				applyTo.Column(cm => cm.Length(50));
 			}
 
 			public bool Match(MemberInfo subject)
@@ -38,34 +35,50 @@ namespace MapDemo
 			}
 		}
 
-        [Test][Explicit]
-        public void MapDomain()
-        {
-            var allDomainTypes =
-                typeof(Base)
-                    .Assembly
-                    .GetTypes()
-                    .Where(t => t.Namespace == typeof(Base).Namespace)
-                    .ToList();
+		public class DescriptionPropertyConvention : IPatternApplier<MemberInfo, IPropertyMapper>
+		{
+			public void Apply(MemberInfo subject, IPropertyMapper applyTo)
+			{
+				applyTo.Column(cm => cm.Length(200));
+			}
 
-            var rootTypes =
-                allDomainTypes
-                    .Where(t => t.BaseType == typeof(Base))
-                    .ToList();
+			public bool Match(MemberInfo subject)
+			{
+				var propertyInfo = (PropertyInfo)subject;
+				return propertyInfo.PropertyType == typeof(string)
+					&& propertyInfo.Name == "Description";
+			}
+		}
 
-            var domainInspector = new ObjectRelationalMapper();
-            domainInspector.TablePerClassHierarchy(rootTypes);
+		[Test][Explicit]
+		public void MapDomain()
+		{
+			var allDomainTypes =
+				typeof(Base)
+					.Assembly
+					.GetTypes()
+					.Where(t => t.Namespace == typeof(Base).Namespace)
+					.ToList();
 
-            var mapper = new Mapper(domainInspector);
-			mapper.PropertyPatternsAppliers.Add(new PropertyConvention());
+			var rootTypes =
+				allDomainTypes
+					.Where(t => t.BaseType == typeof(Base))
+					.ToList();
 
-            var mappings = mapper.CompileMappingForEach(allDomainTypes);
-            var xml = Serialize(mappings);
+			var domainInspector = new ObjectRelationalMapper();
+			domainInspector.TablePerClassHierarchy(rootTypes);
 
-            Console.WriteLine(xml);
-        }
+			var mapper = new Mapper(domainInspector);
+			mapper.PropertyPatternsAppliers.Add(new StringPropertyConvention());
+			mapper.PropertyPatternsAppliers.Add(new DescriptionPropertyConvention());
 
-        protected static string Serialize(IEnumerable<HbmMapping> hbmMappings)
+			var mappings = mapper.CompileMappingForEach(allDomainTypes);
+			var xml = Serialize(mappings);
+
+			Console.WriteLine(xml);
+		}
+
+		protected static string Serialize(IEnumerable<HbmMapping> hbmMappings)
 		{
 			var allXml = "";
 			Directory.CreateDirectory("DemoMapping");
