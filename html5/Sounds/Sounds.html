@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sounds</title>
+
+        <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="soundmanager2-nodebug-jsmin.js"></script>
+
+        <script type="text/javascript">
+
+            soundManager.preferFlash = true;
+            soundManager.onready(doSoundManagerReady);
+
+            $(document).ready(doLoad);
+
+            function doLoad() {
+                $('#pop').click(function () { doPop(1); });
+                $('#pop5').click(function () { doPop(5); });
+                $('#sweep').click(function () { doSweep(); });
+            }
+
+            var pop;
+            var sweep;
+
+            function doSoundManagerReady() {
+                pop = soundManager.createSound({
+                    id: 'pop',
+                    url: 'cool_bub-Roddz-8635_hifi.mp3'
+                });
+
+                sweep = soundManager.createSound({
+                    id: 'sweep',
+                    url: 'Elec-Myse-7739_hifi.mp3'
+                });
+            }
+
+            function doPop(count) {
+                if (count <= 0)
+                    return;
+
+                pop.play({ onfinish: function () { doPop(count - 1); } });
+            }
+
+            function doSweep() {
+                sweep.play();
+            }
+
+        </script>
+
+    </head>
+    <body style="margin:0;padding:0;">
+
+        <div id="pop" style="position:absolute;width:50px;height:50px;background:lightgreen;left:50px;top:50px;">
+            Pop!
+        </div>
+
+        <div id="pop5" style="position:absolute;width:50px;height:50px;background:lightgreen;left:150px;top:50px;">
+            Pop 5
+        </div>
+
+        <div id="sweep" style="position:absolute;width:50px;height:50px;background:lightgreen;left:50px;top:150px;">
+            Sweep
+        </div>
+
+    </body>
+</html>
