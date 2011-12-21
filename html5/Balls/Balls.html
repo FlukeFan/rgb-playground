@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Balls</title>
+
+        <script type="text/javascript">
+
+            var width;
+            var height;
+
+            var canvas;
+            var context;
+            var ball;
+            var ballWidth;
+            var ballHeight;
+            var lastRender;
+
+            var balls;
+            var x = [];
+            var y = [];
+            var xSpeed = [];
+            var ySpeed = [];
+
+            var fpsCount = 2;
+            var fps = [];
+            var fpsTarget = 60;
+
+            window.onload = doLoad;
+
+            function doLoad() {
+                canvas = document.getElementById("canvas");
+                context = canvas.getContext("2d");
+
+                width = document.documentElement.clientWidth;
+                height = document.documentElement.clientHeight;
+                canvas.width = width;
+                canvas.height = height;
+
+                balls = 0;
+                addBalls(100);
+
+                ball = new Image();
+                ball.onload = ballLoaded;
+                ball.src = "Ball_Small.png";
+            }
+
+            function ballLoaded() {
+                ballWidth = ball.width;
+                ballHeight = ball.height;
+                lastRender = new Date();
+                window.setTimeout(moveAll, 1);
+            }
+
+            function moveAll() {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (var index = 0; index < balls; index++)
+                    move(index);
+
+                var time = new Date();
+                var duration = time - lastRender;
+                lastRender = time;
+                var newFps = Math.floor(1000 / duration);
+
+                while (fps.length >= fpsCount)
+                    fps.shift();
+
+                fps.push(newFps);
+
+                var avgFps = 0;
+                for (var index = 0; index < fps.length; index++)
+                    avgFps += fps[index];
+
+                var avgFps = Math.floor(avgFps / fps.length);
+                fpsCount = Math.floor(avgFps / 10) + 1;
+
+                context.font = "12pt Calibri";
+                context.fillText("Balls = " + balls, 5, 20);
+                context.fillText("fps target = " + fpsTarget, 5, 40);
+                context.fillText("fps = " + avgFps, 5, 60);
+                context.fillText("score = " + Math.floor(balls * fpsTarget / 500), 5, 80);
+
+                if (avgFps >= fpsTarget)
+                    addBall();
+
+                if (avgFps < fpsTarget)
+                    if (balls > 0)
+                        balls -= 1;
+                    else {
+                        fpsTarget -= 5;
+                        addBalls(3);
+                    }
+
+                if (fpsTarget < 1)
+                    fpsTarget = 1;
+
+                window.setTimeout(moveAll, 0);
+            }
+
+            function addBalls(count) {
+                for (var i = 0; i < count; i++)
+                    addBall();
+            }
+
+            function addBall() {
+                x[balls] = Math.floor(Math.random() * width / 2);
+                y[balls] = Math.floor(Math.random() * height / 2);
+                xSpeed[balls] = Math.ceil(Math.random() * 5);
+                ySpeed[balls] = Math.ceil(Math.random() * 5);
+                balls += 1;
+            }
+
+            function move(index) {
+                var xc = x[index];
+                var yc = y[index];
+
+                xc += xSpeed[index];
+                yc += ySpeed[index];
+
+                maxX = width - ballWidth;
+                maxY = height - ballHeight;
+
+                if (xc > maxX) {
+                    xc = maxX - (xc - maxX);
+                    xSpeed[index] = -xSpeed[index];
+                }
+
+                if (xc < 0) {
+                    xc = -xc;
+                    xSpeed[index] = -xSpeed[index];
+                }
+
+                if (yc > maxY) {
+                    yc = maxY - (yc - maxY);
+                    ySpeed[index] = -ySpeed[index];
+                }
+
+                if (yc < 0) {
+                    yc = -yc;
+                    ySpeed[index] = -ySpeed[index];
+                }
+
+                x[index] = xc;
+                y[index] = yc;
+
+                context.drawImage(ball, xc, yc);
+            }
+
+        </script>
+
+    </head>
+    <body style="margin:0;padding:0;">
+
+        <canvas id="canvas" style="background:#c0c0c0;position:absolute;">
+        </canvas>
+
+    </body>
+</html>
