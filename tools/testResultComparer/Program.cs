@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,13 +44,25 @@ namespace testResultComparer
 	{
 		static void Main(string[] args)
 		{
-            var before = Result.ParseFile(@"C:\work\mesh\NhNotes\OracleTestResult_5197.xml");
-            var after = Result.ParseFile(@"C:\work\mesh\NhNotes\OracleTestResult_5198.xml");
+            var before = Result.ParseFile(@"C:\work\mesh\NhNotes\TestResults\MySql_5373.xml");
+            var after = Result.ParseFile(@"C:\work\mesh\NhNotes\TestResults\MySql5_5373.xml");
 
             var beforeTestNames = before.Select(r => r.Name).ToList();
             var afterTestNames = before.Select(r => r.Name).ToList();
 
             var afterExistingTests = after.Where(r => beforeTestNames.Contains(r.Name));
+
+            var newTests =
+                after
+                    .Where(r => !beforeTestNames.Contains(r.Name))
+                    .ToList();
+
+            if (newTests.Count > 0)
+            {
+                Console.WriteLine("*** New tests ***");
+                foreach (var result in newTests)
+                    Console.WriteLine((result.Success ? "PASS - " : "FAIL - ") + result.Name);
+            }
 
             var fixedTests =
                 afterExistingTests
@@ -62,6 +74,18 @@ namespace testResultComparer
             {
                 Console.WriteLine("*** Fixed ***");
                 foreach (var result in fixedTests)
+                    Console.WriteLine(result.Name);
+            }
+
+            var missingTests =
+                before
+                    .Where(r => !afterTestNames.Contains(r.Name))
+                    .ToList();
+
+            if (missingTests.Count > 0)
+            {
+                Console.WriteLine("*** MISSING ***");
+                foreach (var result in missingTests)
                     Console.WriteLine(result.Name);
             }
 
